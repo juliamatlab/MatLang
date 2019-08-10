@@ -1,2 +1,2 @@
 # MatLang
-API for Matlab's language fundamentals functions
+API for Matlab's language fundamental functions
