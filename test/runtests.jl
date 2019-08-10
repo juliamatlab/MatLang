@@ -1,6 +1,19 @@
-using MatLang
-using Test
+# ] add Revise # if you don't have it
 
+path=pwd()
+if path[end-6:end] != "MatLang"
+    error("cd(to the MatLang path)")
+else
+    push!(LOAD_PATH, ".")
+    using Revise
+    using MatLang
+    using Test
+end
+
+# usage
+clcM()
+
+# tests
 @testset "MatLang.jl" begin
-    # Write your own tests here.
+    1==1
 end
