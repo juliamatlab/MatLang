@@ -27,4 +27,4 @@ Activate the package:
 ```jl
 ] activate .
 ```
-Then use test.jl file in test folder. It uses Revise.jl for quick testing without the need for restarting
+Then use `usage.jl` file in test folder. It uses `Revise` for quick testing without the need for restarting. You also need to add `Requires`.
