@@ -3,7 +3,6 @@ module MatLang
 using LinearAlgebra
 
 using Requires # for clcM
-import BlockDiagonals # for blkdiagM
 
 # Main Functions
 export clcM, zerosM, onesM, randM, eyeM, diagM, blkdiagM
@@ -205,9 +204,28 @@ mBlkdiag2=blkdiagM(ones(2,2),2*ones(2,2)) # vcat(hcat(ones(2,2),zeros(2,2)),hcat
 
 ```
 """
-blkdiagM(A...)=Array(BlockDiagonals.BlockDiagonal([A...]))
+function blkdiagM(in...)
 
-# this method is slower:
+    argNum=length(in)
+
+    inSize1=collect( size.(in,1) )
+    outSize1 = vcat( [0], cumsum(inSize1,dims=1) )
+
+    inSize2=collect( size.(in,2) )
+    outSize2 = vcat( [0], cumsum(inSize2,dims=1) )
+
+    out = zeros(last(outSize1),last(outSize2));
+    for k=1:argNum
+        out[outSize1[k]+1:outSize1[k+1],outSize2[k]+1:outSize2[k+1]] = in[k];
+    end
+
+    return out
+end
+# only for square matrix:
+# import BlockDiagonals # for blkdiagM
+# blkdiagM(A...)=Array(BlockDiagonals.BlockDiagonal([A...]))
+
+# only for square matrix, this method is slower:
 # import SparseArrays
 # blkdiagM(A...)=Array(SparseArrays.blockdiag(SparseArrays.sparse.(A)...))
 ################################################################
