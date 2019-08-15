@@ -2,8 +2,6 @@ module MatLang
 
 using LinearAlgebra
 
-using Requires # for clcM
-
 # Main Functions
 export clcM, zerosM, onesM, randM, eyeM, diagM, blkdiagM
 
@@ -15,6 +13,8 @@ export clcM, zerosM, onesM, randM, eyeM, diagM, blkdiagM
 # Command Window (REPL console):
 ################################################################
 ################################################################
+using Requires # for clcM
+
 """
     clcM
 
@@ -42,6 +42,7 @@ end
     zerosM(Type, sizeAsArray) # non-efficient Matlab way
 
 # Example
+```julia
 mZeros0=zerosM(2); # same as zeros(2,2)
 
 mZeros1=zerosM(2,2); # same as zeros(2,2)
@@ -55,6 +56,7 @@ mZeros4=zerosM(Int32,(2,2)); # giving size as Tuple and also the Int32 type
 mZeros5=zerosM([2,2]); # giving size as an Array, non-efficient Matlab way. Array should be Integer otherwise you will get errors.
 
 mZeros6=zerosM(Int32,[2,2]); # giving size as Array, non-efficient Matlab way
+```julia
 """
 zerosM(dim::Integer)=zeros(dim,dim)
 zerosM(a::Array)=zeros(Tuple(a))
@@ -68,6 +70,7 @@ zerosM(args...) = zeros(args...)
     onesM(Type, sizeAsArray) # non-efficient Matlab way
 
 # Example
+```julia
 mOnes0=onesM(2); # same as ones(2,2)
 
 mOnes1=onesM(2,2); # same as ones(2,2)
@@ -81,6 +84,7 @@ mOnes4=onesM(Int32,(2,2)); # giving size as Tuple and also the Int32 type
 mOnes5=onesM([2,2]); # giving size as Array, non-efficient Matlab way. Array should be Integer otherwise you will get errors.
 
 mOnes6=onesM(Int32,[2,2]); # giving size as Array, non-efficient Matlab way
+```julia
 """
 onesM(dim::Integer)=ones(dim,dim)
 onesM(a::Array)=ones(Tuple(a))
@@ -95,6 +99,7 @@ onesM(args...) = ones(args...)
 
 
 # Example
+```julia
 mRand0=randM(2); # same as rand(2,2)
 
 mRand1=randM(2,2); # same as rand(2,2)
@@ -108,6 +113,7 @@ mRand4=randM(Int32,(2,2)); # giving size as Tuple and also the Int32 type
 mRand5=randM([2,2]); # giving size as Array, non-efficient Matlab way. Array should be Integer otherwise you will get errors.
 
 mRand6=randM(Int32,[2,2]); # giving size as Array, non-efficient Matlab way
+```julia
 """
 randM(dim::Integer)=rand(dim,dim)
 randM(a::Array)=rand(Tuple(a))
@@ -179,9 +185,11 @@ mDiag2=diagM([2,3,4],1) # [0 2 3 0; 0 0 3 0; 0 0 0 4; 0 0 0 0]
 Returns diagonal of A as a vector.
 
 # Example
+```julia
 mDiag3=diagM([1 2 3; 4 5 6; 7 8 9]) # [1;5;9]
 
 mDiag4=diagM([1 2 3; 4 5 6; 7 8 9],1) # [2;6]
+```
 """
 # make diagonal matrix
 diagM(v::AbstractVector,k::Integer=0)=diagm(k=>v)
@@ -202,6 +210,7 @@ mBlkdiag1=blkdiagM(A1,A2,A3)
 
 mBlkdiag2=blkdiagM(ones(2,2),2*ones(2,2)) # vcat(hcat(ones(2,2),zeros(2,2)),hcat(zeros(2,2),2*ones(2,2)))
 
+mBlkdiag3=blkdiagM(ones(3,2),2*ones(1,4))
 ```
 """
 function blkdiagM(in...)

@@ -89,5 +89,7 @@ mBlkdiag1=blkdiagM(A1,A2,A3)
 
 mBlkdiag2=blkdiagM(ones(2,2),2*ones(2,2)) # vcat(hcat(ones(2,2),zeros(2,2)),hcat(zeros(2,2),2*ones(2,2)))
 
+mBlkdiag3=blkdiagM(ones(3,2),2*ones(1,4))
+
 
 # Julia functions with M suffix
