@@ -15,7 +15,9 @@ using Test
 ################################################################
 clcM() # clears console
 ################################################################
-mZeros=zerosM(2,2); # same as zeros(2,2)
+mZeros0=zerosM(2); # same as zeros(2,2)
+
+mZeros1=zerosM(2,2); # same as zeros(2,2)
 
 mZeros2=zerosM(Int32,2,2); # same as zeros(Int32,2,2)
 
@@ -27,7 +29,9 @@ mZeros5=zerosM([2,2]); # giving size as an Array, non-efficient Matlab way. Arra
 
 mZeros6=zerosM(Int32,[2,2]); # giving size as Array, non-efficient Matlab way
 ################################################################
-mOnes=onesM(2,2); # same as ones(2,2)
+mOnes0=onesM(2); # same as ones(2,2)
+
+mOnes1=onesM(2,2); # same as ones(2,2)
 
 mOnes2=onesM(Int32,2,2); # same as ones(Int32,2,2)
 
@@ -39,7 +43,9 @@ mOnes5=onesM([2,2]); # giving size as Array, non-efficient Matlab way. Array sho
 
 mOnes6=onesM(Int32,[2,2]); # giving size as Array, non-efficient Matlab way
 ################################################################
-mRand=randM(2,2); # same as rand(2,2)
+mRand0=randM(2); # same as rand(2,2)
+
+mRand1=randM(2,2); # same as rand(2,2)
 
 mRand2=randM(Int32,2,2); # same as rand(Int32,2,2)
 
@@ -51,7 +57,9 @@ mRand5=randM([2,2]); # giving size as Array, non-efficient Matlab way. Array sho
 
 mRand6=randM(Int32,[2,2]); # giving size as Array, non-efficient Matlab way
 ################################################################
-mEye=eyeM(2,3); # [1 0 0; 0 1 0]
+mEye0=eyeM(2); # [1 0 0; 0 1 0]
+
+mEye1=eyeM(2,3); # [1 0 0; 0 1 0]
 
 mEye2=eyeM(Int32,2,3); # [1 0 0; 0 1 0]
 
@@ -74,9 +82,12 @@ mDiag3=diagM([1 2 3; 4 5 6; 7 8 9]) # [1;5;9]
 
 mDiag4=diagM([1 2 3; 4 5 6; 7 8 9],1) # [2;6]
 ################################################################
+A1 = 3*ones(2,2);
+A2 = 4*ones(2,2);
+A3 = rand(3,3);
+mBlkdiag1=blkdiagM(A1,A2,A3)
 
-
-
+mBlkdiag2=blkdiagM(ones(2,2),2*ones(2,2)) # vcat(hcat(ones(2,2),zeros(2,2)),hcat(zeros(2,2),2*ones(2,2)))
 
 
 # Julia functions with M suffix

@@ -1,9 +1,12 @@
 module MatLang
-using Requires
+
 using LinearAlgebra
 
+using Requires # for clcM
+import BlockDiagonals # for blkdiagM
+
 # Main Functions
-export clcM, zerosM, onesM, randM, eyeM, diagM
+export clcM, zerosM, onesM, randM, eyeM, diagM, blkdiagM
 
 # Julia functions with M suffix
 # export
@@ -34,10 +37,15 @@ end
 ################################################################
 ################################################################
 """
+    zerosM(idx)         # square idx*idx matrix
+    zerosM(Type,idx)    # square idx*idx matrix
     zerosM(sizeAsArray) # non-efficient Matlab way
+    zerosM(Type, sizeAsArray) # non-efficient Matlab way
 
 # Example
-mZeros=zerosM(2,2); # same as zeros(2,2)
+mZeros0=zerosM(2); # same as zeros(2,2)
+
+mZeros1=zerosM(2,2); # same as zeros(2,2)
 
 mZeros2=zerosM(Int32,2,2); # same as zeros(Int32,2,2)
 
@@ -49,15 +57,21 @@ mZeros5=zerosM([2,2]); # giving size as an Array, non-efficient Matlab way. Arra
 
 mZeros6=zerosM(Int32,[2,2]); # giving size as Array, non-efficient Matlab way
 """
-zerosM(args...) = zeros(args...)
+zerosM(dim::Integer)=zeros(dim,dim)
 zerosM(a::Array)=zeros(Tuple(a))
 zerosM(T::Type,a::Array)=zeros(T::Type,Tuple(a))
+zerosM(args...) = zeros(args...)
 ################################################################
 """
+    onesM(idx)         # square idx*idx matrix
+    onesM(Type,idx)    # square idx*idx matrix
     onesM(sizeAsArray) # non-efficient Matlab way
+    onesM(Type, sizeAsArray) # non-efficient Matlab way
 
 # Example
-mOnes=onesM(2,2); # same as ones(2,2)
+mOnes0=onesM(2); # same as ones(2,2)
+
+mOnes1=onesM(2,2); # same as ones(2,2)
 
 mOnes2=onesM(Int32,2,2); # same as ones(Int32,2,2)
 
@@ -69,15 +83,22 @@ mOnes5=onesM([2,2]); # giving size as Array, non-efficient Matlab way. Array sho
 
 mOnes6=onesM(Int32,[2,2]); # giving size as Array, non-efficient Matlab way
 """
-onesM(args...) = ones(args...)
+onesM(dim::Integer)=ones(dim,dim)
 onesM(a::Array)=ones(Tuple(a))
-onesM(T::Type,a::Array)=onesM(T::Type,Tuple(a))
+onesM(T::Type,a::Array)=ones(T::Type,Tuple(a))
+onesM(args...) = ones(args...)
 ################################################################
 """
+    randM(idx)         # square idx*idx matrix
+    randM(Type,idx)    # square idx*idx matrix
     randM(sizeAsArray) # non-efficient Matlab way
+    randM(Type,sizeAsArray) # non-efficient Matlab way
+
 
 # Example
-mRand=randM(2,2); # same as rand(2,2)
+mRand0=randM(2); # same as rand(2,2)
+
+mRand1=randM(2,2); # same as rand(2,2)
 
 mRand2=randM(Int32,2,2); # same as rand(Int32,2,2)
 
@@ -89,14 +110,20 @@ mRand5=randM([2,2]); # giving size as Array, non-efficient Matlab way. Array sho
 
 mRand6=randM(Int32,[2,2]); # giving size as Array, non-efficient Matlab way
 """
-randM(args...) = rand(args...)
+randM(dim::Integer)=rand(dim,dim)
 randM(a::Array)=rand(Tuple(a))
 randM(T::Type,a::Array)=rand(T::Type,Tuple(a))
+randM(args...) = rand(args...)
 ################################################################
 """
-    eyeM(s1,s2)   # giving size as a separate input numbers
+    eyeM(idx)         # square idx*idx matrix
+    eyeM(Type,idx)    # square idx*idx matrix
+    eyeM(idx1,idx2)   # giving size as a separate input numbers
+    eyeM(Type,idx1,idx2)   # giving size as a separate input numbers
     eyeM(sizeAsTuple) # giving size as a Tuple
+    eyeM(Type,sizeAsTuple) # giving size as a Tuple
     eyeM(sizeAsArray) # non-efficient Matlab way
+    eyeM(Type,sizeAsArray) # non-efficient Matlab way
 
 Creates 2D Identity matrix (can be non-square matrix).
 
@@ -104,7 +131,9 @@ Only 2 dimensions should be supplied othetwise you will receive an error.
 
 # Example
 ```julia
-mEye=eyeM(2,3); # [1 0 0; 0 1 0]
+mEye0=eyeM(2); # [1 0 0; 0 1 0]
+
+mEye1=eyeM(2,3); # [1 0 0; 0 1 0]
 
 mEye2=eyeM(Int32,2,3); # [1 0 0; 0 1 0]
 
@@ -120,8 +149,11 @@ s1=size(ones(2,3)) # getting size from another matrix or calculation
 mEye7=eyeM(s1)  # giving size as a variable (Tuple).
 ```
 """
-eyeM(T::Type, indices::Integer...)=Matrix{T}(I, indices...)
-eyeM(indices::Integer...)=eyeM(Int64, indices)
+eyeM(T::Type, idx1::Integer, idx2::Integer)=Matrix{T}(I, idx1, idx2)
+eyeM(idx1::Integer, idx2::Integer)=eyeM(Int64, idx1, idx2)
+
+eyeM(T::Type, idx1::Integer)=Matrix{T}(I, idx1, idx1)
+eyeM(idx1::Integer)=eyeM(Int64, idx1, idx1)
 
 eyeM(T::Type, t::Tuple)=Matrix{T}(I, t)
 eyeM(t::Tuple)=eyeM(Int64, t)
@@ -157,11 +189,27 @@ diagM(v::AbstractVector,k::Integer=0)=diagm(k=>v)
 # give diagonal
 diagM(A::AbstractMatrix,k::Integer=0)=diag(A,k)
 ################################################################
+"""
+    blkdiagM(A1,A2,...)
 
+Creates a square matrix with A1,A2,... on the diagonal and the rest of the elements being 0. Only works for A1,A2,... being square.
 
+# Example
+```julia
+A1 = 3*ones(2,2);
+A2 = 4*ones(2,2);
+A3 = rand(3,3);
+mBlkdiag1=blkdiagM(A1,A2,A3)
 
+mBlkdiag2=blkdiagM(ones(2,2),2*ones(2,2)) # vcat(hcat(ones(2,2),zeros(2,2)),hcat(zeros(2,2),2*ones(2,2)))
 
+```
+"""
+blkdiagM(A...)=Array(BlockDiagonals.BlockDiagonal([A...]))
 
-
+# this method is slower:
+# import SparseArrays
+# blkdiagM(A...)=Array(SparseArrays.blockdiag(SparseArrays.sparse.(A)...))
+################################################################
 
 end # module
