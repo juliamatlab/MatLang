@@ -21,7 +21,11 @@ using Requires # for clcM
 Clear Command Window for Juno or Atom IDE
 """
 function clcM()
-#    Juno.clearconsole(); # defined in @require instead
+
+if !isdefined(Main, :Juno)
+    println("\33[2J")
+end
+
 end
 # Conditional REQUIRE - https://github.com/MikeInnes/Requires.jl
 function __init__()
