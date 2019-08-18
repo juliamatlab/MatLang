@@ -30,6 +30,7 @@ end
     @test diagM([2,3,4],1)==[0 2 0 0; 0 0 3 0; 0 0 0 4; 0 0 0 0]
     @test diagM([1 2 3; 4 5 6; 7 8 9])==[1;5;9]
     @test blkdiagM(ones(2,2),2*ones(2,2))==vcat(hcat(ones(2,2),zeros(2,2)),hcat(zeros(2,2),2*ones(2,2)))
+	@test blkdiagM(ones(2,4),2*ones(3,2))==vcat(hcat(ones(2,4),zeros(2,2)),hcat(zeros(3,4),2*ones(3,2)))
 end
 
 

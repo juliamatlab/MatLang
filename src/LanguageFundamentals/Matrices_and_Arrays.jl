@@ -176,10 +176,11 @@ diagM(v::AbstractVector,k::Integer=0)=diagm(k=>v)
 # give diagonal
 diagM(A::AbstractMatrix,k::Integer=0)=diag(A,k)
 ################################################################
+import BlockDiagonals
 """
     blkdiagM(A1,A2,...)
 
-Creates a square matrix with A1,A2,... on the diagonal and the rest of the elements being 0. Only works for A1,A2,... being square.
+Creates a square matrix with A1,A2,... on the diagonal and the rest of the elements being 0. Works for both square and non-square matrices.
 
 # Example
 ```julia
@@ -190,29 +191,37 @@ mBlkdiag1=blkdiagM(A1,A2,A3)
 
 mBlkdiag2=blkdiagM(ones(2,2),2*ones(2,2)) # vcat(hcat(ones(2,2),zeros(2,2)),hcat(zeros(2,2),2*ones(2,2)))
 
-mBlkdiag3=blkdiagM(ones(3,2),2*ones(1,4))
+A1 = ones(2,4);
+A2 = 2*ones(3,2);
+mBlkdiag3=blkdiagM(A1,A2) # vcat(hcat(ones(2,4),zeros(2,2)),hcat(zeros(3,4),2*ones(3,2)))
 ```
 """
-function blkdiagM(in...)
+blkdiagM(A...)=collect(BlockDiagonals.BlockDiagonal([A...]))
+"""
+    blkdiagObjM(A1,A2,...)
 
-    argNum=length(in)
+Returns the object itself if you want to use BlockDiagonals methods. use collect(obj) to get the array.
+"""
+blkdiagObjM(A...)=BlockDiagonals.BlockDiagonal([A...])
 
-    inSize1=collect( size.(in,1) )
-    outSize1 = vcat( [0], cumsum(inSize1,dims=1) )
-
-    inSize2=collect( size.(in,2) )
-    outSize2 = vcat( [0], cumsum(inSize2,dims=1) )
-
-    out = zeros(last(outSize1),last(outSize2));
-    for k=1:argNum
-        out[outSize1[k]+1:outSize1[k+1],outSize2[k]+1:outSize2[k+1]] = in[k];
-    end
-
-    return out
-end
-# only for square matrix:
-# import BlockDiagonals # for blkdiagM
-# blkdiagM(A...)=Array(BlockDiagonals.BlockDiagonal([A...]))
+# manual algorithm - slower
+# function blkdiagM(in...)
+#
+#     argNum=length(in)
+#
+#     inSize1=collect( size.(in,1) )
+#     outSize1 = vcat( [0], cumsum(inSize1,dims=1) )
+#
+#     inSize2=collect( size.(in,2) )
+#     outSize2 = vcat( [0], cumsum(inSize2,dims=1) )
+#
+#     out = zeros(last(outSize1),last(outSize2));
+#     for k=1:argNum
+#         out[outSize1[k]+1:outSize1[k+1],outSize2[k]+1:outSize2[k+1]] = in[k];
+#     end
+#
+#     return out
+# end
 
 # only for square matrix, this method is slower:
 # import SparseArrays

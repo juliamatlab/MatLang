@@ -5,7 +5,7 @@ include("LanguageFundamentals/Entering_Commands.jl")
 
 using LinearAlgebra
 
-export  zerosM, onesM, randM, eyeM, diagM, blkdiagM
+export  zerosM, onesM, randM, eyeM, diagM, blkdiagM, blkdiagObjM
 include("LanguageFundamentals/Matrices_and_Arrays.jl")
 
 
