@@ -1,4 +1,4 @@
-developing=true; # are you developing the package or just using?
+developing=false; # are you developing the package or just using? # make it false for CI testing
 if developing
 	# ] add Revise # if you don't have it
 	# ] add Requires
