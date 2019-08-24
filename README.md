@@ -1,5 +1,5 @@
 # MatLang
-API for Matlab's language fundamental functions
+API for Matlab's language core functions
 
 [![Build Status](https://travis-ci.com/juliamatlab/MatLang.svg?branch=master)](https://travis-ci.com/juliamatlab/MatLang)
 [![Build status](https://ci.appveyor.com/api/projects/status/vempmfhwcyma2omm?svg=true)](https://ci.appveyor.com/project/aminya/matlang)
@@ -7,24 +7,58 @@ API for Matlab's language fundamental functions
 
 # For Usage
 Add the package
-```jl
+```julia
 ]add https://github.com/juliamatlab/MatLang
 ```
 Use the package:
-```jl
+```julia
 using MatLang
 ```
-# For developement
+
+# List of implemented Functions
+#### Language_Fundamentals :
+<table>
+    <tr>
+        <td></td>
+        <td>Sub Package</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>Entering_Commands</td>
+        <td>clcM</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Matrices_and_Arrays</td>
+        <td>zerosM</td>
+        <td>onesM</td>
+        <td>randM</td>
+        <td>eyeM</td>
+        <td>diagM</td>
+        <td>blkdiagM</td>
+    </tr>
+</table>
+
+The full list of the functions that will be implemented in the future can be found [here](https://www.mathworks.com/help/matlab/referencelist.html;jsessionid=e221a09e47ed26d2b333ea600f68?type=function)
+
+# For Development
 clone the project in your usual way, or using the following command which clones the project in .julia\dev\MatLang
-```jl
+```julia
 ] dev https://github.com/juliamatlab/MatLang
 ```
 cd to cloned package. if you used dev command, run the following:
-```jl
+```julia
 cd("$(homedir())\\.julia\\dev\\MatLang")
 ```
 Activate the package:
-```jl
+```julia
 ] activate .
 ```
-Then use `usage.jl` file in test folder. It uses `Revise` for quick testing without the need for restarting. You also need to add `Requires`.
+Set `developing` variable to `true` in the files in `test` and `usage` folder.
+```julia
+developing = true
+```
+Set `developing` variable to `false` before committing (for a successful CI build).
+
+The package uses `Revise` for quick testing without the need for restarting.

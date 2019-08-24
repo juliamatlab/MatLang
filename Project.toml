@@ -3,11 +3,13 @@ uuid = "05b439c0-bb3c-11e9-1d8d-1f0a9ebca87a"
 authors = ["aminya <aminyahyaabadi74@gmail.com>"]
 version = "0.1.0"
 
+[deps]
+BlockDiagonals = "0a1fb500-61f7-11e9-3c65-f5ef3456f9f0"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+Requires = "ae029012-a4dd-5104-9daa-d747884805df"
+
 [compat]
 julia = "1"
-
-[deps]
-Requires="ae029012-a4dd-5104-9daa-d747884805df"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
