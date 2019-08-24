@@ -1,7 +1,6 @@
 developing = false; # are you developing the package or just using?
 if developing
 	# ] add Revise # if you don't have it
-	# ] add Requires
     path = pwd()
     if path[end-6:end] != "MatLang"
         error("cd(to the MatLang path)")
