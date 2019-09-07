@@ -209,28 +209,36 @@ import BlockDiagonals
 
 Creates a square matrix with A1,A2,... on the diagonal and the rest of the elements being 0. Works for both square and non-square matrices.
 
+    blkdiagM(A1,A2,..., :obj)
+
+Returns the object itself if you want to use BlockDiagonals methods. use collect(obj) to get the array.
+
 # Example
 ```julia
-A1 = 3*ones(2,2);
-A2 = 4*ones(2,2);
-A3 = rand(3,3);
-mBlkdiag1=blkdiagM(A1,A2,A3)
+1 = 3 * ones(2, 2);
+A2 = 4 * ones(2, 2);
+A3 = rand(3, 3);
+mBlkdiag1 = blkdiagM(A1, A2, A3)
 
-mBlkdiag2=blkdiagM(ones(2,2),2*ones(2,2)) # vcat(hcat(ones(2,2),zeros(2,2)),hcat(zeros(2,2),2*ones(2,2)))
+mBlkdiag2 = blkdiagM(ones(2, 2), 2 * ones(2, 2)) # [ones(2, 2) zeros(2, 2); zeros(2, 2)  2 * ones(2, 2)]
 
-A1 = ones(2,4);
-A2 = 2*ones(3,2);
-mBlkdiag3=blkdiagM(A1,A2) # vcat(hcat(ones(2,4),zeros(2,2)),hcat(zeros(3,4),2*ones(3,2)))
+A1 = ones(2, 4);
+A2 = 2 * ones(3, 2);
+mBlkdiag3 = blkdiagM(A1, A2) # [ones(2,4) zeros(2,2); zeros(3,4) 2*ones(3,2)]
+
+mBlkdiag1obj = blkdiagM(:obj, A1, A2, A3)
+
+mBlkdiag2obj = blkdiagM(:obj, ones(2, 2), 2 * ones(2, 2)) # Block Diagonal object for [ones(2, 2) zeros(2, 2); zeros(2, 2)  2 * ones(2, 2)]
 ```
 """
 blkdiagM(A...) = collect(BlockDiagonals.BlockDiagonal([A...]))
-"""
 
-    blkdiagObjM(A1,A2,...)
-
-Returns the object itself if you want to use BlockDiagonals methods. use collect(obj) to get the array.
-"""
-blkdiagObjM(A...) = BlockDiagonals.BlockDiagonal([A...])
+# returning BlockDiagonal object
+function blkdiagM(objectSymbol::Symbol, A...)
+    if objectSymbol === :obj
+        BlockDiagonals.BlockDiagonal([A...])
+    end
+end
 
 # manual algorithm - slower
 # function blkdiagM(in...)
@@ -251,7 +259,7 @@ blkdiagObjM(A...) = BlockDiagonals.BlockDiagonal([A...])
 #     return out
 # end
 
-# only for square matrix, this method is slower:
+# Julia SparseArrays algorithm - only for square matrix, slower:
 # import SparseArrays
 # blkdiagM(A...)=Array(SparseArrays.blockdiag(SparseArrays.sparse.(A)...))
 ################################################################
