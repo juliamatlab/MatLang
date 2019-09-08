@@ -1,15 +1,3 @@
-# To build documentation:
-# cd to docs folder using OS terminal and run the following command:
-# julia --color=yes make.jl
-# julia path should be added to OS path
-
-
-# Because MatLang package is not registered yet:
-using Pkg
-pkg"activate .."
-push!(LOAD_PATH,"../src/")
-
-#
 using Documenter, MatLang
 
 makedocs(;

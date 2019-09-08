@@ -5,9 +5,13 @@ https://juliamatlab.github.io/MatLang/dev
 ## docs folder
 These are the source files that are used for building the documentation.
 
-## To build the documentation
-cd to docs folder using OS terminal and run the following command:
+## To build the documentation locally
+cd to package folder using OS terminal and run the following commands:
 ```
-julia --color=yes make.jl
+- julia -e 'using Pkg; Pkg.activate(); push!(LOAD_PATH, pwd());' 
+- julia --project=docs/ -e 'using Pkg; Pkg.activate();  push!(LOAD_PATH,pwd());'
+
+- julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.instantiate();'
+- julia --project=docs/ --color=yes docs/make.jl
 ```
-julia path should be added to OS path
+Julia path should be added to OS path
