@@ -11,7 +11,7 @@
     zerosM(Type, sizeAsArray) # non-efficient Matlab way
     zerosM(sizeAsArray, like=anArray) # to make an array with similar type of anArray
 
-# Example
+# Examples
 ```julia
 mZeros0=zerosM(2) # same as zeros(2,2)
 
@@ -28,7 +28,7 @@ mZeros5=zerosM(Int32,(2,2)) # giving size as Tuple and also the Int32 type
 mZeros6=zerosM([2,2]) # giving size as an Array, non-efficient Matlab way. Array should be Integer otherwise you will get errors.
 
 mZeros7=zerosM(Int32,[2,2]) # giving size as Array, non-efficient Matlab way
-```julia
+```
 """
 zerosM(args...) = zeros(args...) # includes T::Type method
 
@@ -49,7 +49,7 @@ zerosM(a::Array; like::AbstractArray = Vector{Float64}()) =
     onesM(Type, sizeAsArray) # non-efficient Matlab way
     onesM(sizeAsArray, like = anArray) # to make an array with similar type of anArray
 
-# Example
+# Examples
 ```julia
 mOnes0=onesM(2) # same as ones(2,2)
 
@@ -66,7 +66,7 @@ mOnes5=onesM(Int32,(2,2)) # giving size as Tuple and also the Int32 type
 mOnes6=onesM([2,2]) # giving size as an Array, non-efficient Matlab way. Array should be Integer otherwise you will get errors.
 
 mOnes7=onesM(Int32,[2,2]) # giving size as Array, non-efficient Matlab way
-```julia
+```
 """
 onesM(args...) = ones(args...) # includes T::Type method
 
@@ -87,7 +87,7 @@ onesM(a::Array; like::AbstractArray = Vector{Float64}()) =
     randM(Type, sizeAsArray) # non-efficient Matlab way
     randM(sizeAsArray, like = anArray) # to make an array with similar type of anArray
 
-# Example
+# Examples
 ```julia
 mRand0=randM(2) # same as rand(2,2)
 
@@ -104,7 +104,7 @@ mRand5=randM(Int32,(2,2)) # giving size as Tuple and also the Int32 type
 mRand6=randM([2,2]) # giving size as an Array, non-efficient Matlab way. Array should be Integer otherwise you will get errors.
 
 mRand7=randM(Int32,[2,2]) # giving size as Array, non-efficient Matlab way
-```julia
+```
 """
 randM(args...) = rand(args...) # includes T::Type method
 
@@ -136,7 +136,7 @@ Creates 2D Identity matrix (can be non-square matrix).
 
 Only 2 dimensions should be supplied othetwise you will receive an error.
 
-# Example
+# Examples
 ```julia
 mEye0=eyeM(2); # [1 0 0; 0 1 0]
 
@@ -179,7 +179,7 @@ eyeM(a::Array; like::AbstractArray = Vector{Int64}()) = eyeM(eltype(like), a)
 
 Create a diagonal matrix from vector v. If k is given, the vector v will be placed on kth diagonal
 
-# Example
+# Examples
 ```julia
 mDiag=diagM([2,3,4]) # [0 2 0 ; 0 3 0; 0 4]
 
@@ -190,7 +190,7 @@ mDiag2=diagM([2,3,4],1) # [0 2 3 0; 0 0 3 0; 0 0 0 4; 0 0 0 0]
 
 Returns diagonal of A as a vector.
 
-# Example
+# Examples
 ```julia
 mDiag3=diagM([1 2 3; 4 5 6; 7 8 9]) # [1;5;9]
 
@@ -213,7 +213,7 @@ Creates a square matrix with A1,A2,... on the diagonal and the rest of the eleme
 
 Returns the object itself if you want to use BlockDiagonals methods. use collect(obj) to get the array.
 
-# Example
+# Examples
 ```julia
 1 = 3 * ones(2, 2);
 A2 = 4 * ones(2, 2);

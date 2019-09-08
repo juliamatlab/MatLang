@@ -6,7 +6,7 @@
 ################################################################
 
 """
-    clcM
+    clcM()
 
 Clear Command Window for Juno or Atom IDE
 """

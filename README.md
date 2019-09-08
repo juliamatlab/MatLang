@@ -6,11 +6,13 @@ API for Matlab's language core functions
 [![Build status](https://ci.appveyor.com/api/projects/status/vempmfhwcyma2omm?svg=true)](https://ci.appveyor.com/project/aminya/matlang)
 [![codecov](https://codecov.io/gh/juliamatlab/MatLang/branch/master/graph/badge.svg)](https://codecov.io/gh/juliamatlab/MatLang)
 
-# For Usage
+
+# Installation
 Add the package
 ```julia
 ]add https://github.com/juliamatlab/MatLang
 ```
+# Usage
 Use the package:
 ```julia
 using MatLang
@@ -43,8 +45,8 @@ using MatLang
 
 The full list of the functions that will be implemented in the future can be found [here](https://www.mathworks.com/help/matlab/referencelist.html;jsessionid=e221a09e47ed26d2b333ea600f68?type=function)
 
-# For Development
-clone the project in your usual way, or using the following command which clones the project in .julia\dev\MatLang
+# Development
+clone the project in your usual way, or using the following command which clones the project in `.julia\dev\MatLang`
 ```julia
 ] dev https://github.com/juliamatlab/MatLang
 ```
