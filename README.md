@@ -22,6 +22,7 @@ using MatLang
 ```
 
 # List of implemented Functions
+To see the full progress see this link: https://github.com/juliamatlab/MatLang/projects
 #### Language_Fundamentals :
 <table>
     <tr>
@@ -46,7 +47,7 @@ using MatLang
     </tr>
 </table>
 
-The full list of the functions that will be implemented in the future can be found [here](https://www.mathworks.com/help/matlab/referencelist.html;jsessionid=e221a09e47ed26d2b333ea600f68?type=function)
+The full list of the functions that will be implemented in the future can be found [here](https://github.com/juliamatlab/MatLang/projects) or [here](https://www.mathworks.com/help/matlab/referencelist.html;jsessionid=e221a09e47ed26d2b333ea600f68?type=function)
 
 # Development
 clone the project in your usual way, or using the following command which clones the project in `.julia\dev\MatLang`
