@@ -3,6 +3,15 @@
 # Matrices_and_Arrays
 ################################################################
 ################################################################
+# Copy of Julia Functions/Types
+natives = (:true, :false)
+for n in natives
+    @eval begin
+        const $(Symbol(n, "M")) = $n
+        export $(Symbol(n, "M"))
+    end
+end
+
 """
     zerosM(dim)         # square dim*dim matrix
     zerosM(Type,dim)    # square dim*dim matrix
