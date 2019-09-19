@@ -33,4 +33,6 @@ end
 	@test diagM([1 2 3; 4 5 6; 7 8 9]) == [1; 5; 9]
 	@test blkdiagM(ones(2, 2), 2 * ones(2, 2)) == [ones(2, 2) zeros(2, 2); zeros(2, 2)  2 * ones(2, 2)]
 	@test blkdiagM(ones(2, 4), 2 * ones(3, 2)) == [ones(2, 4) zeros(2, 2); zeros(3, 4)  2 * ones(3, 2)]
+	@test catM(1, ones(3, 3), zeros(3, 3), 2 * ones(3, 3)) == [ones(3, 3); zeros(3, 3); 2 * ones(3, 3)]
+	@test horzcatM(ones(3, 3), zeros(3, 3)) == [ones(3, 3) zeros(3, 3)]
 end

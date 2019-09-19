@@ -272,3 +272,42 @@ end
 # import SparseArrays
 # blkdiagM(A...)=Array(SparseArrays.blockdiag(SparseArrays.sparse.(A)...))
 ################################################################
+"""
+    catM(dim, A1, A2, ...)
+
+concatenates A1, A2, … , An along dimension dim.
+# Examples
+```julia
+mCat1 = catM(1, ones(3, 3), zeros(3, 3)) # [ones(3, 3); zeros(3, 3)]
+
+mCat2 = catM(2, ones(3, 3), zeros(3, 3)) # [ones(3, 3) zeros(3, 3)]
+
+mCat3 = catM(1, ones(3, 3), zeros(3, 3), 2 * ones(3, 3)) # [ones(3, 3); zeros(3, 3); 2 * ones(3, 3)]
+
+mCat4 = catM(3, ones(2, 2, 2), zeros(2, 2, 2)) # [ones(2, 2, 2) zeros(2, 2, 2)]
+```
+"""
+catM(dim::Integer, A...)= cat(A...; dims=dim)
+################################################################
+"""
+    horzcatM(A1, A2, …)
+
+Concatenate arrays horizontally
+# Examples
+```julia
+mHCat1 = horzcatM(ones(3, 3), zeros(3, 3)) # [ones(3, 3) zeros(3, 3)]
+```
+"""
+const horzcatM = hcat
+################################################################
+"""
+    vertcatM(A1, A2, …)
+
+Concatenate arrays vertically
+# Examples
+```julia
+mVCat1 = vertcatM(ones(3, 3), zeros(3, 3)) # [ones(3, 3); zeros(3, 3)]
+```
+"""
+const vertcatM = vcat
+################################################################
