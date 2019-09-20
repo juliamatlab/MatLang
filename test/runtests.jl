@@ -38,4 +38,5 @@ end
 	@test blkdiagM(ones(2, 4), 2 * ones(3, 2)) == [ones(2, 4) zeros(2, 2); zeros(3, 4)  2 * ones(3, 2)]
 	@test catM(1, ones(3, 3), zeros(3, 3), 2 * ones(3, 3)) == [ones(3, 3); zeros(3, 3); 2 * ones(3, 3)]
 	@test horzcatM(ones(3, 3), zeros(3, 3)) == [ones(3, 3) zeros(3, 3)]
+	@test squeezeM(ones(2,1,2)) == [1 1; 1 1]
 end

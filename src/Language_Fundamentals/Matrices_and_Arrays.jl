@@ -287,7 +287,7 @@ mCat3 = catM(1, ones(3, 3), zeros(3, 3), 2 * ones(3, 3)) # [ones(3, 3); zeros(3,
 mCat4 = catM(3, ones(2, 2, 2), zeros(2, 2, 2)) # [ones(2, 2, 2) zeros(2, 2, 2)]
 ```
 """
-catM(dim::Integer, A...)= cat(A...; dims=dim)
+catM(dim::Integer, A...) = cat(A...; dims = dim)
 ################################################################
 """
     horzcatM(A1, A2, …)
@@ -311,3 +311,31 @@ mVCat1 = vertcatM(ones(3, 3), zeros(3, 3)) # [ones(3, 3); zeros(3, 3)]
 """
 const vertcatM = vcat
 ################################################################
+################################################################
+
+"""
+    squeezeM(A)
+
+Drops all of the singleton dimensions of `A` (dimensions that are 1).
+If `A` contains only one element (i.e., all of its dimensions are singletons) then the output will be a zero-dimensional array.
+
+If you know the dimension that you want to drop, use dropdims(A ; dims= dimensionsToRemove).
+
+Only use this function if you don't know the dimensions that you want to remove, and you are sure that you are not removing important dimensions, and if you don't care about type stability.
+
+Returns an array containing the same data as `A` but with no singleton dimensions; note that `arr` is NOT a copy of `A`, i.e., modifying the contents of `arr` will modify the contents of `A`. To get a copy use copy(arr).
+
+# Examples
+```julia
+A1 = ones(2, 1, 2); # 3 dimensional
+mSqueeze1 = squeezeM(A1) # [1 1; 1 1]
+
+A2 = zeros(1, 4, 1);
+A2[:, 1:4, ] = [5; 3; 6; 0]
+mSqueeze2 = squeezeM(A2) # When it gets one dimensional, it is vertical.
+
+mSqueeze2 == [5; 3; 6; 0] # true
+mSqueeze2 == [5 3 6 0] # false
+```
+"""
+squeezeM(A::AbstractArray) = dropdims(A, dims = Tuple(findall(size(A) .== 1)))
