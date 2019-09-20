@@ -16,8 +16,11 @@ else
 end
 ################################################################
 
-# tests
-@testset "MatLang.jl" begin
+
+@testset "MatLang.j - Entering_Commands" begin
+
+end
+@testset "MatLang.jl - Matrices_and_Arrays" begin
 	@test trueM == true
 	@test zerosM(2) == zeros(2, 2)
 	@test zerosM(2, like = ones(Int32, 2, 2)) == zeros(Int32, 2, 2)

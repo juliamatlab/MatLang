@@ -4,7 +4,7 @@
 ################################################################
 ################################################################
 # Copy of Julia Functions/Types
-natives = (:true, :false)
+natives = [:true, :false] # input symbols
 for n in natives
     @eval begin
         const $(Symbol(n, "M")) = $n
