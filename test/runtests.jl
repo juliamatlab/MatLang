@@ -45,5 +45,6 @@ end
 	@test lengthM([2 3 4 5 6 7; 1 2 3 4 5 6]) == 6
 	@test sizeM([2 3 4 5 6 7; 1 2 3 4 5 6]) == [2; 6]
 	@test sizeM(rand(3, 5, 4), 2, 3) == [5; 4]
+	@test numelM([1, 2, 3, 4]) == 4
 	@test squeezeM(ones(2,1,2)) == [1 1; 1 1]
 end

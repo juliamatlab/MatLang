@@ -496,6 +496,22 @@ nDim1 = ndims(A) # 3
 const ndimsM = ndims
 ################################################################
 """
+    numelM(A)
+
+Returns the number of elements of array A.
+
+# Examples
+```julia
+nNumel1 = numelM(1:5) # 5
+
+nNumel2 = numelM([1, 2, 3, 4]) # 4
+
+nNumel3 = numelM([1 2; 3 4]) # 4
+```
+"""
+const numelM = length
+################################################################
+"""
     squeezeM(A)
 
 Drops all of the singleton dimensions of `A` (dimensions that are 1).
