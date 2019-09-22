@@ -37,5 +37,5 @@ using MatLang
 
 # Table of contents
 ```@contents
-Pages = ["index.md", "functions.md", "development.md"]
+Pages = ["index.md", "functions.md", "development.md", "juliavsmatlab.md"]
 ```
