@@ -40,6 +40,7 @@ end
 	@test horzcatM(ones(3, 3), zeros(3, 3)) == [ones(3, 3) zeros(3, 3)]
 	@test repelemM([1 2 3 4], 3) == [1; 1; 1; 2; 2; 2; 3; 3; 3; 4; 4; 4]
 	@test repmatM([1; 2], 3, 2) == [[1; 2] [1; 2]; [1; 2] [1; 2]; [1; 2] [1; 2]]
-	@test linspaceM(1, 10, 2) == 1:2:10 
+	@test linspaceM(1, 10, 2) == 1:2:10
+	@test logspaceM(1, 5, :equal) == 10.0.^(1:5)
 	@test squeezeM(ones(2,1,2)) == [1 1; 1 1]
 end

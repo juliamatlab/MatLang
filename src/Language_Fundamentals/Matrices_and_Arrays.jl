@@ -404,6 +404,34 @@ function linspaceM(collectSymbol::Symbol, xi, xf, d)
 end
 ################################################################
 """
+    logspaceM(start, stop) # gives 50 points
+    logspaceM(start, stop, length)
+    logspaceM(start, stop, :equal) # equally spaced powers of 10
+
+Generate logarithmically spaced vector (between 10^start and 10^stop). `length` is the number of the poinst (50 by defualt if not supplied). If you instead provide ``:equal`, it makes a range from equally spaced powers of 10
+
+For logspaceM in contrast to linspaceM, the full vector is given by default.
+
+# Examples
+```julia
+mLogspace1 = logspaceM(1, 5) # 50 logarithmically spaced points between 10^1 and 10^5
+
+mLogspace2 = logspaceM(1, 5, 10) # 10 logarithmically spaced points between 10^1 and 10^5
+
+mLogspace3 = logspaceM(1, 5, :equal) # [10.0^1, 10.0^2, 10.0^3, 10.0^4, 10.0^5] == 10.0.^(1:5)
+```
+"""
+logspaceM(xi, xf) = 10.0.^range(xi, stop=xf, length=50)
+
+function logspaceM(xi, xf, equalSymbol::Symbol)
+    if equalSymbol == :equal
+        return  10.0.^range(xi, stop=xf)
+    end
+end
+
+logspaceM(xi, xf, num) = 10.0.^range(xi, stop=xf, length=num)
+################################################################
+"""
     squeezeM(A)
 
 Drops all of the singleton dimensions of `A` (dimensions that are 1).

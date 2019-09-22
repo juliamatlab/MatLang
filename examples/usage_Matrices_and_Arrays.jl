@@ -144,6 +144,12 @@ mLinspace3 = linspaceM(:arr, 1, 10) # collect(1:10)
 
 mLinspace4 = linspaceM(:arr, 1, 10, 2) # collect(1:2:10)
 ################################################################
+mLogspace1 = logspaceM(1, 5) # 50 logarithmically spaced points between 10^1 and 10^5
+
+mLogspace2 = logspaceM(1, 5, 10) # 10 logarithmically spaced points between 10^1 and 10^5
+
+mLogspace3 = logspaceM(1, 5, :equal) # [10.0^1, 10.0^2, 10.0^3, 10.0^4, 10.0^5] == 10.0.^(1:5)
+################################################################
 A1 = ones(2, 1, 2); # 3 dimensional
 mSqueeze1 = squeezeM(A1) # [1 1; 1 1]
 
