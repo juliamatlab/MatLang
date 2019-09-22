@@ -29,3 +29,12 @@ julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.i
 julia --project=docs/ --color=yes docs/make.jl
 ```
 Julia path should be added to OS path
+
+
+## To build the documentation online using Travis
+This Travis script is used:
+```
+- julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd()));
+                                               Pkg.instantiate()'
+- julia --project=docs/ docs/make.jl
+```
