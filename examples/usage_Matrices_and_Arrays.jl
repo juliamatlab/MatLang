@@ -136,6 +136,14 @@ mRempat5 = repmatM(V, 2) # [[1; 2] [1; 2]; [1; 2] [1; 2]]
 
 mRempat6 = repmatM(V, 1, 3) # [[1; 2] [1; 2] [1; 2]]
 ################################################################
+mLinspace1 = linspaceM(1, 10) # 1:10
+
+mLinspace2 = linspaceM(1, 10, 2) # 1:2:10 == 1:2:9
+
+mLinspace3 = linspaceM(:arr, 1, 10) # collect(1:10)
+
+mLinspace4 = linspaceM(:arr, 1, 10, 2) # collect(1:2:10)
+################################################################
 A1 = ones(2, 1, 2); # 3 dimensional
 mSqueeze1 = squeezeM(A1) # [1 1; 1 1]
 

@@ -367,6 +367,43 @@ repmatM(n::Integer, counts::Tuple) = repeat(A, counts...)
 
 ################################################################
 """
+    linspaceM(start, stop)
+    linspaceM(start, stop, step)
+    linspaceM(:arr, start, stop)
+    linspaceM(:arr, start, stop, step)
+
+Generate linearly spaced range. You can also write this as `start:stop` or `start:step:stop`.
+
+To get the full vector isntead of a range object pass :arr as the 1st argument.
+
+# Examples
+```julia
+mLinspace1 = linspaceM(1, 10) # 1:10
+
+mLinspace2 = linspaceM(1, 10, 2) # 1:2:10 == 1:2:9
+
+mLinspace3 = linspaceM(:arr, 1, 10) # collect(1:10)
+
+mLinspace4 = linspaceM(:arr, 1, 10, 2) # collect(1:2:10)
+```
+"""
+linspaceM(xi, xf) = range(xi, stop=xf)
+linspaceM(xi, xf, d) = range(xi, stop=xf, step=d)
+
+# collect symbol - :arr
+function linspaceM(collectSymbol::Symbol, xi, xf)
+    if collectSymbol == :arr
+        return collect(linspaceM(xi, xf))
+    end
+end
+
+function linspaceM(collectSymbol::Symbol, xi, xf, d)
+    if collectSymbol == :arr
+        return collect(linspaceM(xi, xf, d))
+    end
+end
+################################################################
+"""
     squeezeM(A)
 
 Drops all of the singleton dimensions of `A` (dimensions that are 1).
