@@ -214,6 +214,41 @@ bIsscalarMat8 = isscalarM(:mat, 'H') # true # becareful that in Julia, chars are
 
 bIsscalarMat9 = isscalarM(:mat, true) # true
 ################################################################
+A1 = [1; 2; 3] # or [1, 2, 3]
+bIsvector1 = isvectorM(A1) # true
+
+A2 = [1 2 3]
+bIsvector2 = isvectorM(A2) # false
+
+bIsvector3 = isvectorM(ones(3, 1)) # false
+
+bIsvector4 = isvectorM(ones(1, 3)) # false
+
+bIsvector5 = isvectorM(ones(3)) # true
+
+bIsvector6 = isvectorM(1) # false
+
+bIsvector7 = isvectorM("Hi") # false
+
+bIsvector8 = isvectorM(["Hi", "Bye"]) # true
+
+# Matlab Way:
+bIsvectorMat1 = isvectorM(:mat, A1) # true
+
+bIsvectorMat2 = isvectorM(:mat, A2) # true
+
+bIsvectorMat3 = isvectorM(:mat, ones(3, 1)) # true
+
+bIsvectorMat4 = isvectorM(:mat, ones(1, 3)) # true
+
+bIsvectorMat5 = isvectorM(:mat, ones(3)) # true
+
+bIsvectorMat6 = isvectorM(:mat, 1) # true
+
+bIsvectorMat7 = isvectorM(:mat, "Hi") # true
+
+bIsvectorMat8 = isvectorM(:mat, ["Hi", "Bye"]) # true
+################################################################
 A1 = [2 3 4 5 6 7;
       1 2 3 4 5 6]
 mTranspose1 = transposeM(A1)

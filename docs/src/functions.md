@@ -17,7 +17,7 @@
     <tr>
         <td>2</td>
         <td>Matrices_and_Arrays</td>
-        <td>zerosM, onesM, randM, eyeM, diagM, catM, horzcatM, vertcatM, repelemM(limited), repmatM, linspaceM, logspaceM, lengthM, sizeM, numelM, isscalarM, transposeM, squeezeM</td>
+        <td>zerosM, onesM, randM, eyeM, diagM, catM, horzcatM, vertcatM, repelemM(limited), repmatM, linspaceM, logspaceM, lengthM, sizeM, numelM, isscalarM, isvectorM, transposeM, squeezeM</td>
     </tr>
 </table>
 ```

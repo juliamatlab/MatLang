@@ -544,7 +544,7 @@ using Base.Broadcast
     isscalarM(x)
     isscalarM(:mat, x)
 
-Returns boolean 1 if x is scalar.
+Returns boolean true if x is scalar.
 
 It uses Broadcast.DefaultArrayStyle{0}, which basically are numbers (0-dimensional) and 1 dimensional-1 element number arrays.
 
@@ -609,6 +609,66 @@ end
 function isscalarM(matlabWaySymbol::Symbol, x::Any)
     if matlabWaySymbol == :mat
         isa(x, Union{Number,Char,Bool})
+    end
+end
+################################################################
+"""
+    isvectorM(x)
+
+Returns boolean true if x is a vector.
+
+
+It uses AbstractVector, which basically are 1 dimensional arrays.
+
+To get a MATLAB way result, pass `:mat` argument. Doing this:
+* For arrays (of any element type), it considers 1-dimensional arrays and also 2-dimensional arrays that one of their dimensions are singletone.
+* For others, if it is among {Number, AbstractString, Char, Bool}, then it is considered vectir.
+
+# Examples
+```julia
+A1 = [1; 2; 3] # or [1, 2, 3]
+bIsvector1 = isvectorM(A1) # true
+
+A2 = [1 2 3]
+bIsvector2 = isvectorM(A2) # false
+
+bIsvector3 = isvectorM(ones(3, 1)) # false
+
+bIsvector4 = isvectorM(ones(1, 3)) # false
+
+bIsvector5 = isvectorM(ones(3)) # true
+
+bIsvector6 = isvectorM("Hi") # false
+
+# Matlab Way:
+bIsvector7 = isvectorM(["Hi", "Bye"]) # true
+
+bIsvectorMat1 = isvectorM(:mat, A1) # true
+
+bIsvectorMat2 = isvectorM(:mat, A2) # true
+
+bIsvectorMat3 = isvectorM(:mat, ones(3, 1)) # true
+
+bIsvectorMat4 = isvectorM(:mat, ones(1, 3)) # true
+
+bIsvectorMat5 = isvectorM(:mat, ones(3)) # true
+
+bIsvectorMat6 = isvectorM(:mat, "Hi") # true
+
+bIsvectorMat7 = isvectorM(:mat, ["Hi", "Bye"]) # true
+```
+"""
+isvectorM(x) = isa(x, AbstractVector)
+
+function isvectorM(matlabWaySymbol::Symbol, x::AbstractArray)
+    if matlabWaySymbol == :mat
+        return ndimsM(x) == 1 || (ndimsM(x) == 2 && (size(x, 1) == 1 || size(x,2) == 1))
+    end
+end
+
+function isvectorM(matlabWaySymbol::Symbol, x::Any)
+    if matlabWaySymbol == :mat
+        return isa(x, Union{Number, AbstractString, Char, Bool})
     end
 end
 ################################################################
