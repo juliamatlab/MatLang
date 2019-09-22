@@ -150,6 +150,15 @@ mLogspace2 = logspaceM(1, 5, 10) # 10 logarithmically spaced points between 10^1
 
 mLogspace3 = logspaceM(1, 5, :equal) # [10.0^1, 10.0^2, 10.0^3, 10.0^4, 10.0^5] == 10.0.^(1:5)
 ################################################################
+A1 = [2 3 4 5 6 7;
+      1 2 3 4 5 6]
+nLength1 = lengthM(A1); # 6
+
+A2 = ["Hi" 6;
+      "Goodbye" 5;
+      "Hello" 1]
+nLength2 = lengthM(A2); # 3
+################################################################
 A1 = ones(2, 1, 2); # 3 dimensional
 mSqueeze1 = squeezeM(A1) # [1 1; 1 1]
 

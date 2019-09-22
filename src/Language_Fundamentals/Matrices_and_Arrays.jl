@@ -432,6 +432,24 @@ end
 logspaceM(xi, xf, num) = 10.0.^range(xi, stop=xf, length=num)
 ################################################################
 """
+    lengthM(A)
+
+Length of the largest array dimension of A.
+# Examples
+```julia
+A1 = [2 3 4 5 6 7;
+      1 2 3 4 5 6]
+nLength1 = lengthM(A1); # 6
+
+A2 = ["Hi" 6;
+      "Goodbye" 5;
+      "Hello" 1]
+nLength2 = lengthM(A2); # 3
+```
+"""
+lengthM(A::AbstractArray)=maximum(size(A));
+################################################################
+"""
     squeezeM(A)
 
 Drops all of the singleton dimensions of `A` (dimensions that are 1).

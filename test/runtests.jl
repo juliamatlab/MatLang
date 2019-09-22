@@ -42,5 +42,6 @@ end
 	@test repmatM([1; 2], 3, 2) == [[1; 2] [1; 2]; [1; 2] [1; 2]; [1; 2] [1; 2]]
 	@test linspaceM(1, 10, 2) == 1:2:10
 	@test logspaceM(1, 5, :equal) == 10.0.^(1:5)
+	@test lengthM([2 3 4 5 6 7; 1 2 3 4 5 6]) == 6
 	@test squeezeM(ones(2,1,2)) == [1 1; 1 1]
 end
