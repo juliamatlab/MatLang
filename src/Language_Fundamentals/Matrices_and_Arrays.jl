@@ -311,6 +311,25 @@ mVCat1 = vertcatM(ones(3, 3), zeros(3, 3)) # [ones(3, 3); zeros(3, 3)]
 """
 const vertcatM = vcat
 ################################################################
+"""
+    repelemM(V, count)
+
+Construct an array by repeating elements of array V by a given number of times specified by counts. if If count is a scalar, then each element of v is repeated "count" times
+
+# Examples
+```julia
+V1 = [1 2 3 4];
+mRepelem1 = repelemM(V1, 3) # [1 1 1 2 2 2 3 3 3 4 4 4]
+```
+"""
+repelemM(A::AbstractArray, count::Integer) = vcat(fill.(A, count)...);
+
+# For full support wait until this is merged: https://github.com/JuliaLang/julia/pull/29560
+# doc string to be added:
+# , and if count is a vector of the same size of V, it will repeat each element of V corespondigly based on counts.
+# repelemM(A, counts)
+#
+# Construct an array by repeating elements of array A by a given number of times in each dimension, specified by counts.
 ################################################################
 
 """
