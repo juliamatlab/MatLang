@@ -161,14 +161,19 @@ nLength2 = lengthM(A2); # 3
 ################################################################
 A1 = [2 3 4 5 6 7;
       1 2 3 4 5 6]
-mSize1 = sizeM(A1); # [2; 6]
+mSize1 = sizeM(:arr, A1); # [2; 6]
+tSize1 = sizeM(A1); # (2, 6)
 
 nA1Size2 = sizeM(A1, 2); # 6
+sizeM(A1, 2) == 6 # true
+sizeM(:arr, A1, 2) == 6 # false
+sizeM(:arr, A1, 2) == [6] # true
 
 nA1Size1, nA1Size2 = sizeM(A1); # 2 and 6
 
 A2 = rand(3, 5, 4)
-mSize2 = sizeM(A2, 2, 3); # [5; 4]
+mSize2 = sizeM(:arr, A2, 2, 3); # [5; 4]
+tSize2 = sizeM(A2, 2, 3); # (5, 4)
 ################################################################
 A = rand(3,4,5);
 nDim1 = ndims(A) # 3

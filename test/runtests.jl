@@ -43,8 +43,8 @@ end
 	@test linspaceM(1, 10, 2) == 1:2:10
 	@test logspaceM(1, 5, :equal) == 10.0.^(1:5)
 	@test lengthM([2 3 4 5 6 7; 1 2 3 4 5 6]) == 6
-	@test sizeM([2 3 4 5 6 7; 1 2 3 4 5 6]) == [2; 6]
-	@test sizeM(rand(3, 5, 4), 2, 3) == [5; 4]
+	@test sizeM(:arr, [2 3 4 5 6 7; 1 2 3 4 5 6]) == [2; 6]
+	@test sizeM(rand(3, 5, 4), 2, 3) == (5, 4)
 	@test numelM([1, 2, 3, 4]) == 4
 	@test [isscalarM(:mat, 1); isscalarM(:mat, 5 * ones(1, 1, 1)); isscalarM(:mat, "H"); isscalarM(:mat, "Hi"); isscalarM(:mat, ["Hi"]); isscalarM(:mat, ["Hi" "Bye"]); isscalarM(:mat, 'H'); ] == [true; true; true; false; true; false; true]
 	@test [isvectorM(:mat, [1; 2; 3]); isvectorM(:mat, [1 2 3]); isvectorM(:mat, ones(3, 1)); isvectorM(:mat, ones(1, 3)); isvectorM(:mat, ones(3)); isvectorM(:mat, 1); isvectorM(:mat, "Hi"); isvectorM(:mat, ["Hi", "Bye"])] == [true; true; true; true; true; true; true; true]

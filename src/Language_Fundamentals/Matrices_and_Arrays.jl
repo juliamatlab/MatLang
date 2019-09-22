@@ -450,14 +450,16 @@ nLength2 = lengthM(A2); # 3
 lengthM(A::AbstractArray)=maximum(size(A));
 ################################################################
 """
-    sizeAsArray = sizeM(A)
+    sizeAsTuple = sizeM(A)
     sizeDim = sizeM(dim)  # only returns the specified dim
-    sizeDimAsArray = sizeM(A, dim1, dim2,...) # only returns the specified dims
+    sizeDimAsTuple = sizeM(A, dim1, dim2,...) # only returns the specified dims
+    sizeAsArray = sizeM(:arr, A)
+    sizeDimAsArray = sizeM(:arr, A, dim1, dim2,...) # only returns the specified dims
     sz1, sz2, ... = size(A)
 
-Returns the size of an array (as an array).
+Returns the size of an array as a Tuple.
 
-In contrast to Julia base, size is returned as an array (not a tuple).
+Pass `:arr` to get size as an Array (not a Tuple).
 
 Consider the points that are explained here when using this function: https://juliamatlab.github.io/MatLang/dev/juliavsmatlab/#Julia-Arrays:-1
 
@@ -465,19 +467,37 @@ Consider the points that are explained here when using this function: https://ju
 ```julia
 A1 = [2 3 4 5 6 7;
       1 2 3 4 5 6]
-mSize1 = sizeM(A1); # [2; 6]
+mSize1 = sizeM(:arr, A1); # [2; 6]
+tSize1 = sizeM(A1); # (2, 6)
 
 nA1Size2 = sizeM(A1, 2); # 6
+sizeM(A1, 2) == 6 # true
+sizeM(:arr, A1, 2) == 6 # false
+sizeM(:arr, A1, 2) == [6] # true
 
 nA1Size1, nA1Size2 = sizeM(A1); # 2 and 6
 
 A2 = rand(3, 5, 4)
-mSize2 = sizeM(A2, 2, 3); # [5; 4]
+mSize2 = sizeM(:arr, A2, 2, 3); # [5; 4]
+tSize2 = sizeM(A2, 2, 3); # (5, 4)
+
 ```
 """
-sizeM(args...) = collect(size(args...))
+sizeM(args...) = size(args...)
+sizeM(A::AbstractArray, dim1::Integer, dim2::Integer...) = size(A)[[dim1, dim2...]]
 
-sizeM(A::AbstractArray, dim1::Integer, dim2::Integer...) = collect(size(A))[[dim1, dim2...]] # = getindex(collect(size(A)), [dim1, dim2...])
+# collect symbol - :arr
+function sizeM(collectSymbol::Symbol, A::AbstractArray, dim1::Integer, dim2::Integer...)
+    if collectSymbol == :arr
+        return collect(size(A))[[dim1, dim2...]] # = getindex(collect(size(A)), [dim1, dim2...])
+    end
+end
+
+function sizeM(collectSymbol::Symbol, args...)
+    if collectSymbol == :arr
+        return collect(sizeM(args...))
+    end
+end
 ################################################################
 """
     ndimsM(A)
