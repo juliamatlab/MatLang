@@ -391,15 +391,9 @@ linspaceM(xi, xf) = range(xi, stop=xf)
 linspaceM(xi, xf, d) = range(xi, stop=xf, step=d)
 
 # collect symbol - :arr
-function linspaceM(collectSymbol::Symbol, xi, xf)
+function linspaceM(collectSymbol::Symbol, args...)
     if collectSymbol == :arr
-        return collect(linspaceM(xi, xf))
-    end
-end
-
-function linspaceM(collectSymbol::Symbol, xi, xf, d)
-    if collectSymbol == :arr
-        return collect(linspaceM(xi, xf, d))
+        return collect(linspaceM(args...))
     end
 end
 ################################################################
