@@ -179,6 +179,12 @@ nNumel2 = numelM([1, 2, 3, 4]) # 4
 
 nNumel3 = numelM([1 2; 3 4]) # 4
 ################################################################
+A1 = [2 3 4 5 6 7;
+      1 2 3 4 5 6]
+mTranspose1 = transposeM(A1)
+
+mTranspose2 = transposeM(:arr, A1)
+################################################################
 A1 = ones(2, 1, 2); # 3 dimensional
 mSqueeze1 = squeezeM(A1) # [1 1; 1 1]
 

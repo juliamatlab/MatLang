@@ -37,7 +37,7 @@ using MatLang
     <tr>
         <td>2</td>
         <td>Matrices_and_Arrays</td>
-        <td>zerosM, onesM, randM, eyeM, diagM, catM, horzcatM, vertcatM, repelemM(limited), repmatM, linspaceM, logspaceM, lengthM, sizeM, numelM, squeezeM</td>
+        <td>zerosM, onesM, randM, eyeM, diagM, catM, horzcatM, vertcatM, repelemM(limited), repmatM, linspaceM, logspaceM, lengthM, sizeM, numelM, transposeM, squeezeM</td>
     </tr>
 </table>
 

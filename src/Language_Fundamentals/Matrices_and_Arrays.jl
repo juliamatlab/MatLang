@@ -512,6 +512,32 @@ nNumel3 = numelM([1 2; 3 4]) # 4
 const numelM = length
 ################################################################
 """
+    transposeM(A)
+    transposeM(:arr, A)
+
+Returns the transpose an array.
+
+If :arr is supplied `permutedims` method is used which returns an array rather a transpose object.
+
+Becareful that `'` in Julia is used for adjoint and `.'` is not defined.
+
+# Examples
+```julia
+A1 = [2 3 4 5 6 7;
+      1 2 3 4 5 6]
+mTranspose1 = transposeM(A1)
+
+mTranspose2 = transposeM(:arr, A1)
+```
+"""
+transposeM(args...) = transpose(args...)
+function transposeM(collectSymbol::Symbol, A)
+    if collectSymbol == :arr
+        return permutedims(A)
+    end
+end
+################################################################
+"""
     squeezeM(A)
 
 Drops all of the singleton dimensions of `A` (dimensions that are 1).
