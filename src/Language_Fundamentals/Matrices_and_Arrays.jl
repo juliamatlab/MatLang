@@ -485,6 +485,8 @@ sizeM(A::AbstractArray, dim1::Integer, dim2::Integer...) = collect(size(A))[[dim
 
 Return the number of dimensions of A.
 
+In contrast to Matlab equivalent, this function considers trailing singleton dimensions,
+
 Consider the points that are explained here when using this function: https://juliamatlab.github.io/MatLang/dev/juliavsmatlab/#Julia-Arrays:-1
 
 # Examples
@@ -537,6 +539,80 @@ function transposeM(collectSymbol::Symbol, A)
     end
 end
 ################################################################
+using Base.Broadcast
+"""
+    isscalarM(x)
+    isscalarM(:mat, x)
+
+Returns boolean 1 if x is scalar.
+
+It uses Broadcast.DefaultArrayStyle{0}, which basically are numbers (0-dimensional) and 1 dimensional-1 element number arrays.
+
+To get a MATLAB way result, pass `:mat` argument. Doing this:
+* For arrays (of any element type), it calculates number of elements (using numelM).
+* For single strings it calculates number of characters (using numelM).
+* For others, if it is among {Number,Char,Bool}, then it is considered scalar.
+
+
+# Examples
+```julia
+bIsscalar1 = isscalarM(1) # true
+
+bIsscalar2 = isscalarM(5 * ones(1, 1, 1)) # false
+
+# bIsscalar3 = isscalarM("H") # gives error
+#
+# bIsscalar4 = isscalarM("Hi") # gives error
+
+bIsscalar5 = isscalarM(["Hi"]) # false
+
+bIsscalar6 = isscalarM(["Hi" "Bye"]) # false
+
+bIsscalar7 = isscalarM('H') # true # becareful that in Julia, chars are always singular.
+
+bIsscalar8 = isscalarM(true) # true
+
+# Matlab way:
+bIsscalarMat1 = isscalarM(:mat, 1) # true
+
+bIsscalarMat2 = isscalarM(:mat, [1]) # true
+
+bIsscalarMat3 = isscalarM(:mat, 5 * ones(1, 1, 1)) # true
+
+bIsscalarMat4 = isscalarM(:mat, "H") # true
+
+bIsscalarMat5 = isscalarM(:mat, "Hi") # false
+
+bIsscalarMat6 = isscalarM(:mat, ["Hi"]) # true
+
+bIsscalarMat7 = isscalarM(:mat, ["Hi" "Bye"]) # false
+
+bIsscalarMat8 = isscalarM(:mat, 'H') # true # becareful that in Julia, chars are always singular.
+
+bIsscalarMat9 = isscalarM(:mat, true) # true
+```
+"""
+isscalarM(x::T) where T = isscalarM(T)
+isscalarM(::Type{T}) where T = BroadcastStyle(T) isa Broadcast.DefaultArrayStyle{0}
+
+# Matlab way:
+function isscalarM(matlabWaySymbol::Symbol, x::AbstractArray)
+    if matlabWaySymbol == :mat
+        numelM(x) == 1
+    end
+end
+function isscalarM(matlabWaySymbol::Symbol, x::AbstractString)
+    if matlabWaySymbol == :mat
+        numelM(x) == 1
+    end
+end
+function isscalarM(matlabWaySymbol::Symbol, x::Any)
+    if matlabWaySymbol == :mat
+        isa(x, Union{Number,Char,Bool})
+    end
+end
+################################################################
+
 """
     squeezeM(A)
 

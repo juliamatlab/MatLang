@@ -179,6 +179,41 @@ nNumel2 = numelM([1, 2, 3, 4]) # 4
 
 nNumel3 = numelM([1 2; 3 4]) # 4
 ################################################################
+bIsscalar1 = isscalarM(1) # true
+
+bIsscalar2 = isscalarM(5 * ones(1, 1, 1)) # false
+
+# bIsscalar3 = isscalarM("H") # gives error
+#
+# bIsscalar4 = isscalarM("Hi") # gives error
+
+bIsscalar5 = isscalarM(["Hi"]) # false
+
+bIsscalar6 = isscalarM(["Hi" "Bye"]) # false
+
+bIsscalar7 = isscalarM('H') # true # becareful that in Julia, chars are always singular.
+
+bIsscalar8 = isscalarM(true) # true
+
+# Matlab way:
+bIsscalarMat1 = isscalarM(:mat, 1) # true
+
+bIsscalarMat2 = isscalarM(:mat, [1]) # true
+
+bIsscalarMat3 = isscalarM(:mat, 5 * ones(1, 1, 1)) # true
+
+bIsscalarMat4 = isscalarM(:mat, "H") # true
+
+bIsscalarMat5 = isscalarM(:mat, "Hi") # false
+
+bIsscalarMat6 = isscalarM(:mat, ["Hi"]) # true
+
+bIsscalarMat7 = isscalarM(:mat, ["Hi" "Bye"]) # false
+
+bIsscalarMat8 = isscalarM(:mat, 'H') # true # becareful that in Julia, chars are always singular.
+
+bIsscalarMat9 = isscalarM(:mat, true) # true
+################################################################
 A1 = [2 3 4 5 6 7;
       1 2 3 4 5 6]
 mTranspose1 = transposeM(A1)

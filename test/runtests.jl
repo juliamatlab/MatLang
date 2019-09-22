@@ -46,6 +46,7 @@ end
 	@test sizeM([2 3 4 5 6 7; 1 2 3 4 5 6]) == [2; 6]
 	@test sizeM(rand(3, 5, 4), 2, 3) == [5; 4]
 	@test numelM([1, 2, 3, 4]) == 4
+	@test [isscalarM(:mat, 1); isscalarM(:mat, 5 * ones(1, 1, 1)); isscalarM(:mat, "H"); isscalarM(:mat, "Hi"); isscalarM(:mat, ["Hi"]); isscalarM(:mat, ["Hi" "Bye"]); isscalarM(:mat, 'H'); ] == [true; true; true; false; true; false; true]
 	@test transposeM([2 3 4 5 6 7; 1 2 3 4 5 6]) == transposeM(:arr, [2 3 4 5 6 7; 1 2 3 4 5 6])
 	@test squeezeM(ones(2,1,2)) == [1 1; 1 1]
 end
