@@ -480,6 +480,22 @@ sizeM(args...) = collect(size(args...))
 sizeM(A::AbstractArray, dim1::Integer, dim2::Integer...) = collect(size(A))[[dim1, dim2...]] # = getindex(collect(size(A)), [dim1, dim2...])
 ################################################################
 """
+    ndimsM(A)
+
+
+Return the number of dimensions of A.
+
+Consider the points that are explained here when using this function: https://juliamatlab.github.io/MatLang/dev/juliavsmatlab/#Julia-Arrays:-1
+
+# Examples
+```julia
+A = rand(3,4,5);
+nDim1 = ndims(A) # 3
+```
+"""
+const ndimsM = ndims
+################################################################
+"""
     squeezeM(A)
 
 Drops all of the singleton dimensions of `A` (dimensions that are 1).
