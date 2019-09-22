@@ -49,6 +49,9 @@ may trip up Julia users accustomed to MATLAB:
       with spaces (`[x y z]`).
     - To construct block matrices (concatenating in the first two dimensions), use either [`hvcat`](@ref)
       or combine spaces and semicolons (`[a b; c d]`).
+
+
+  
   * Julia arrays are not copied when assigned to another variable. After `A = B`, changing elements of `B` will modify `A`
     as well.
   * Julia values are not copied when passed to a function. If a function modifies an array, the changes

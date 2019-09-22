@@ -331,7 +331,41 @@ repelemM(A::AbstractArray, count::Integer) = vcat(fill.(A, count)...);
 #
 # Construct an array by repeating elements of array A by a given number of times in each dimension, specified by counts.
 ################################################################
+"""
+    repmatM(A, n) # n*n copy
+    repmatM(A, s1, s2, ...)
+    repmatM(A, [s1, s2, ...])
+    repmatM(A, (s1, s2, ...))
 
+Repeat copies of array A based on the give size
+# Examples
+```julia
+mRempat1 = repmatM(10, 3, 2) # [10 10; 10 10; 10 10]
+
+V = [1; 2]
+mRempat2 = repmatM(V, 3, 2)   # [[1; 2] [1; 2]; [1; 2] [1; 2]; [1; 2] [1; 2]]
+
+mRempat3 = repmatM(V, [3, 2]) # [[1; 2] [1; 2]; [1; 2] [1; 2]; [1; 2] [1; 2]]
+
+mRempat4 = repmatM(V, (3, 2)) # [[1; 2] [1; 2]; [1; 2] [1; 2]; [1; 2] [1; 2]]
+
+mRempat5 = repmatM(V, 2) # [[1; 2] [1; 2]; [1; 2] [1; 2]]
+
+mRempat6 = repmatM(V, 1, 3) # [[1; 2] [1; 2] [1; 2]]
+```
+"""
+repmatM(A::AbstractArray, count::Integer) = repeat(A, count, count)
+repmatM(A::AbstractArray, counts::Integer...) = repeat(A, counts...)
+repmatM(A::AbstractArray, counts::Array{<:Integer,1}) = repeat(A, counts...)
+repmatM(A::AbstractArray, counts::Tuple) = repeat(A, counts...)
+
+# For single number input instead of an array:
+repmatM(n::Integer, count::Integer) = repeat(A, count, count)
+repmatM(n::Integer, counts::Integer...) = repeat([n], counts...) # for single integer
+repmatM(n::Integer, counts::Array{<:Integer,1}) = repeat(A, counts...)
+repmatM(n::Integer, counts::Tuple) = repeat(A, counts...)
+
+################################################################
 """
     squeezeM(A)
 

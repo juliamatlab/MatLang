@@ -39,5 +39,6 @@ end
 	@test catM(1, ones(3, 3), zeros(3, 3), 2 * ones(3, 3)) == [ones(3, 3); zeros(3, 3); 2 * ones(3, 3)]
 	@test horzcatM(ones(3, 3), zeros(3, 3)) == [ones(3, 3) zeros(3, 3)]
 	@test repelemM([1 2 3 4], 3) == [1; 1; 1; 2; 2; 2; 3; 3; 3; 4; 4; 4]
+	@test repmatM([1; 2], 3, 2) == [[1; 2] [1; 2]; [1; 2] [1; 2]; [1; 2] [1; 2]]
 	@test squeezeM(ones(2,1,2)) == [1 1; 1 1]
 end
