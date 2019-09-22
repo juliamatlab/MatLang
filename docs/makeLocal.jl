@@ -1,12 +1,23 @@
-# make file only for local make of the document.
+# # make file only for local make of the document.
 # this result in errors in Travis
-
-# To build documentation locally:
+#
+# ## To build the documentation locally
+#
+# ### Running inside Julia REPL:
+#  cd to docs folder `cd("path to docs\\MatLang\\docs")` and run the following command:
+# ```
+# include("makeLocal.jl")
+# ```
+#
+# ### Running inside OS Terminal:
 # cd to docs folder using OS terminal and run the following command (julia path should be added to OS path):
+# ```
 # julia --color=yes makeLocal.jl
+# ```
+
 
 using Pkg
-Pkg.activate();
+pkg"activate .."
 push!(LOAD_PATH,"../src/")
 
 #
