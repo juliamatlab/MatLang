@@ -450,6 +450,36 @@ nLength2 = lengthM(A2); # 3
 lengthM(A::AbstractArray)=maximum(size(A));
 ################################################################
 """
+    sizeAsArray = sizeM(A)
+    sizeDim = sizeM(dim)  # only returns the specified dim
+    sizeDimAsArray = sizeM(A, dim1, dim2,...) # only returns the specified dims
+    sz1, sz2, ... = size(A)
+
+Returns the size of an array (as an array).
+
+In contrast to Julia base, size is returned as an array (not a tuple).
+
+Consider the points that are explained here when using this function: https://juliamatlab.github.io/MatLang/dev/juliavsmatlab/#Julia-Arrays:-1
+
+# Examples
+```julia
+A1 = [2 3 4 5 6 7;
+      1 2 3 4 5 6]
+mSize1 = sizeM(A1); # [2; 6]
+
+nA1Size2 = sizeM(A1, 2); # 6
+
+nA1Size1, nA1Size2 = sizeM(A1); # 2 and 6
+
+A2 = rand(3, 5, 4)
+mSize2 = sizeM(A2, 2, 3); # [5; 4]
+```
+"""
+sizeM(args...) = collect(size(args...))
+
+sizeM(A::AbstractArray, dim1::Integer, dim2::Integer...) = collect(size(A))[[dim1, dim2...]] # = getindex(collect(size(A)), [dim1, dim2...])
+################################################################
+"""
     squeezeM(A)
 
 Drops all of the singleton dimensions of `A` (dimensions that are 1).
