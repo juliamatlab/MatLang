@@ -13,37 +13,50 @@ for n in natives
 end
 
 """
-    zerosM(dim)         # square dim*dim matrix
-    zerosM(Type,dim)    # square dim*dim matrix
-    zerosM(dim, like=anArray) # to make an array with similar type of anArray
+    zerosM(:mat, dim)         # square dim*dim matrix
+    zerosM(:mat, Type,dim)    # square dim*dim matrix
+    zerosM(:mat, dim, like=anArray) # to make an array with similar type of anArray
     zerosM(sizeAsArray) # non-efficient Matlab way
     zerosM(Type, sizeAsArray) # non-efficient Matlab way
     zerosM(sizeAsArray, like=anArray) # to make an array with similar type of anArray
 
+returns an array filled with zero values.
+
+`zerosM(dim)` returns 1-dimensional array. To get a square matrix like in Matlab, pass `:mat` as the 1st argument.
+
 # Examples
 ```julia
-mZeros0=zerosM(2) # same as zeros(2,2)
+mZeros0 = zerosM(:mat, 2) # same as zeros(2,2)
 
-mZeros1 = zerosM(2, like = zerosM(Int32,2,2) ) # like method
+mZeros1 = zerosM(:mat, 2, like = zerosM(Int32, 2, 2)) # like method
 
-mZeros2=zerosM(2,2) # same as zeros(2,2)
+mZeros2 = zerosM(2) # same as zeros(2)
 
-mZeros3=zerosM(Int32,2,2) # same as zeros(Int32,2,2)
+mZeros3 = zerosM(Int32, 2, 2) # same as zeros(Int32,2,2)
 
-mZeros4=zerosM((2,2)) # giving size as Tuple
+mZeros4 = zerosM((2, 2)) # = zerosM(2,2) # giving size as Tuple
 
-mZeros5=zerosM(Int32,(2,2)) # giving size as Tuple and also the Int32 type
+mZeros5 = zerosM(Int32, (2, 2)) # giving size as Tuple and also the Int32 type
 
-mZeros6=zerosM([2,2]) # giving size as an Array, non-efficient Matlab way. Array should be Integer otherwise you will get errors.
+mZeros6 = zerosM([2, 2]) # giving size as an Array, non-efficient Matlab way. Array should be Integer otherwise you will get errors.
 
-mZeros7=zerosM(Int32,[2,2]) # giving size as Array, non-efficient Matlab way
+mZeros7 = zerosM(Int32, [2, 2]) # giving size as Array, non-efficient Matlab way
 ```
 """
 zerosM(args...) = zeros(args...) # includes T::Type method
 
-zerosM(T::Type, dim::Integer) = zeros(T, dim, dim)
-zerosM(dim::Integer; like::AbstractArray = Vector{Float64}()) =
-    zeros(eltype(like), dim, dim)
+function zerosM(matSymbol::Symbol, T::Type, dim::Integer)
+    if matSymbol == :mat
+        return zeros(T, dim, dim)
+    end
+end
+
+function zerosM(matSymbol::Symbol, dim::Integer; like::AbstractArray = Vector{Float64}())
+    if matSymbol == :mat
+        return zeros(eltype(like), dim, dim)
+    end
+end
+
 # zerosM(dim::Integer; like::Union{Array,Nothing}=nothing) = like === nothing ? zeros(dim,dim) : zeros(eltype(like), dim, dim)
 
 zerosM(T::Type, a::Array) = zeros(T, Tuple(a))
@@ -51,37 +64,50 @@ zerosM(a::Array; like::AbstractArray = Vector{Float64}()) =
     zeros(eltype(like), Tuple(a))
 ################################################################
 """
-    onesM(dim)         # square dim*dim matrix
-    onesM(Type, dim)    # square dim*dim matrix
-    onesM(dim, like = anArray) # to make an array with similar type of anArray
+    onesM(:mat, dim)         # square dim*dim matrix
+    onesM(:mat, Type,dim)    # square dim*dim matrix
+    onesM(:mat, dim, like=anArray) # to make an array with similar type of anArray
     onesM(sizeAsArray) # non-efficient Matlab way
     onesM(Type, sizeAsArray) # non-efficient Matlab way
-    onesM(sizeAsArray, like = anArray) # to make an array with similar type of anArray
+    onesM(sizeAsArray, like=anArray) # to make an array with similar type of anArray
+
+returns an array filled with one values.
+
+`onesM(dim)` returns 1-dimensional array. To get a square matrix like in Matlab, pass `:mat` as the 1st argument.
 
 # Examples
 ```julia
-mOnes0=onesM(2) # same as ones(2,2)
+mOnes0 = onesM(:mat, 2) # same as ones(2,2)
 
-mOnes1 = onesM(2, like = zerosM(Int32,2,2) )
+mOnes1 = onesM(:mat, 2, like = zerosM(Int32, 2, 2)) # like method
 
-mOnes2=onesM(2,2) # same as ones(2,2)
+mOnes2 = onesM(2) # same as ones(2)
 
-mOnes3=onesM(Int32,2,2) # same as ones(Int32,2,2)
+mOnes3 = onesM(Int32, 2, 2) # same as ones(Int32,2,2)
 
-mOnes4=onesM((2,2)) # giving size as Tuple
+mOnes4 = onesM((2, 2)) # = onesM(2,2) # giving size as Tuple
 
-mOnes5=onesM(Int32,(2,2)) # giving size as Tuple and also the Int32 type
+mOnes5 = onesM(Int32, (2, 2)) # giving size as Tuple and also the Int32 type
 
-mOnes6=onesM([2,2]) # giving size as an Array, non-efficient Matlab way. Array should be Integer otherwise you will get errors.
+mOnes6 = onesM([2, 2]) # giving size as an Array, non-efficient Matlab way. Array should be Integer otherwise you will get errors.
 
-mOnes7=onesM(Int32,[2,2]) # giving size as Array, non-efficient Matlab way
+mOnes7 = onesM(Int32, [2, 2]) # giving size as Array, non-efficient Matlab way
 ```
 """
 onesM(args...) = ones(args...) # includes T::Type method
 
-onesM(T::Type, dim::Integer) = ones(T, dim, dim)
-onesM(dim::Integer; like::AbstractArray = Vector{Float64}()) =
-    ones(eltype(like), dim, dim)
+function onesM(matSymbol::Symbol, T::Type, dim::Integer)
+    if matSymbol == :mat
+        return ones(T, dim, dim)
+    end
+end
+
+function onesM(matSymbol::Symbol, dim::Integer; like::AbstractArray = Vector{Float64}())
+    if matSymbol == :mat
+        return ones(eltype(like), dim, dim)
+    end
+end
+
 # onesM(dim::Integer; like::Union{Array,Nothing}=nothing) = like === nothing ? ones(dim,dim) : ones(eltype(like), dim, dim)
 
 onesM(T::Type, a::Array) = ones(T, Tuple(a))
@@ -89,37 +115,50 @@ onesM(a::Array; like::AbstractArray = Vector{Float64}()) =
     ones(eltype(like), Tuple(a))
 ################################################################
 """
-    randM(dim)         # square dim*dim matrix
-    randM(Type, dim)    # square dim*dim matrix
-    randM(dim, like = anArray) # to make an array with similar type of anArray
+    randM(:mat, dim)          # square dim*dim matrix
+    randM(:mat, Type, dim)    # square dim*dim matrix
+    randM(:mat, dim, like = anArray) # to make an array with similar type of anArray
     randM(sizeAsArray) # non-efficient Matlab way
     randM(Type, sizeAsArray) # non-efficient Matlab way
     randM(sizeAsArray, like = anArray) # to make an array with similar type of anArray
 
+returns an array filled with random values.
+
+`randM(dim)` returns 1-dimensional array. To get a square matrix like in Matlab, pass `:mat` as the 1st argument.
+
 # Examples
 ```julia
-mRand0=randM(2) # same as rand(2,2)
+mRand0 = randM(:mat, 2) # same as rand(2,2)
 
-mRand1 = randM(2, like = zerosM(Int32,2,2) )
+mRand1 = randM(:mat, 2, like = zerosM(Int32, 2, 2)) # like method
 
-mRand2=randM(2,2) # same as rand(2,2)
+mRand2 = randM(2) # same as rand(2)
 
-mRand3=randM(Int32,2,2) # same as rand(Int32,2,2)
+mRand3 = randM(Int32, 2, 2) # same as rand(Int32,2,2)
 
-mRand4=randM((2,2)) # giving size as Tuple
+mRand4 = randM((2, 2)) # = onesM(2,2) # giving size as Tuple
 
-mRand5=randM(Int32,(2,2)) # giving size as Tuple and also the Int32 type
+mRand5 = randM(Int32, (2, 2)) # giving size as Tuple and also the Int32 type
 
-mRand6=randM([2,2]) # giving size as an Array, non-efficient Matlab way. Array should be Integer otherwise you will get errors.
+mRand6 = randM([2, 2]) # giving size as an Array, non-efficient Matlab way. Array should be Integer otherwise you will get errors.
 
-mRand7=randM(Int32,[2,2]) # giving size as Array, non-efficient Matlab way
+mRand7 = randM(Int32, [2, 2]) # giving size as Array, non-efficient Matlab way
 ```
 """
 randM(args...) = rand(args...) # includes T::Type method
 
-randM(T::Type, dim::Integer) = rand(T, dim, dim)
-randM(dim::Integer; like::AbstractArray = Vector{Float64}()) =
-    rand(eltype(like), dim, dim)
+function randM(matSymbol::Symbol, T::Type, dim::Integer)
+    if matSymbol == :mat
+        return rand(T, dim, dim)
+    end
+end
+
+function randM(matSymbol::Symbol, dim::Integer; like::AbstractArray = Vector{Float64}())
+    if matSymbol == :mat
+        return rand(eltype(like), dim, dim)
+    end
+end
+
 # randM(dim::Integer; like::Union{Array,Nothing}=nothing) = like === nothing ? rand(dim,dim) : rand(eltype(like), dim, dim)
 
 randM(T::Type, a::Array) = rand(T, Tuple(a))
@@ -143,28 +182,28 @@ randM(a::Array; like::AbstractArray = Vector{Float64}()) =
 
 Creates 2D Identity matrix (can be non-square matrix).
 
-Only 2 dimensions should be supplied othetwise you will receive an error.
+eyeM is 2-dimensional by the definition, so you don't need to pass `:mat` argument for getting a 2-dimensional matrix from `eyeM(dim)`
 
 # Examples
 ```julia
-mEye0=eyeM(2); # [1 0 0; 0 1 0]
+mEye0 = eyeM(2); # [1 0 0; 0 1 0]
 
-mEye1=eyeM(2,3); # [1 0 0; 0 1 0]
+mEye1 = eyeM(2, 3); # [1 0 0; 0 1 0]
 
-mEye2=eyeM(Int32,2,3); # [1 0 0; 0 1 0]
+mEye2 = eyeM(Int32, 2, 3); # [1 0 0; 0 1 0]
 
-mEye3=eyeM(2,3, like = zerosM(Int8,2,2) )
+mEye3 = eyeM(2, 3, like = zerosM(Int8, 2, 2))
 
-mEye4=eyeM((2,2))  # giving size as a Tuple. In Julia we use (2,2) instead of giving it as [2,2]
+mEye4 = eyeM((2, 2))  # giving size as a Tuple. In Julia we use (2,2) instead of giving it as [2,2]
 
-mEye5=eyeM(Int32,(2,2))  # giving size as a Tuple. In Julia we use (2,2) instead of giving it as [2,2]
+mEye5 = eyeM(Int32, (2, 2))  # giving size as a Tuple. In Julia we use (2,2) instead of giving it as [2,2]
 
-mEye6=eyeM([2,2]) # non-efficient Matlab way
+mEye6 = eyeM([2, 2]) # non-efficient Matlab way
 
-mEye7=eyeM(Int32,[2,2]) # non-efficient Matlab way
+mEye7 = eyeM(Int32, [2, 2]) # non-efficient Matlab way
 
-s1=size(ones(2,3)) # getting size from another matrix or calculation
-mEye8=eyeM(s1)  # giving size as a variable (Tuple).
+s1 = size(ones(2, 3)) # getting size from another matrix or calculation
+mEye8 = eyeM(s1)  # giving size as a variable (Tuple).
 ```
 """
 eyeM(T::Type, dim1::Integer, dim2::Integer) = Matrix{T}(I, dim1, dim2)
@@ -186,7 +225,7 @@ eyeM(a::Array; like::AbstractArray = Vector{Int64}()) = eyeM(eltype(like), a)
     diagM(v)
     diagM(v,k)
 
-Create a diagonal matrix from vector v. If k is given, the vector v will be placed on kth diagonal
+Create a diagonal matrix from vector `v`. If k is given, the vector v will be placed on kth diagonal
 
 # Examples
 ```julia
@@ -220,7 +259,7 @@ Creates a square matrix with A1,A2,... on the diagonal and the rest of the eleme
 
     blkdiagM(A1,A2,..., :obj)
 
-Returns the object itself if you want to use BlockDiagonals methods. use collect(obj) to get the array.
+Returns the object itself if you want to use BlockDiagonals methods. use `collect(obj)` to get the array.
 
 # Examples
 ```julia
@@ -314,7 +353,7 @@ const vertcatM = vcat
 """
     repelemM(V, count)
 
-Construct an array by repeating elements of array V by a given number of times specified by counts. if If count is a scalar, then each element of v is repeated "count" times
+Construct an array by repeating elements of array `V` by a given number of times specified by counts. if If count is a scalar, then each element of V is repeated `count` times
 
 # Examples
 ```julia
@@ -337,7 +376,7 @@ repelemM(A::AbstractArray, count::Integer) = vcat(fill.(A, count)...);
     repmatM(A, [s1, s2, ...])
     repmatM(A, (s1, s2, ...))
 
-Repeat copies of array A based on the give size
+Repeat copies of array `A` based on the give size
 # Examples
 ```julia
 mRempat1 = repmatM(10, 3, 2) # [10 10; 10 10; 10 10]
@@ -374,7 +413,7 @@ repmatM(n::Integer, counts::Tuple) = repeat(A, counts...)
 
 Generate linearly spaced range. You can also write this as `start:stop` or `start:step:stop`.
 
-To get the full vector isntead of a range object pass :arr as the 1st argument.
+To get the full vector isntead of a range object pass `:arr` as the 1st argument.
 
 # Examples
 ```julia
@@ -402,9 +441,9 @@ end
     logspaceM(start, stop, length)
     logspaceM(start, stop, :equal) # equally spaced powers of 10
 
-Generate logarithmically spaced vector (between 10^start and 10^stop). `length` is the number of the poinst (50 by defualt if not supplied). If you instead provide ``:equal`, it makes a range from equally spaced powers of 10
+Generate logarithmically spaced vector (between `10^start` and `10^stop`). `length` is the number of the poinst (50 by defualt if not supplied). If you instead provide `:equal`, it makes a range from equally spaced powers of 10
 
-For logspaceM in contrast to linspaceM, the full vector is given by default.
+For `logspaceM` in contrast to `linspaceM`, the full vector is given by default.
 
 # Examples
 ```julia
@@ -428,7 +467,7 @@ logspaceM(xi, xf, num) = 10.0.^range(xi, stop=xf, length=num)
 """
     lengthM(A)
 
-Length of the largest array dimension of A.
+Length of the largest array dimension of `A`.
 # Examples
 ```julia
 A1 = [2 3 4 5 6 7;
@@ -455,7 +494,7 @@ Returns the size of an array as a Tuple.
 
 Pass `:arr` to get size as an Array (not a Tuple).
 
-Consider the points that are explained here when using this function: https://juliamatlab.github.io/MatLang/dev/juliavsmatlab/#Julia-Arrays:-1
+Consider the points that are explained here when using this function: [Julia Arrays](https://juliamatlab.github.io/MatLang/dev/juliavsmatlab/#Julia-Arrays:-1)
 
 # Examples
 ```julia
@@ -497,11 +536,11 @@ end
     ndimsM(A)
 
 
-Return the number of dimensions of A.
+Return the number of dimensions of `A`.
 
 In contrast to Matlab equivalent, this function considers trailing singleton dimensions,
 
-Consider the points that are explained here when using this function: https://juliamatlab.github.io/MatLang/dev/juliavsmatlab/#Julia-Arrays:-1
+Consider the points that are explained here when using this function: [Julia Arrays](https://juliamatlab.github.io/MatLang/dev/juliavsmatlab/#Julia-Arrays:-1)
 
 # Examples
 ```julia
@@ -514,7 +553,7 @@ const ndimsM = ndims
 """
     numelM(A)
 
-Returns the number of elements of array A.
+Returns the number of elements of array `A`.
 
 # Examples
 ```julia
@@ -533,7 +572,7 @@ const numelM = length
 
 Returns the transpose an array.
 
-If :arr is supplied `permutedims` method is used which returns an array rather a transpose object.
+If `:arr` is supplied `permutedims` method is used which returns an array rather a transpose object.
 
 Becareful that `'` in Julia is used for adjoint and `.'` is not defined.
 
@@ -560,12 +599,12 @@ using Base.Broadcast
 
 Returns boolean true if x is scalar.
 
-It uses Broadcast.DefaultArrayStyle{0}, which basically are numbers (0-dimensional) and 1 dimensional-1 element number arrays.
+It uses `Broadcast.DefaultArrayStyle{0}`, which basically are numbers (0-dimensional) and 1 dimensional-1 element number arrays.
 
 To get a MATLAB way result, pass `:mat` argument. Doing this:
-* For arrays (of any element type), it calculates number of elements (using numelM).
-* For single strings it calculates number of characters (using numelM).
-* For others, if it is among {Number,Char,Bool}, then it is considered scalar.
+* For arrays (of any element type), it calculates number of elements (using `numelM`).
+* For single strings it calculates number of characters (using `numelM`).
+* For others, if it is among `{Number,Char,Bool}`, then it is considered scalar.
 
 
 # Examples
@@ -636,7 +675,7 @@ It uses AbstractVector, which basically are 1 dimensional arrays.
 
 To get a MATLAB way result, pass `:mat` argument. Doing this:
 * For arrays (of any element type), it considers 1-dimensional arrays and also 2-dimensional arrays that one of their dimensions are singletone.
-* For others, if it is among {Number, AbstractString, Char, Bool}, then it is considered vectir.
+* For others, if it is among `{Number, AbstractString, Char, Bool}`, then it is considered vectir.
 
 # Examples
 ```julia
@@ -697,7 +736,7 @@ If you know the dimension that you want to drop, use dropdims(A ; dims= dimensio
 
 Only use this function if you don't know the dimensions that you want to remove, and you are sure that you are not removing important dimensions, and if you don't care about type stability.
 
-Returns an array containing the same data as `A` but with no singleton dimensions; note that `arr` is NOT a copy of `A`, i.e., modifying the contents of `arr` will modify the contents of `A`. To get a copy use copy(arr).
+Returns an array containing the same data as `A` but with no singleton dimensions; note that the output is NOT a copy of `A`, i.e., modifying the contents of output will modify the contents of `A`. To get a copy use copy(output).
 
 # Examples
 ```julia

@@ -13,16 +13,15 @@ else
 end
 ################################################################
 ################################################################
+mZeros0 = zerosM(:mat, 2) # same as zeros(2,2)
 
-mZeros0 = zerosM(2) # same as zeros(2,2)
+mZeros1 = zerosM(:mat, 2, like = zerosM(Int32, 2, 2)) # like method
 
-mZeros1 = zerosM(2, like = zerosM(Int32, 2, 2))
-
-mZeros2 = zerosM(2, 2) # same as zeros(2,2)
+mZeros2 = zerosM(2) # same as zeros(2)
 
 mZeros3 = zerosM(Int32, 2, 2) # same as zeros(Int32,2,2)
 
-mZeros4 = zerosM((2, 2)) # giving size as Tuple
+mZeros4 = zerosM((2, 2)) # = zerosM(2,2) # giving size as Tuple
 
 mZeros5 = zerosM(Int32, (2, 2)) # giving size as Tuple and also the Int32 type
 
@@ -30,15 +29,15 @@ mZeros6 = zerosM([2, 2]) # giving size as an Array, non-efficient Matlab way. Ar
 
 mZeros7 = zerosM(Int32, [2, 2]) # giving size as Array, non-efficient Matlab way
 ################################################################
-mOnes0 = onesM(2) # same as ones(2,2)
+mOnes0 = onesM(:mat, 2) # same as ones(2,2)
 
-mOnes1 = onesM(2, like = zerosM(Int32, 2, 2))
+mOnes1 = onesM(:mat, 2, like = zerosM(Int32, 2, 2)) # like method
 
-mOnes2 = onesM(2, 2) # same as ones(2,2)
+mOnes2 = onesM(2) # same as ones(2)
 
 mOnes3 = onesM(Int32, 2, 2) # same as ones(Int32,2,2)
 
-mOnes4 = onesM((2, 2)) # giving size as Tuple
+mOnes4 = onesM((2, 2)) # = onesM(2,2) # giving size as Tuple
 
 mOnes5 = onesM(Int32, (2, 2)) # giving size as Tuple and also the Int32 type
 
@@ -46,15 +45,15 @@ mOnes6 = onesM([2, 2]) # giving size as an Array, non-efficient Matlab way. Arra
 
 mOnes7 = onesM(Int32, [2, 2]) # giving size as Array, non-efficient Matlab way
 ################################################################
-mRand0 = randM(2) # same as rand(2,2)
+mRand0 = randM(:mat, 2) # same as rand(2,2)
 
-mRand1 = randM(2, like = zerosM(Int32, 2, 2))
+mRand1 = randM(:mat, 2, like = zerosM(Int32, 2, 2)) # like method
 
-mRand2 = randM(2, 2) # same as rand(2,2)
+mRand2 = randM(2) # same as rand(2)
 
 mRand3 = randM(Int32, 2, 2) # same as rand(Int32,2,2)
 
-mRand4 = randM((2, 2)) # giving size as Tuple
+mRand4 = randM((2, 2)) # = onesM(2,2) # giving size as Tuple
 
 mRand5 = randM(Int32, (2, 2)) # giving size as Tuple and also the Int32 type
 
