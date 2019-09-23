@@ -574,7 +574,7 @@ Returns the transpose an array.
 
 If `:arr` is supplied `permutedims` method is used which returns an array rather a transpose object.
 
-Becareful that `'` in Julia is used for adjoint and `.'` is not defined.
+You can use `'` for transposing an Array (e.g `A'`), the result is an adjoint object. If you want, you can get the array using `collect()`. Be careful that in Julia `.'` is not used for transposing.
 
 # Examples
 ```julia
