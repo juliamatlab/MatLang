@@ -11,7 +11,7 @@ for n in natives
         export $(Symbol(n, "M"))
     end
 end
-
+################################################################
 """
     zerosM(:mat, dim)         # square dim*dim matrix
     zerosM(:mat, Type,dim)    # square dim*dim matrix

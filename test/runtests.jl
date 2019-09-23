@@ -51,3 +51,18 @@ end
 	@test transposeM([2 3 4 5 6 7; 1 2 3 4 5 6]) == transposeM(:arr, [2 3 4 5 6 7; 1 2 3 4 5 6])
 	@test squeezeM(ones(2,1,2)) == [1 1; 1 1]
 end
+
+@testset "MatLang.j - Numeric_Types" begin
+
+	@test typeof(doubleM(10.0)) == Float64
+	@test typeof(singleM(10.0)) == Float32
+	@test typeof(int8M(-10)) == Int8
+	@test typeof(int16M(-10)) == Int16
+	@test typeof(int32M(-10)) == Int32
+	@test typeof(int64M(-10)) == Int64
+	@test typeof(uint8M(10)) == UInt8
+	@test typeof(uint16M(10)) == UInt16
+	@test typeof(uint32M(10)) == UInt32
+	@test typeof(uint64M(10)) == UInt64
+
+end

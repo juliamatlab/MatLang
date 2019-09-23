@@ -7,10 +7,14 @@ makedocs(;
     ),
     pages=[
         "Home" => "index.md",
-        "Functions" => "functions.md",
+		"Functions" =>
+			["Functions List" => "functions.md",
+			"Functions Explanations and Examples" =>
+				["Entering Commands" => "functions/Entering_Commands.md",
+				"Matrices and Arrays" => "functions/Matrices_and_Arrays.md",
+				"Numeric Types" => "functions/Numeric_Types.md"],],
         "Development - Contribution" => "development.md",
         "Native Julia noteworthy differences from MATLAB" => "juliavsmatlab.md"
-
     ],
     repo="https://github.com/juliamatlab/MatLang/blob/{commit}{path}#L{line}",
     sitename="MatLang",

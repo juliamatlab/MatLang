@@ -8,7 +8,7 @@ using LinearAlgebra
 export zerosM, onesM, randM, eyeM, diagM, blkdiagM, catM, horzcatM, vertcatM, repelemM, repmatM, linspaceM, logspaceM, lengthM, sizeM, ndimsM, numelM, isscalarM, isvectorM, transposeM, squeezeM
 include("Language_Fundamentals/Matrices_and_Arrays.jl")
 
-
+include("Language_Fundamentals/Data_Types/Numeric_Types.jl")
 ################################################################
 # Conditional REQUIRE - https://github.com/MikeInnes/Requires.jl
 using Requires

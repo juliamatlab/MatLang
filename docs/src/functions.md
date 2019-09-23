@@ -1,6 +1,5 @@
-# Functions
+# Functions List
 
-## List of implemented Functions
 #### Language_Fundamentals :
 ```@raw html
 <table>
@@ -19,23 +18,17 @@
         <td>Matrices_and_Arrays</td>
         <td>zerosM, onesM, randM, eyeM, diagM, catM, horzcatM, vertcatM, repelemM(limited), repmatM, linspaceM, logspaceM, lengthM, sizeM, numelM, isscalarM, isvectorM, transposeM, squeezeM</td>
     </tr>
+    <tr>
+        <td>3</td>
+        <td>Data Types/Numeric Types</td>
+        <td>doubleM, singleM, int8M, int16M, int32M, int64M, uint8M, uint16M, uint32M, uint64M</td>
+    </tr>
 </table>
 ```
+
 ```@index
 ```
+
 To see the full progress see this link: [here](https://github.com/juliamatlab/MatLang/projects)
 
 The full list of the functions that will be implemented in the future can be found [Here](https://www.mathworks.com/help/matlab/referencelist.html;jsessionid=e221a09e47ed26d2b333ea600f68?type=function)
-
-## Functions Explanation and Examples
-### Language Fundamentals
-#### Entering_Commands
-```@autodocs
-Modules = [MatLang]
-Pages   = ["Entering_Commands.jl"]
-```
-#### Matrices and Arrays
-```@autodocs
-Modules = [MatLang]
-Pages   = ["Matrices_and_Arrays.jl"]
-```

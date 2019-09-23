@@ -1,24 +1,17 @@
-
 ################################################################
 ################################################################
 # Entering_Commands
 ################################################################
 ################################################################
 # # Copy of Julia Functions/Types
-natives = [] # input symbols
-for n in natives
-    @eval begin
-        const $(Symbol(n, "M")) = $n
-        export $(Symbol(n, "M"))
-    end
-end
 
+################################################################
 # ansM can't be defined. use ans instead.
-
+################################################################
 """
     clcM()
 
-Clear Command Window for Juno or Atom IDE
+Clear Command Window. Works for any IDE or console.
 """
 function clcM()
 

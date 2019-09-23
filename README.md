@@ -39,6 +39,11 @@ using MatLang
         <td>Matrices_and_Arrays</td>
         <td>zerosM, onesM, randM, eyeM, diagM, catM, horzcatM, vertcatM, repelemM(limited), repmatM, linspaceM, logspaceM, lengthM, sizeM, numelM, isscalarM, isvectorM, transposeM, squeezeM</td>
     </tr>
+    <tr>
+        <td>3</td>
+        <td>Data Types/Numeric Types</td>
+        <td>doubleM, singleM, int8M, int16M, int32M, int64M, uint8M, uint16M, uint32M, uint64M</td>
+    </tr>
 </table>
 
 To see the full progress see this link: https://github.com/juliamatlab/MatLang/projects
