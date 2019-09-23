@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Matrices and Arrays · MatLang</title><link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" rel="stylesheet" type="text/css"/><link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link href="../../assets/documenter.css" rel="stylesheet" type="text/css"/></head><body><nav class="toc"><a href="../../"><img class="logo" src="../../assets/logo.png" alt="MatLang logo"/></a><h1>MatLang</h1><select id="version-selector" onChange="window.location.href=this.value" style="visibility: hidden"></select><form class="search" id="search-form" action="../../search/"><input id="search-query" name="q" type="text" placeholder="Search docs"/></form><ul><li><a class="toctext" href="../../">Home</a></li><li><span class="toctext">Functions</span><ul><li><a class="toctext" href="../">Functions List</a></li><li><span class="toctext">Functions Explanations and Examples</span><ul><li><a class="toctext" href="../Entering_Commands/">Entering Commands</a></li><li class="current"><a class="toctext" href>Matrices and Arrays</a><ul class="internal"></ul></li><li><a class="toctext" href="../Numeric_Types/">Numeric Types</a></li></ul></li></ul></li><li><a class="toctext" href="../../development/">Development - Contribution</a></li><li><a class="toctext" href="../../juliavsmatlab/">Native Julia noteworthy differences from MATLAB</a></li></ul></nav><article id="docs"><header><nav><ul><li>Functions</li><li>Functions Explanations and Examples</li><li><a href>Matrices and Arrays</a></li></ul><a class="edit-page" href="https://github.com/juliamatlab/MatLang/blob/master/docs/src/functions/Matrices_and_Arrays.md#L"><span class="fa"></span> Edit on GitHub</a></nav><hr/><div id="topbar"><span>Matrices and Arrays</span><a class="fa fa-bars" href="#"></a></div></header><h1><a class="nav-anchor" id="Functions-1" href="#Functions-1">Functions</a></h1><h3><a class="nav-anchor" id="Language-Fundamentals-1" href="#Language-Fundamentals-1">Language Fundamentals</a></h3><h4><a class="nav-anchor" id="Matrices-and-Arrays-1" href="#Matrices-and-Arrays-1">Matrices and Arrays</a></h4><section class="docstring"><div class="docstring-header"><a class="docstring-binding" id="MatLang.blkdiagM-Tuple" href="#MatLang.blkdiagM-Tuple"><code>MatLang.blkdiagM</code></a> — <span class="docstring-category">Method</span>.</div><div><div><pre><code class="language-julia">blkdiagM(A1,A2,...)</code></pre><p>Creates a square matrix with A1,A2,... on the diagonal and the rest of the elements being 0. Works for both square and non-square matrices.</p><pre><code class="language-none">blkdiagM(A1,A2,..., :obj)</code></pre><p>Returns the object itself if you want to use BlockDiagonals methods. use <code>collect(obj)</code> to get the array.</p><p><strong>Examples</strong></p><pre><code class="language-julia">1 = 3 * ones(2, 2);
+A2 = 4 * ones(2, 2);
+A3 = rand(3, 3);
+mBlkdiag1 = blkdiagM(A1, A2, A3)
+
+mBlkdiag2 = blkdiagM(ones(2, 2), 2 * ones(2, 2)) # [ones(2, 2) zeros(2, 2); zeros(2, 2)  2 * ones(2, 2)]
+
+A1 = ones(2, 4);
+A2 = 2 * ones(3, 2);
+mBlkdiag3 = blkdiagM(A1, A2) # [ones(2,4) zeros(2,2); zeros(3,4) 2*ones(3,2)]
+
+mBlkdiag1obj = blkdiagM(:obj, A1, A2, A3)
+
+mBlkdiag2obj = blkdiagM(:obj, ones(2, 2), 2 * ones(2, 2)) # Block Diagonal object for [ones(2, 2) zeros(2, 2); zeros(2, 2)  2 * ones(2, 2)]</code></pre></div></div><a class="source-link" target="_blank" href="https://github.com/juliamatlab/MatLang/blob/2af6dd983097d33459a0e44633b32165d804bc16/src/Language_Fundamentals/Matrices_and_Arrays.jl#LL254-L281">source</a></section><section class="docstring"><div class="docstring-header"><a class="docstring-binding" id="MatLang.catM-Tuple{Integer,Vararg{Any,N} where N}" href="#MatLang.catM-Tuple{Integer,Vararg{Any,N} where N}"><code>MatLang.catM</code></a> — <span class="docstring-category">Method</span>.</div><div><div><pre><code class="language-julia">catM(dim, A1, A2, ...)</code></pre><p>concatenates A1, A2, … , An along dimension dim.</p><p><strong>Examples</strong></p><pre><code class="language-julia">mCat1 = catM(1, ones(3, 3), zeros(3, 3)) # [ones(3, 3); zeros(3, 3)]
+
+mCat2 = catM(2, ones(3, 3), zeros(3, 3)) # [ones(3, 3) zeros(3, 3)]
+
+mCat3 = catM(1, ones(3, 3), zeros(3, 3), 2 * ones(3, 3)) # [ones(3, 3); zeros(3, 3); 2 * ones(3, 3)]
+
+mCat4 = catM(3, ones(2, 2, 2), zeros(2, 2, 2)) # [ones(2, 2, 2) zeros(2, 2, 2)]</code></pre></div></div><a class="source-link" target="_blank" href="https://github.com/juliamatlab/MatLang/blob/2af6dd983097d33459a0e44633b32165d804bc16/src/Language_Fundamentals/Matrices_and_Arrays.jl#LL314-L328">source</a></section><section class="docstring"><div class="docstring-header"><a class="docstring-binding" id="MatLang.eyeM-Tuple{Type,Integer,Integer}" href="#MatLang.eyeM-Tuple{Type,Integer,Integer}"><code>MatLang.eyeM</code></a> — <span class="docstring-category">Method</span>.</div><div><div><pre><code class="language-julia">eyeM(dim)         # square dim*dim matrix
+eyeM(Type, dim)    # square dim*dim matrix
+eyeM(dim, like = anArray) # to make an array with similar type of anArray
+eyeM(dim1, dim2)   # giving size as a separate input numbers
+eyeM(Type, dim1, dim2)   # giving size as a separate input numbers
+eyeM(dim1, dim2, like = anArray) # to make an array with similar type of anArray
+eyeM(sizeAsTuple) # giving size as a Tuple
+eyeM(Type, sizeAsTuple) # giving size as a Tuple
+eyeM(sizeAsTuple, like = anArray) # to make an array with similar type of anArray
+eyeM(sizeAsArray) # non-efficient Matlab way
+eyeM(Type, sizeAsArray) # non-efficient Matlab way
+eyeM(sizeAsArray, like = anArray) # to make an array with similar type of anArray</code></pre><p>Creates 2D Identity matrix (can be non-square matrix).</p><p>eyeM is 2-dimensional by the definition, so you don&#39;t need to pass <code>:mat</code> argument for getting a 2-dimensional matrix from <code>eyeM(dim)</code></p><p><strong>Examples</strong></p><pre><code class="language-julia">mEye0 = eyeM(2); # [1 0 0; 0 1 0]
+
+mEye1 = eyeM(2, 3); # [1 0 0; 0 1 0]
+
+mEye2 = eyeM(Int32, 2, 3); # [1 0 0; 0 1 0]
+
+mEye3 = eyeM(2, 3, like = zerosM(Int8, 2, 2))
+
+mEye4 = eyeM((2, 2))  # giving size as a Tuple. In Julia we use (2,2) instead of giving it as [2,2]
+
+mEye5 = eyeM(Int32, (2, 2))  # giving size as a Tuple. In Julia we use (2,2) instead of giving it as [2,2]
+
+mEye6 = eyeM([2, 2]) # non-efficient Matlab way
+
+mEye7 = eyeM(Int32, [2, 2]) # non-efficient Matlab way
+
+s1 = size(ones(2, 3)) # getting size from another matrix or calculation
+mEye8 = eyeM(s1)  # giving size as a variable (Tuple).</code></pre></div></div><a class="source-link" target="_blank" href="https://github.com/juliamatlab/MatLang/blob/2af6dd983097d33459a0e44633b32165d804bc16/src/Language_Fundamentals/Matrices_and_Arrays.jl#LL168-L208">source</a></section><section class="docstring"><div class="docstring-header"><a class="docstring-binding" id="MatLang.horzcatM" href="#MatLang.horzcatM"><code>MatLang.horzcatM</code></a> — <span class="docstring-category">Function</span>.</div><div><div><pre><code class="language-julia">horzcatM(A1, A2, …)</code></pre><p>Concatenate arrays horizontally</p><p><strong>Examples</strong></p><pre><code class="language-julia">mHCat1 = horzcatM(ones(3, 3), zeros(3, 3)) # [ones(3, 3) zeros(3, 3)]</code></pre></div></div><a class="source-link" target="_blank" href="https://github.com/juliamatlab/MatLang/blob/2af6dd983097d33459a0e44633b32165d804bc16/src/Language_Fundamentals/Matrices_and_Arrays.jl#LL331-L339">source</a></section><section class="docstring"><div class="docstring-header"><a class="docstring-binding" id="MatLang.isscalarM-Union{Tuple{T}, Tuple{T}} where T" href="#MatLang.isscalarM-Union{Tuple{T}, Tuple{T}} where T"><code>MatLang.isscalarM</code></a> — <span class="docstring-category">Method</span>.</div><div><div><pre><code class="language-julia">isscalarM(x)
+isscalarM(:mat, x)</code></pre><p>Returns boolean true if x is scalar.</p><p>It uses <code>Broadcast.DefaultArrayStyle{0}</code>, which basically are numbers (0-dimensional) and 1 dimensional-1 element number arrays.</p><p>To get a MATLAB way result, pass <code>:mat</code> argument. Doing this:</p><ul><li>For arrays (of any element type), it calculates number of elements (using <code>numelM</code>).</li><li>For single strings it calculates number of characters (using <code>numelM</code>).</li><li>For others, if it is among <code>{Number,Char,Bool}</code>, then it is considered scalar.</li></ul><p><strong>Examples</strong></p><pre><code class="language-julia">bIsscalar1 = isscalarM(1) # true
+
+bIsscalar2 = isscalarM(5 * ones(1, 1, 1)) # false
+
+# bIsscalar3 = isscalarM(&quot;H&quot;) # gives error
+#
+# bIsscalar4 = isscalarM(&quot;Hi&quot;) # gives error
+
+bIsscalar5 = isscalarM([&quot;Hi&quot;]) # false
+
+bIsscalar6 = isscalarM([&quot;Hi&quot; &quot;Bye&quot;]) # false
+
+bIsscalar7 = isscalarM(&#39;H&#39;) # true # becareful that in Julia, chars are always singular.
+
+bIsscalar8 = isscalarM(true) # true
+
+# Matlab way:
+bIsscalarMat1 = isscalarM(:mat, 1) # true
+
+bIsscalarMat2 = isscalarM(:mat, [1]) # true
+
+bIsscalarMat3 = isscalarM(:mat, 5 * ones(1, 1, 1)) # true
+
+bIsscalarMat4 = isscalarM(:mat, &quot;H&quot;) # true
+
+bIsscalarMat5 = isscalarM(:mat, &quot;Hi&quot;) # false
+
+bIsscalarMat6 = isscalarM(:mat, [&quot;Hi&quot;]) # true
+
+bIsscalarMat7 = isscalarM(:mat, [&quot;Hi&quot; &quot;Bye&quot;]) # false
+
+bIsscalarMat8 = isscalarM(:mat, &#39;H&#39;) # true # becareful that in Julia, chars are always singular.
+
+bIsscalarMat9 = isscalarM(:mat, true) # true</code></pre></div></div><a class="source-link" target="_blank" href="https://github.com/juliamatlab/MatLang/blob/2af6dd983097d33459a0e44633b32165d804bc16/src/Language_Fundamentals/Matrices_and_Arrays.jl#LL596-L647">source</a></section><section class="docstring"><div class="docstring-header"><a class="docstring-binding" id="MatLang.isvectorM-Tuple{Any}" href="#MatLang.isvectorM-Tuple{Any}"><code>MatLang.isvectorM</code></a> — <span class="docstring-category">Method</span>.</div><div><div><pre><code class="language-julia">isvectorM(x)</code></pre><p>Returns boolean true if x is a vector.</p><p>It uses AbstractVector, which basically are 1 dimensional arrays.</p><p>To get a MATLAB way result, pass <code>:mat</code> argument. Doing this:</p><ul><li>For arrays (of any element type), it considers 1-dimensional arrays and also 2-dimensional arrays that one of their dimensions are singletone.</li><li>For others, if it is among <code>{Number, AbstractString, Char, Bool}</code>, then it is considered vectir.</li></ul><p><strong>Examples</strong></p><pre><code class="language-julia">A1 = [1; 2; 3] # or [1, 2, 3]
+bIsvector1 = isvectorM(A1) # true
+
+A2 = [1 2 3]
+bIsvector2 = isvectorM(A2) # false
+
+bIsvector3 = isvectorM(ones(3, 1)) # false
+
+bIsvector4 = isvectorM(ones(1, 3)) # false
+
+bIsvector5 = isvectorM(ones(3)) # true
+
+bIsvector6 = isvectorM(&quot;Hi&quot;) # false
+
+# Matlab Way:
+bIsvector7 = isvectorM([&quot;Hi&quot;, &quot;Bye&quot;]) # true
+
+bIsvectorMat1 = isvectorM(:mat, A1) # true
+
+bIsvectorMat2 = isvectorM(:mat, A2) # true
+
+bIsvectorMat3 = isvectorM(:mat, ones(3, 1)) # true
+
+bIsvectorMat4 = isvectorM(:mat, ones(1, 3)) # true
+
+bIsvectorMat5 = isvectorM(:mat, ones(3)) # true
+
+bIsvectorMat6 = isvectorM(:mat, &quot;Hi&quot;) # true
+
+bIsvectorMat7 = isvectorM(:mat, [&quot;Hi&quot;, &quot;Bye&quot;]) # true</code></pre></div></div><a class="source-link" target="_blank" href="https://github.com/juliamatlab/MatLang/blob/2af6dd983097d33459a0e44633b32165d804bc16/src/Language_Fundamentals/Matrices_and_Arrays.jl#LL668-L713">source</a></section><section class="docstring"><div class="docstring-header"><a class="docstring-binding" id="MatLang.lengthM-Tuple{AbstractArray}" href="#MatLang.lengthM-Tuple{AbstractArray}"><code>MatLang.lengthM</code></a> — <span class="docstring-category">Method</span>.</div><div><div><pre><code class="language-julia">lengthM(A)</code></pre><p>Length of the largest array dimension of <code>A</code>.</p><p><strong>Examples</strong></p><pre><code class="language-julia">A1 = [2 3 4 5 6 7;
+      1 2 3 4 5 6]
+nLength1 = lengthM(A1); # 6
+
+A2 = [&quot;Hi&quot; 6;
+      &quot;Goodbye&quot; 5;
+      &quot;Hello&quot; 1]
+nLength2 = lengthM(A2); # 3</code></pre></div></div><a class="source-link" target="_blank" href="https://github.com/juliamatlab/MatLang/blob/2af6dd983097d33459a0e44633b32165d804bc16/src/Language_Fundamentals/Matrices_and_Arrays.jl#LL467-L482">source</a></section><section class="docstring"><div class="docstring-header"><a class="docstring-binding" id="MatLang.linspaceM-Tuple{Any,Any}" href="#MatLang.linspaceM-Tuple{Any,Any}"><code>MatLang.linspaceM</code></a> — <span class="docstring-category">Method</span>.</div><div><div><pre><code class="language-julia">linspaceM(start, stop)
+linspaceM(start, stop, step)
+linspaceM(:arr, start, stop)
+linspaceM(:arr, start, stop, step)</code></pre><p>Generate linearly spaced range. You can also write this as <code>start:stop</code> or <code>start:step:stop</code>.</p><p>To get the full vector isntead of a range object pass <code>:arr</code> as the 1st argument.</p><p><strong>Examples</strong></p><pre><code class="language-julia">mLinspace1 = linspaceM(1, 10) # 1:10
+
+mLinspace2 = linspaceM(1, 10, 2) # 1:2:10 == 1:2:9
+
+mLinspace3 = linspaceM(:arr, 1, 10) # collect(1:10)
+
+mLinspace4 = linspaceM(:arr, 1, 10, 2) # collect(1:2:10)</code></pre></div></div><a class="source-link" target="_blank" href="https://github.com/juliamatlab/MatLang/blob/2af6dd983097d33459a0e44633b32165d804bc16/src/Language_Fundamentals/Matrices_and_Arrays.jl#LL408-L428">source</a></section><section class="docstring"><div class="docstring-header"><a class="docstring-binding" id="MatLang.logspaceM-Tuple{Any,Any}" href="#MatLang.logspaceM-Tuple{Any,Any}"><code>MatLang.logspaceM</code></a> — <span class="docstring-category">Method</span>.</div><div><div><pre><code class="language-julia">logspaceM(start, stop) # gives 50 points
+logspaceM(start, stop, length)
+logspaceM(start, stop, :equal) # equally spaced powers of 10</code></pre><p>Generate logarithmically spaced vector (between <code>10^start</code> and <code>10^stop</code>). <code>length</code> is the number of the poinst (50 by defualt if not supplied). If you instead provide <code>:equal</code>, it makes a range from equally spaced powers of 10</p><p>For <code>logspaceM</code> in contrast to <code>linspaceM</code>, the full vector is given by default.</p><p><strong>Examples</strong></p><pre><code class="language-julia">mLogspace1 = logspaceM(1, 5) # 50 logarithmically spaced points between 10^1 and 10^5
+
+mLogspace2 = logspaceM(1, 5, 10) # 10 logarithmically spaced points between 10^1 and 10^5
+
+mLogspace3 = logspaceM(1, 5, :equal) # [10.0^1, 10.0^2, 10.0^3, 10.0^4, 10.0^5] == 10.0.^(1:5)</code></pre></div></div><a class="source-link" target="_blank" href="https://github.com/juliamatlab/MatLang/blob/2af6dd983097d33459a0e44633b32165d804bc16/src/Language_Fundamentals/Matrices_and_Arrays.jl#LL439-L456">source</a></section><section class="docstring"><div class="docstring-header"><a class="docstring-binding" id="MatLang.ndimsM" href="#MatLang.ndimsM"><code>MatLang.ndimsM</code></a> — <span class="docstring-category">Function</span>.</div><div><div><pre><code class="language-julia">ndimsM(A)</code></pre><p>Return the number of dimensions of <code>A</code>.</p><p>In contrast to Matlab equivalent, this function considers trailing singleton dimensions,</p><p>Consider the points that are explained here when using this function: <a href="https://juliamatlab.github.io/MatLang/dev/juliavsmatlab/#Julia-Arrays:-1">Julia Arrays</a></p><p><strong>Examples</strong></p><pre><code class="language-julia">A = rand(3,4,5);
+nDim1 = ndims(A) # 3</code></pre></div></div><a class="source-link" target="_blank" href="https://github.com/juliamatlab/MatLang/blob/2af6dd983097d33459a0e44633b32165d804bc16/src/Language_Fundamentals/Matrices_and_Arrays.jl#LL535-L550">source</a></section><section class="docstring"><div class="docstring-header"><a class="docstring-binding" id="MatLang.numelM" href="#MatLang.numelM"><code>MatLang.numelM</code></a> — <span class="docstring-category">Function</span>.</div><div><div><pre><code class="language-julia">numelM(A)</code></pre><p>Returns the number of elements of array <code>A</code>.</p><p><strong>Examples</strong></p><pre><code class="language-julia">nNumel1 = numelM(1:5) # 5
+
+nNumel2 = numelM([1, 2, 3, 4]) # 4
+
+nNumel3 = numelM([1 2; 3 4]) # 4</code></pre></div></div><a class="source-link" target="_blank" href="https://github.com/juliamatlab/MatLang/blob/2af6dd983097d33459a0e44633b32165d804bc16/src/Language_Fundamentals/Matrices_and_Arrays.jl#LL553-L566">source</a></section><section class="docstring"><div class="docstring-header"><a class="docstring-binding" id="MatLang.onesM-Tuple" href="#MatLang.onesM-Tuple"><code>MatLang.onesM</code></a> — <span class="docstring-category">Method</span>.</div><div><div><pre><code class="language-julia">onesM(:mat, dim)         # square dim*dim matrix
+onesM(:mat, Type,dim)    # square dim*dim matrix
+onesM(:mat, dim, like=anArray) # to make an array with similar type of anArray
+onesM(sizeAsArray) # non-efficient Matlab way
+onesM(Type, sizeAsArray) # non-efficient Matlab way
+onesM(sizeAsArray, like=anArray) # to make an array with similar type of anArray</code></pre><p>returns an array filled with one values.</p><p><code>onesM(dim)</code> returns 1-dimensional array. To get a square matrix like in Matlab, pass <code>:mat</code> as the 1st argument.</p><p><strong>Examples</strong></p><pre><code class="language-julia">mOnes0 = onesM(:mat, 2) # same as ones(2,2)
+
+mOnes1 = onesM(:mat, 2, like = zerosM(Int32, 2, 2)) # like method
+
+mOnes2 = onesM(2) # same as ones(2)
+
+mOnes3 = onesM(Int32, 2, 2) # same as ones(Int32,2,2)
+
+mOnes4 = onesM((2, 2)) # = onesM(2,2) # giving size as Tuple
+
+mOnes5 = onesM(Int32, (2, 2)) # giving size as Tuple and also the Int32 type
+
+mOnes6 = onesM([2, 2]) # giving size as an Array, non-efficient Matlab way. Array should be Integer otherwise you will get errors.
+
+mOnes7 = onesM(Int32, [2, 2]) # giving size as Array, non-efficient Matlab way</code></pre></div></div><a class="source-link" target="_blank" href="https://github.com/juliamatlab/MatLang/blob/2af6dd983097d33459a0e44633b32165d804bc16/src/Language_Fundamentals/Matrices_and_Arrays.jl#LL66-L96">source</a></section><section class="docstring"><div class="docstring-header"><a class="docstring-binding" id="MatLang.randM-Tuple" href="#MatLang.randM-Tuple"><code>MatLang.randM</code></a> — <span class="docstring-category">Method</span>.</div><div><div><pre><code class="language-julia">randM(:mat, dim)          # square dim*dim matrix
+randM(:mat, Type, dim)    # square dim*dim matrix
+randM(:mat, dim, like = anArray) # to make an array with similar type of anArray
+randM(sizeAsArray) # non-efficient Matlab way
+randM(Type, sizeAsArray) # non-efficient Matlab way
+randM(sizeAsArray, like = anArray) # to make an array with similar type of anArray</code></pre><p>returns an array filled with random values.</p><p><code>randM(dim)</code> returns 1-dimensional array. To get a square matrix like in Matlab, pass <code>:mat</code> as the 1st argument.</p><p><strong>Examples</strong></p><pre><code class="language-julia">mRand0 = randM(:mat, 2) # same as rand(2,2)
+
+mRand1 = randM(:mat, 2, like = zerosM(Int32, 2, 2)) # like method
+
+mRand2 = randM(2) # same as rand(2)
+
+mRand3 = randM(Int32, 2, 2) # same as rand(Int32,2,2)
+
+mRand4 = randM((2, 2)) # = onesM(2,2) # giving size as Tuple
+
+mRand5 = randM(Int32, (2, 2)) # giving size as Tuple and also the Int32 type
+
+mRand6 = randM([2, 2]) # giving size as an Array, non-efficient Matlab way. Array should be Integer otherwise you will get errors.
+
+mRand7 = randM(Int32, [2, 2]) # giving size as Array, non-efficient Matlab way</code></pre></div></div><a class="source-link" target="_blank" href="https://github.com/juliamatlab/MatLang/blob/2af6dd983097d33459a0e44633b32165d804bc16/src/Language_Fundamentals/Matrices_and_Arrays.jl#LL117-L147">source</a></section><section class="docstring"><div class="docstring-header"><a class="docstring-binding" id="MatLang.repelemM-Tuple{AbstractArray,Integer}" href="#MatLang.repelemM-Tuple{AbstractArray,Integer}"><code>MatLang.repelemM</code></a> — <span class="docstring-category">Method</span>.</div><div><div><pre><code class="language-julia">repelemM(V, count)</code></pre><p>Construct an array by repeating elements of array <code>V</code> by a given number of times specified by counts. if If count is a scalar, then each element of V is repeated <code>count</code> times</p><p><strong>Examples</strong></p><pre><code class="language-julia">V1 = [1 2 3 4];
+mRepelem1 = repelemM(V1, 3) # [1 1 1 2 2 2 3 3 3 4 4 4]</code></pre></div></div><a class="source-link" target="_blank" href="https://github.com/juliamatlab/MatLang/blob/2af6dd983097d33459a0e44633b32165d804bc16/src/Language_Fundamentals/Matrices_and_Arrays.jl#LL353-L363">source</a></section><section class="docstring"><div class="docstring-header"><a class="docstring-binding" id="MatLang.repmatM-Tuple{AbstractArray,Integer}" href="#MatLang.repmatM-Tuple{AbstractArray,Integer}"><code>MatLang.repmatM</code></a> — <span class="docstring-category">Method</span>.</div><div><div><pre><code class="language-julia">repmatM(A, n) # n*n copy
+repmatM(A, s1, s2, ...)
+repmatM(A, [s1, s2, ...])
+repmatM(A, (s1, s2, ...))</code></pre><p>Repeat copies of array <code>A</code> based on the give size</p><p><strong>Examples</strong></p><pre><code class="language-julia">mRempat1 = repmatM(10, 3, 2) # [10 10; 10 10; 10 10]
+
+V = [1; 2]
+mRempat2 = repmatM(V, 3, 2)   # [[1; 2] [1; 2]; [1; 2] [1; 2]; [1; 2] [1; 2]]
+
+mRempat3 = repmatM(V, [3, 2]) # [[1; 2] [1; 2]; [1; 2] [1; 2]; [1; 2] [1; 2]]
+
+mRempat4 = repmatM(V, (3, 2)) # [[1; 2] [1; 2]; [1; 2] [1; 2]; [1; 2] [1; 2]]
+
+mRempat5 = repmatM(V, 2) # [[1; 2] [1; 2]; [1; 2] [1; 2]]
+
+mRempat6 = repmatM(V, 1, 3) # [[1; 2] [1; 2] [1; 2]]</code></pre></div></div><a class="source-link" target="_blank" href="https://github.com/juliamatlab/MatLang/blob/2af6dd983097d33459a0e44633b32165d804bc16/src/Language_Fundamentals/Matrices_and_Arrays.jl#LL373-L395">source</a></section><section class="docstring"><div class="docstring-header"><a class="docstring-binding" id="MatLang.sizeM-Tuple" href="#MatLang.sizeM-Tuple"><code>MatLang.sizeM</code></a> — <span class="docstring-category">Method</span>.</div><div><div><pre><code class="language-julia">sizeAsTuple = sizeM(A)
+sizeDim = sizeM(dim)  # only returns the specified dim
+sizeDimAsTuple = sizeM(A, dim1, dim2,...) # only returns the specified dims
+sizeAsArray = sizeM(:arr, A)
+sizeDimAsArray = sizeM(:arr, A, dim1, dim2,...) # only returns the specified dims
+sz1, sz2, ... = size(A)</code></pre><p>Returns the size of an array as a Tuple.</p><p>Pass <code>:arr</code> to get size as an Array (not a Tuple).</p><p>Consider the points that are explained here when using this function: <a href="https://juliamatlab.github.io/MatLang/dev/juliavsmatlab/#Julia-Arrays:-1">Julia Arrays</a></p><p><strong>Examples</strong></p><pre><code class="language-julia">A1 = [2 3 4 5 6 7;
+      1 2 3 4 5 6]
+mSize1 = sizeM(:arr, A1); # [2; 6]
+tSize1 = sizeM(A1); # (2, 6)
+
+nA1Size2 = sizeM(A1, 2); # 6
+sizeM(A1, 2) == 6 # true
+sizeM(:arr, A1, 2) == 6 # false
+sizeM(:arr, A1, 2) == [6] # true
+
+nA1Size1, nA1Size2 = sizeM(A1); # 2 and 6
+
+A2 = rand(3, 5, 4)
+mSize2 = sizeM(:arr, A2, 2, 3); # [5; 4]
+tSize2 = sizeM(A2, 2, 3); # (5, 4)
+</code></pre></div></div><a class="source-link" target="_blank" href="https://github.com/juliamatlab/MatLang/blob/2af6dd983097d33459a0e44633b32165d804bc16/src/Language_Fundamentals/Matrices_and_Arrays.jl#LL485-L518">source</a></section><section class="docstring"><div class="docstring-header"><a class="docstring-binding" id="MatLang.squeezeM-Tuple{AbstractArray}" href="#MatLang.squeezeM-Tuple{AbstractArray}"><code>MatLang.squeezeM</code></a> — <span class="docstring-category">Method</span>.</div><div><div><pre><code class="language-julia">squeezeM(A)</code></pre><p>Drops all of the singleton dimensions of <code>A</code> (dimensions that are 1). If <code>A</code> contains only one element (i.e., all of its dimensions are singletons) then the output will be a zero-dimensional array.</p><p>If you know the dimension that you want to drop, use dropdims(A ; dims= dimensionsToRemove).</p><p>Only use this function if you don&#39;t know the dimensions that you want to remove, and you are sure that you are not removing important dimensions, and if you don&#39;t care about type stability.</p><p>Returns an array containing the same data as <code>A</code> but with no singleton dimensions; note that the output is NOT a copy of <code>A</code>, i.e., modifying the contents of output will modify the contents of <code>A</code>. To get a copy use copy(output).</p><p><strong>Examples</strong></p><pre><code class="language-julia">A1 = ones(2, 1, 2); # 3 dimensional
+mSqueeze1 = squeezeM(A1) # [1 1; 1 1]
+
+A2 = zeros(1, 4, 1);
+A2[:, 1:4, ] = [5; 3; 6; 0]
+mSqueeze2 = squeezeM(A2) # When it gets one dimensional, it is vertical.
+
+mSqueeze2 == [5; 3; 6; 0] # true
+mSqueeze2 == [5 3 6 0] # false</code></pre></div></div><a class="source-link" target="_blank" href="https://github.com/juliamatlab/MatLang/blob/2af6dd983097d33459a0e44633b32165d804bc16/src/Language_Fundamentals/Matrices_and_Arrays.jl#LL729-L753">source</a></section><section class="docstring"><div class="docstring-header"><a class="docstring-binding" id="MatLang.transposeM-Tuple" href="#MatLang.transposeM-Tuple"><code>MatLang.transposeM</code></a> — <span class="docstring-category">Method</span>.</div><div><div><pre><code class="language-julia">transposeM(A)
+transposeM(:arr, A)</code></pre><p>Returns the transpose an array.</p><p>If <code>:arr</code> is supplied <code>permutedims</code> method is used which returns an array rather a transpose object.</p><p>Becareful that <code>&#39;</code> in Julia is used for adjoint and <code>.&#39;</code> is not defined.</p><p><strong>Examples</strong></p><pre><code class="language-julia">A1 = [2 3 4 5 6 7;
+      1 2 3 4 5 6]
+mTranspose1 = transposeM(A1)
+
+mTranspose2 = transposeM(:arr, A1)</code></pre></div></div><a class="source-link" target="_blank" href="https://github.com/juliamatlab/MatLang/blob/2af6dd983097d33459a0e44633b32165d804bc16/src/Language_Fundamentals/Matrices_and_Arrays.jl#LL569-L587">source</a></section><section class="docstring"><div class="docstring-header"><a class="docstring-binding" id="MatLang.vertcatM" href="#MatLang.vertcatM"><code>MatLang.vertcatM</code></a> — <span class="docstring-category">Function</span>.</div><div><div><pre><code class="language-julia">vertcatM(A1, A2, …)</code></pre><p>Concatenate arrays vertically</p><p><strong>Examples</strong></p><pre><code class="language-julia">mVCat1 = vertcatM(ones(3, 3), zeros(3, 3)) # [ones(3, 3); zeros(3, 3)]</code></pre></div></div><a class="source-link" target="_blank" href="https://github.com/juliamatlab/MatLang/blob/2af6dd983097d33459a0e44633b32165d804bc16/src/Language_Fundamentals/Matrices_and_Arrays.jl#LL342-L350">source</a></section><section class="docstring"><div class="docstring-header"><a class="docstring-binding" id="MatLang.zerosM-Tuple" href="#MatLang.zerosM-Tuple"><code>MatLang.zerosM</code></a> — <span class="docstring-category">Method</span>.</div><div><div><pre><code class="language-julia">zerosM(:mat, dim)         # square dim*dim matrix
+zerosM(:mat, Type,dim)    # square dim*dim matrix
+zerosM(:mat, dim, like=anArray) # to make an array with similar type of anArray
+zerosM(sizeAsArray) # non-efficient Matlab way
+zerosM(Type, sizeAsArray) # non-efficient Matlab way
+zerosM(sizeAsArray, like=anArray) # to make an array with similar type of anArray</code></pre><p>returns an array filled with zero values.</p><p><code>zerosM(dim)</code> returns 1-dimensional array. To get a square matrix like in Matlab, pass <code>:mat</code> as the 1st argument.</p><p><strong>Examples</strong></p><pre><code class="language-julia">mZeros0 = zerosM(:mat, 2) # same as zeros(2,2)
+
+mZeros1 = zerosM(:mat, 2, like = zerosM(Int32, 2, 2)) # like method
+
+mZeros2 = zerosM(2) # same as zeros(2)
+
+mZeros3 = zerosM(Int32, 2, 2) # same as zeros(Int32,2,2)
+
+mZeros4 = zerosM((2, 2)) # = zerosM(2,2) # giving size as Tuple
+
+mZeros5 = zerosM(Int32, (2, 2)) # giving size as Tuple and also the Int32 type
+
+mZeros6 = zerosM([2, 2]) # giving size as an Array, non-efficient Matlab way. Array should be Integer otherwise you will get errors.
+
+mZeros7 = zerosM(Int32, [2, 2]) # giving size as Array, non-efficient Matlab way</code></pre></div></div><a class="source-link" target="_blank" href="https://github.com/juliamatlab/MatLang/blob/2af6dd983097d33459a0e44633b32165d804bc16/src/Language_Fundamentals/Matrices_and_Arrays.jl#LL15-L45">source</a></section><footer><hr/><a class="previous" href="../Entering_Commands/"><span class="direction">Previous</span><span class="title">Entering Commands</span></a><a class="next" href="../Numeric_Types/"><span class="direction">Next</span><span class="title">Numeric Types</span></a></footer></article></body></html>
