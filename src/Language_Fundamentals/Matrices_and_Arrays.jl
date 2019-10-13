@@ -465,6 +465,61 @@ end
 logspaceM(xi, xf, num) = 10.0.^range(xi, stop=xf, length=num)
 ################################################################
 """
+    ngridM(x1, x2,...)
+    ngridM(x, dim = dimAsInteger)
+
+Creates a N-dimensional rectangular grid, that spans the space made by it.
+
+In `ngridM(x1, x2,...)`, depending on the number of inputs, the dimension of output grid is specified.
+
+In `ngridM(x, dim = dimAsInteger)`, user should explicitly pass the dimension as an integer to the function.
+
+Modified from https://github.com/ChrisRackauckas/VectorizedRoutines.jl/blob/master/src/matlab.jl
+
+# Examples
+```julia
+m1Ndgrid0, m2Ndgrid0 = ndgridM(1:2:5, dim = 2) # a 2-D rectangle spanning 1:2:5 in x and y direction == [1 1 1; 3 3 3; 5 5 5] and [1 3 5;1 3 5; 1 3 5]
+
+m1Ndgrid1, m2Ndgrid1 = ndgridM(1:2:5, 1:2:5) #  a 2-D rectangle spanning 1:2:5 in x and y direction == ([1 1 1; 3 3 3; 5 5 5], [1 3 5;1 3 5; 1 3 5])
+
+m1Ndgrid2, m2Ndgrid2, m3Ndgrid2 = ndgridM(1:6, 20:25, 5:10) # a 3-D rectangle spanning 1:6 in x, 20:25 in y, and 5:10 in z
+```
+"""
+ndgridM(v::AbstractVector; dim::Integer) = ndgridM(ntuple(x -> v, dim)...)
+
+function ndgridM(v1::AbstractVector{T}, v2::AbstractVector{T}) where {T}
+    m, n = length(v1), length(v2)
+    v1 = reshape(v1, m, 1)
+    v2 = reshape(v2, 1, n)
+    return (repeat(v1, 1, n), repeat(v2, m, 1))
+end
+
+function ndgrid_fill(a, v, s, snext)
+    for j = 1:length(a)
+        a[j] = v[div(rem(j - 1, snext), s)+1]
+    end
+    return a
+end
+
+function ndgridM(vs::AbstractVector{T}...) where {T}
+    n = length(vs)
+    if n == 1
+        error("You should explicitly pass number of dimensions as a keywork argument like `ngridM(x, dim = 2)`")
+    end
+    sz = map(length, vs)
+    out = ntuple(i -> Array{T}(undef, sz), n)
+    s = 1
+    for i = 1:n
+        a = out[i]::Array
+        v = vs[i]
+        snext = s * size(a, i)
+        ndgrid_fill(a, v, s, snext)
+        s = snext
+    end
+    return out
+end
+################################################################
+"""
     lengthM(A)
 
 Length of the largest array dimension of `A`.
