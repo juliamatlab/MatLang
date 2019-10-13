@@ -881,6 +881,22 @@ flipM(V) = reverse(V)
 flipM(A::AbstractArray, n::Integer = 1) = reverse(A, dims = n)
 ################################################################
 """
+    fliplrM(A)
+
+Flip input left to right
+"""
+fliplrM(V) = reverse(V)
+fliplrM(A::AbstractArray, 2) = reverse(A, dims = n)
+################################################################
+"""
+    flipudM(A)
+
+Flip input up to down
+"""
+fliplrM(V) = reverse(V)
+fliplrM(A::AbstractArray, 1) = reverse(A, dims = n)
+################################################################
+"""
     transposeM(A)
     transposeM(:arr, A)
 
