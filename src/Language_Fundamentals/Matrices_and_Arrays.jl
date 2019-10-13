@@ -722,32 +722,6 @@ nNumel3 = numelM([1 2; 3 4]) # 4
 """
 const numelM = length
 ################################################################
-"""
-    transposeM(A)
-    transposeM(:arr, A)
-
-Returns the transpose an array.
-
-If `:arr` is supplied `permutedims` method is used which returns an array rather a transpose object.
-
-You can use `'` for transposing an Array (e.g `A'`), the result is an adjoint object. If you want, you can get the array using `collect()`. Be careful that in Julia `.'` is not used for transposing.
-
-# Examples
-```julia
-A1 = [2 3 4 5 6 7;
-      1 2 3 4 5 6]
-mTranspose1 = transposeM(A1)
-
-mTranspose2 = transposeM(:arr, A1)
-```
-"""
-transposeM(args...) = transpose(args...)
-function transposeM(collectSymbol::Symbol, A)
-    if collectSymbol == :arr
-        return permutedims(A)
-    end
-end
-################################################################
 using Base.Broadcast
 """
     isscalarM(x)
@@ -878,6 +852,57 @@ end
 function isvectorM(matlabWaySymbol::Symbol, x::Any)
     if matlabWaySymbol == :mat
         return isa(x, Union{Number, AbstractString, Char, Bool})
+    end
+end
+################################################################
+"""
+    flipM(A)
+
+Flip elements of a vector
+Flip elements of an array along columns
+Flip a string
+
+    flipM(A, dim)
+
+Flip elements of an array along specifed dim
+
+# Examples
+```julia
+sFlip1 = flipM("Hi") # "iH"
+
+mFlip2 = flipM([1; 2; 3; 4]) #[4;3;2;1]
+
+mFlip3 = flipM([1 2; 3 4]) # flips every column: # [3 4; 1 2]
+
+mFlip4 = flipM([1 2; 3 4], 2) # flip along dims 2: #[2 1; 4 3]
+```
+"""
+flipM(V) = reverse(V)
+flipM(A::AbstractArray, n::Integer = 1) = reverse(A, dims = n)
+################################################################
+"""
+    transposeM(A)
+    transposeM(:arr, A)
+
+Returns the transpose an array.
+
+If `:arr` is supplied `permutedims` method is used which returns an array rather a transpose object.
+
+You can use `'` for transposing an Array (e.g `A'`), the result is an adjoint object. If you want, you can get the array using `collect()`. Be careful that in Julia `.'` is not used for transposing.
+
+# Examples
+```julia
+A1 = [2 3 4 5 6 7;
+      1 2 3 4 5 6]
+mTranspose1 = transposeM(A1)
+
+mTranspose2 = transposeM(:arr, A1)
+```
+"""
+transposeM(args...) = transpose(args...)
+function transposeM(collectSymbol::Symbol, A)
+    if collectSymbol == :arr
+        return permutedims(A)
     end
 end
 ################################################################

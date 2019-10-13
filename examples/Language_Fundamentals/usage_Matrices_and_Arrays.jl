@@ -273,6 +273,14 @@ bIsvectorMat7 = isvectorM(:mat, "Hi") # true
 
 bIsvectorMat8 = isvectorM(:mat, ["Hi", "Bye"]) # true
 ################################################################
+sFlip1 = flipM("Hi") # "iH"
+
+mFlip2 = flipM([1; 2; 3; 4]) #[4;3;2;1]
+
+mFlip3 = flipM([1 2; 3 4]) # flips every column: # [3 4; 1 2]
+
+mFlip4 = flipM([1 2; 3 4], 2) # flip along dims 2: #[2 1; 4 3]
+################################################################
 A1 = [2 3 4 5 6 7;
       1 2 3 4 5 6]
 mTranspose1 = transposeM(A1)
