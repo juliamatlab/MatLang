@@ -161,6 +161,14 @@ m1Ndgrid1, m2Ndgrid1 = ndgridM(1:2:5, 1:2:5) #  a 2-D rectangle spanning 1:2:5 i
 
 m1Ndgrid2, m2Ndgrid2, m3Ndgrid2 = ndgridM(1:6, 20:25, 5:10) # a 3-D rectangle spanning 1:6 in x, 20:25 in y, and 5:10 in z
 ################################################################
+mFreqspace1 = freqspaceM(10, dim = 1) # 0:0.2:1
+
+mFreqspace2 = freqspaceM(10, :whole, dim = 1) # 0:0.2:1.8
+
+m1Freqspace3, m2Freqspace3 = freqspaceM(10, dim = 2) # returns two -1:0.2:0.8
+
+m1Freqspace4, m2Freqspace4 = freqspaceM(10, :meshgrid, dim = 2) # returns mesgridM(-1:0.2:0.8, -1:0.2:0.8), which is two -1:0.2:0.8
+################################################################
 A1 = [2 3 4 5 6 7;
       1 2 3 4 5 6]
 nLength1 = lengthM(A1); # 6

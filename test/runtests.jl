@@ -43,6 +43,7 @@ end
 	@test linspaceM(1, 10, 2) == 1:2:10
 	@test logspaceM(1, 5, :equal) == 10.0.^(1:5)
 	@test meshgridM(1:2:5, 1:2:5)==([1 3 5;1 3 5; 1 3 5],[1 1 1; 3 3 3; 5 5 5])
+	@test freqspaceM(10, dim = 1) == 0:0.2:1
 	@test ndgridM(1:2:5, 1:2:5)==([1 1 1; 3 3 3; 5 5 5], [1 3 5;1 3 5; 1 3 5])
 	@test lengthM([2 3 4 5 6 7; 1 2 3 4 5 6]) == 6
 	@test sizeM(:arr, [2 3 4 5 6 7; 1 2 3 4 5 6]) == [2; 6]

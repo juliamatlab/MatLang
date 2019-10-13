@@ -569,6 +569,58 @@ function ndgridM(vs::AbstractVector{T}...) where {T}
 end
 ################################################################
 """
+    freqspaceM(n, opt, dim = dimAsInteger)
+
+Returns the implied frequency range for equally spaced frequency responses.
+
+Pass `:whole` when dim=1, to get m evenly spaced points around the whole unit circle.
+
+Pass `:meshgridM` when dim=2, to get meshgrid of the frequency range.
+
+# Examples
+```julia
+mFreqspace1 = freqspaceM(10, dim = 1) # 0:0.2:1
+
+mFreqspace2 = freqspaceM(10, :whole, dim = 1) # 0:0.2:1.8
+
+m1Freqspace3, m2Freqspace3 = freqspaceM(10, dim = 2) # returns two -1:0.2:0.8
+
+m1Freqspace4, m2Freqspace4 = freqspaceM(10, :meshgrid, dim = 2) # returns mesgridM(-1:0.2:0.8, -1:0.2:0.8), which is two -1:0.2:0.8
+```
+"""
+function freqspaceM(n::Integer, opt::Symbol = :nothing ; dim::Integer)
+
+    if dim == 1
+        if opt != :whole
+            if n != 0
+                f = 0:2/n:1
+            else
+                f = zeros(eltype(n), 1, 0)
+            end
+            return f
+        else
+            f = 0:2/n:2*(n-1)/n
+            return f
+        end
+    elseif dim == 2
+
+        if iseven(n)
+            f = [-n:2:n-2] / n
+        else
+            f = [-n+1:2:n-1] / n
+        end
+
+        if opt != :meshgrid
+            return f, f
+        else
+            return meshgridM(f, f)
+        end
+    else
+        error("dim should be 1 or 2")
+    end
+end
+################################################################
+"""
     lengthM(A)
 
 Length of the largest array dimension of `A`.
