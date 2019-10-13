@@ -465,6 +465,53 @@ end
 logspaceM(xi, xf, num) = 10.0.^range(xi, stop=xf, length=num)
 ################################################################
 """
+    meshgridM(vx)
+    meshgridM(vx,vy)
+    meshgridM(vx,vy,vz)
+
+Creates a 2-dimensional or 3-dimensional rectangular grid, that spans the space made by it.
+
+`meshgridM(vx)` computes a 2-D (x,y)-grid from the vectors (vx,vx).
+
+`meshgridM(vx,vy)` computes a 2-D (x,y)-grid from the vectors (vx,vy).
+
+`meshgridM(vx,vy,vz)` computes a 3-D (x,y,z)-grid from the vectors (vx,vy,vz).
+
+meshgridM's 1st output is the transpose of ngridsM's 1st output. It is the same for the 2nd output.
+
+Modified from https://github.com/ChrisRackauckas/VectorizedRoutines.jl/blob/master/src/matlab.jl
+
+# Examples
+```julia
+m1Meshgrid0, m2Meshgrid0 = meshgridM(1:2:5) # a 2-D rectangle spanning 1:2:5 in x and y direction == [[1;1;1][3;3;3] [5;5;5]] and [1 1 1; 3 3 3; 5 5 5]
+
+m1Meshgrid1, m2Meshgrid1 = meshgridM(1:2:5, 1:2:5) #  a 2-D rectangle spanning 1:2:5 in x and y direction == ([1 3 5;1 3 5; 1 3 5],[1 1 1; 3 3 3; 5 5 5])
+
+m1Meshgrid2, m2Meshgrid2, m3Meshgrid2 = meshgridM(1:6, 20:25, 5:10) # a 3-D rectangle spanning 1:6 in x, 20:25 in y, and 5:10 in z
+```
+ """
+ meshgridM(v::AbstractVector) = meshgridM(v, v)
+
+ function meshgridM(vx::AbstractVector{T}, vy::AbstractVector{T}) where {T}
+     m, n = length(vy), length(vx)
+     vx = reshape(vx, 1, n)
+     vy = reshape(vy, m, 1)
+     (repeat(vx, m, 1), repeat(vy, 1, n))
+ end
+
+ function meshgridM(vx::AbstractVector{T}, vy::AbstractVector{T},
+                      vz::AbstractVector{T}) where {T}
+     m, n, o = length(vy), length(vx), length(vz)
+     vx = reshape(vx, 1, n, 1)
+     vy = reshape(vy, m, 1, 1)
+     vz = reshape(vz, 1, 1, o)
+     om = ones(Int, m)
+     on = ones(Int, n)
+     oo = ones(Int, o)
+     (vx[om, :, oo], vy[:, on, oo], vz[om, on, :])
+ end
+################################################################
+"""
     ngridM(x1, x2,...)
     ngridM(x, dim = dimAsInteger)
 
@@ -473,6 +520,8 @@ Creates a N-dimensional rectangular grid, that spans the space made by it.
 In `ngridM(x1, x2,...)`, depending on the number of inputs, the dimension of output grid is specified.
 
 In `ngridM(x, dim = dimAsInteger)`, user should explicitly pass the dimension as an integer to the function.
+
+ngridsM's 1st output is the transpose of meshgridM()'s 1st output. It is the same for the 2nd output.
 
 Modified from https://github.com/ChrisRackauckas/VectorizedRoutines.jl/blob/master/src/matlab.jl
 

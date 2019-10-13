@@ -149,6 +149,12 @@ mLogspace2 = logspaceM(1, 5, 10) # 10 logarithmically spaced points between 10^1
 
 mLogspace3 = logspaceM(1, 5, :equal) # [10.0^1, 10.0^2, 10.0^3, 10.0^4, 10.0^5] == 10.0.^(1:5)
 ################################################################
+m1Meshgrid0, m2Meshgrid0 = meshgridM(1:2:5) # a 2-D rectangle spanning 1:2:5 in x and y direction == [[1;1;1][3;3;3] [5;5;5]] and [1 1 1; 3 3 3; 5 5 5]
+
+m1Meshgrid1, m2Meshgrid1 = meshgridM(1:2:5, 1:2:5) #  a 2-D rectangle spanning 1:2:5 in x and y direction == ([1 3 5;1 3 5; 1 3 5],[1 1 1; 3 3 3; 5 5 5])
+
+m1Meshgrid2, m2Meshgrid2, m3Meshgrid2 = meshgridM(1:6, 20:25, 5:10) # a 3-D rectangle spanning 1:6 in x, 20:25 in y, and 5:10 in z
+################################################################
 m1Ndgrid0, m2Ndgrid0 = ndgridM(1:2:5, dim = 2) # a 2-D rectangle spanning 1:2:5 in x and y direction == [1 1 1; 3 3 3; 5 5 5] and [1 3 5;1 3 5; 1 3 5]
 
 m1Ndgrid1, m2Ndgrid1 = ndgridM(1:2:5, 1:2:5) #  a 2-D rectangle spanning 1:2:5 in x and y direction == ([1 1 1; 3 3 3; 5 5 5], [1 3 5;1 3 5; 1 3 5])
