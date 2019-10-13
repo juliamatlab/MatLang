@@ -61,6 +61,22 @@ mRand6 = randM([2, 2]) # giving size as an Array, non-efficient Matlab way. Arra
 
 mRand7 = randM(Int32, [2, 2]) # giving size as Array, non-efficient Matlab way
 ################################################################
+mTrue0 = trueM(:mat, 2) # same as trues(2,2)
+
+mTrue1 = trueM(2) # same as trues(2)
+
+mTrue2 = trueM((2, 2)) # = onesM(2,2) # giving size as Tuple
+
+mTrue3 = trueM([2, 2]) # giving size as an Array, non-efficient Matlab way. Array should be Integer otherwise you will get errors.
+################################################################
+mFalse0 = falseM(:mat, 2) # same as falses(2,2)
+
+mFalse1 = falseM(2) # same as falses(2)
+
+mFalse2 = falseM((2, 2)) # = falseM(2,2) # giving size as Tuple
+
+mFalse3 = falseM([2, 2]) # giving size as an Array, non-efficient Matlab way. Array should be Integer otherwise you will get errors.
+################################################################
 mEye0 = eyeM(2); # [1 0 0; 0 1 0]
 
 mEye1 = eyeM(2, 3); # [1 0 0; 0 1 0]

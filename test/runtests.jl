@@ -21,7 +21,6 @@ end
 
 end
 @testset "MatLang.jl - Matrices_and_Arrays" begin
-	@test trueM == true
 	@test zerosM(:mat, 2) == zeros(2, 2)
 	@test zerosM(:mat, 2, like = ones(Int32, 2, 2)) == zeros(Int32, 2, 2)
 	@test zerosM([2, 3]) == zerosM((2, 3))
@@ -29,6 +28,7 @@ end
 	@test onesM(:mat, 2) == ones(2, 2)
 	@test onesM([2, 3]) == onesM((2, 3))
 	@test onesM(Int8, [2, 3]) == onesM(Int8, (2, 3))
+	@test falseM([2, 2]) == 0*trueM(:mat,2)
 	@test eyeM(2, 3) == [1 0 0; 0 1 0]
 	@test eyeM(Int32, 2, 3) == [1 0 0; 0 1 0]
 	@test eyeM(2, 3, like = ones(Int32, 2, 2)) == [1 0 0; 0 1 0]

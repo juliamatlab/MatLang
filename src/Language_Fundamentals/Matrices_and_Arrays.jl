@@ -4,7 +4,7 @@
 ################################################################
 ################################################################
 # Copy of Julia Functions/Types
-natives = [:true, :false] # input symbols
+natives = [] # input symbols
 for n in natives
     @eval begin
         const $(Symbol(n, "M")) = $n
@@ -136,7 +136,7 @@ mRand2 = randM(2) # same as rand(2)
 
 mRand3 = randM(Int32, 2, 2) # same as rand(Int32,2,2)
 
-mRand4 = randM((2, 2)) # = onesM(2,2) # giving size as Tuple
+mRand4 = randM((2, 2)) # = randM(2,2) # giving size as Tuple
 
 mRand5 = randM(Int32, (2, 2)) # giving size as Tuple and also the Int32 type
 
@@ -164,6 +164,63 @@ end
 randM(T::Type, a::Array) = rand(T, Tuple(a))
 randM(a::Array; like::AbstractArray = Vector{Float64}()) =
     rand(eltype(like), Tuple(a))
+
+################################################################
+"""
+    trueM(:mat, dim)          # square dim*dim matrix
+    trueM(sizeAsArray) # non-efficient Matlab way
+
+returns an array filled with true values.
+
+`trueM(dim)` returns 1-dimensional array. To get a square matrix like in Matlab, pass `:mat` as the 1st argument.
+
+# Examples
+```julia
+mTrue0 = trueM(:mat, 2) # same as trues(2,2)
+
+mTrue1 = trueM(2) # same as trues(2)
+
+mTrue2 = trueM((2, 2)) # = trues(2,2) # giving size as Tuple
+
+mTrue3 = trueM([2, 2]) # giving size as an Array, non-efficient Matlab way. Array should be Integer otherwise you will get errors.
+```
+"""
+trueM(args...) = trues(args...) # includes T::Type method
+
+function trueM(matSymbol::Symbol, dim::Integer)
+    if matSymbol == :mat
+        return trues(dim, dim)
+    end
+end
+trueM(a::Array) = trues(Tuple(a))
+################################################################
+"""
+    falseM(:mat, dim)          # square dim*dim matrix
+    falseM(sizeAsArray) # non-efficient Matlab way
+
+returns an array filled with false values.
+
+`falseM(dim)` returns 1-dimensional array. To get a square matrix like in Matlab, pass `:mat` as the 1st argument.
+
+# Examples
+```julia
+mFalse0 = falseM(:mat, 2) # same as falses(2,2)
+
+mFalse1 = falseM(2) # same as falses(2)
+
+mFalse2 = falseM((2, 2)) # = falseM(2,2) # giving size as Tuple
+
+mFalse3 = falseM([2, 2]) # giving size as an Array, non-efficient Matlab way. Array should be Integer otherwise you will get errors.
+```
+"""
+falseM(args...) = falses(args...) # includes T::Type method
+
+function falseM(matSymbol::Symbol, dim::Integer)
+    if matSymbol == :mat
+        return falses(dim, dim)
+    end
+end
+falseM(a::Array) = falses(Tuple(a))
 ################################################################
 """
 

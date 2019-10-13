@@ -16,7 +16,7 @@
     <tr>
         <td>2</td>
         <td>Matrices_and_Arrays</td>
-        <td>zerosM, onesM, randM, eyeM, diagM, catM, horzcatM, vertcatM, repelemM(limited), repmatM, linspaceM, logspaceM, meshgridM, ndgridM, freqspaceM, lengthM, sizeM, numelM, isscalarM, isvectorM, flipM, fliplrM, flipudM, flipdimM, rot90M, transposeM, squeezeM</td>
+        <td>zerosM, onesM, randM, trueM, falseM, eyeM, diagM, catM, horzcatM, vertcatM, repelemM(limited), repmatM, linspaceM, logspaceM, meshgridM, ndgridM, freqspaceM, lengthM, sizeM, numelM, isscalarM, isvectorM, flipM, fliplrM, flipudM, flipdimM, rot90M, transposeM, squeezeM</td>
     </tr>
     <tr>
         <td>3</td>
