@@ -906,6 +906,21 @@ See [`flipM`](@ref) doc
 flipdimM(A::AbstractArray, n::Integer) = reverse(A, dims = n)
 ################################################################
 """
+    rot90M(A)
+    rot90M(A, k)
+
+Rotate 90 or 90*k degress counter clock wise.
+
+# Examples
+```julia
+mRot1 = rot90M([1 2; 3 4]) #[2 4; 1 3]
+
+mRot2 = rot90M([1 2; 3 4], 3) # [3 1; 4 2]
+```
+"""
+const rot90M = rotl90
+################################################################
+"""
     transposeM(A)
     transposeM(:arr, A)
 
