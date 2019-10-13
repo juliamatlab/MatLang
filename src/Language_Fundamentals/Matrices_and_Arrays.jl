@@ -887,7 +887,7 @@ Flip input left to right
 See [`flipM`](@ref) doc
 """
 fliplrM(V) = reverse(V)
-fliplrM(A::AbstractArray, 2) = reverse(A, dims = n)
+fliplrM(A::AbstractArray) = reverse(A, dims = 2)
 ################################################################
 """
     flipudM(A)
@@ -896,7 +896,7 @@ Flip input up to down
 See [`flipM`](@ref) doc
 """
 fliplrM(V) = reverse(V)
-fliplrM(A::AbstractArray, 1) = reverse(A, dims = n)
+fliplrM(A::AbstractArray) = reverse(A, dims = 1)
 ################################################################
 """
     flipdimM(A, dim)
