@@ -289,6 +289,19 @@ bIsvectorMat7 = isvectorM(:mat, "Hi") # true
 
 bIsvectorMat8 = isvectorM(:mat, ["Hi", "Bye"]) # true
 ################################################################
+mSort1 = sortM([5, 3, 19, 20, 1, 4]) # [1, 3, 4, 5, 19, 20]
+
+mSort2 = sortM([5, 3, 19, 20, 1, 4], :descend) # [20,19,5,4,3,1]
+
+mSort3 = sortM([1 5 3; 4 1 10]) # [1 1 3; 4 5 10]
+
+mSort4 = sortM([1 5 3; 4 1 10], 2, :ascend) # [1 3 5; 1 4 10]
+
+A = zerosM(Integer, 2, 2, 2)
+A[:, :, 1] = [2 3; 1 6]
+A[:, :, 2] = [-1 9; 0 12]
+mSort5 = sortM(A, 3) # 3D sort
+################################################################
 sFlip1 = flipM("Hi") # "iH"
 
 mFlip2 = flipM([1; 2; 3; 4]) #[4;3;2;1]

@@ -51,6 +51,7 @@ end
 	@test numelM([1, 2, 3, 4]) == 4
 	@test [isscalarM(:mat, 1); isscalarM(:mat, 5 * ones(1, 1, 1)); isscalarM(:mat, "H"); isscalarM(:mat, "Hi"); isscalarM(:mat, ["Hi"]); isscalarM(:mat, ["Hi" "Bye"]); isscalarM(:mat, 'H'); ] == [true; true; true; false; true; false; true]
 	@test [isvectorM(:mat, [1; 2; 3]); isvectorM(:mat, [1 2 3]); isvectorM(:mat, ones(3, 1)); isvectorM(:mat, ones(1, 3)); isvectorM(:mat, ones(3)); isvectorM(:mat, 1); isvectorM(:mat, "Hi"); isvectorM(:mat, ["Hi", "Bye"])] == [true; true; true; true; true; true; true; true]
+	@test sortM([1 5 3; 4 1 10], 2, :ascend) == [1 3 5; 1 4 10]
 	@test flipM([1 2; 3 4]) == [3 4; 1 2]
 	@test  rot90M([1 2; 3 4], 3) == [3 1; 4 2]
 	@test transposeM([2 3 4 5 6 7; 1 2 3 4 5 6]) == transposeM(:arr, [2 3 4 5 6 7; 1 2 3 4 5 6])

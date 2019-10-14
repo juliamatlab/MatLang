@@ -913,6 +913,54 @@ function isvectorM(matlabWaySymbol::Symbol, x::Any)
 end
 ################################################################
 """
+    sortM(A)
+    sortM(A,dim)
+    sortM(..., direction)
+
+Sorts array elements
+
+If A is an matrix and dim not specified, it sorts each column. If A is an array, it sorts along first dimension
+
+Optionally, specify direction as `:ascend` or `:descend`. Default one is `:ascend`.
+
+See [`sort`](@ref) doc for more options.
+
+To do: implement NaN, undef, missing placement options. Implement comparison method for complex numbers. Implement ignoring of first dimensions which are 1 in multidimensional arrays.
+
+# Examples
+```julia
+mSort1 = sortM([5, 3, 19, 20, 1, 4]) # [1, 3, 4, 5, 19, 20]
+
+mSort2 = sortM([5, 3, 19, 20, 1, 4], :descend) # [20,19,5,4,3,1]
+
+mSort3 = sortM([1 5 3; 4 1 10]) # [1 1 3; 4 5 10]
+
+mSort4 = sortM([1 5 3; 4 1 10], 2, :ascend) # [1 3 5; 1 4 10]
+
+A = zerosM(Integer, 2, 2, 2)
+A[:, :, 1] = [2 3; 1 6]
+A[:, :, 2] = [-1 9; 0 12]
+mSort5 = sortM(A, 3) # 3D sort
+```
+"""
+sortM(args...) = sort(args...)
+
+function sortM(V::AbstractVector, direction::Symbol=:ascend)
+    if direction == :ascend
+        return sort(V)
+    elseif direction == :descend
+        return sort(V, rev=true)
+    end
+end
+function sortM(A::AbstractArray, dim::Integer = 1, direction::Symbol=:ascend)
+    if direction == :ascend
+        return sort(A,dims=dim)
+    elseif direction == :descend
+        return sort(A,dims=dim, rev=true)
+    end
+end
+################################################################
+"""
     flipM(A)
 
 Flip elements of a vector
