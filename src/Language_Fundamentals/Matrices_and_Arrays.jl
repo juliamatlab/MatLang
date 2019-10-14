@@ -934,7 +934,7 @@ mFlip3 = flipM([1 2; 3 4]) # flips every column: # [3 4; 1 2]
 mFlip4 = flipM([1 2; 3 4], 2) # flip along dims 2: #[2 1; 4 3]
 ```
 """
-flipM(V) = reverse(V)
+flipM(V::Any) = reverse(V::Any)
 flipM(A::AbstractArray, n::Integer = 1) = reverse(A, dims = n)
 ################################################################
 """
@@ -943,7 +943,7 @@ flipM(A::AbstractArray, n::Integer = 1) = reverse(A, dims = n)
 Flip input left to right
 See [`flipM`](@ref) doc
 """
-fliplrM(V) = reverse(V)
+fliplrM(V::Any) = reverse(V::Any)
 fliplrM(A::AbstractArray) = reverse(A, dims = 2)
 ################################################################
 """
@@ -952,8 +952,8 @@ fliplrM(A::AbstractArray) = reverse(A, dims = 2)
 Flip input up to down
 See [`flipM`](@ref) doc
 """
-fliplrM(V) = reverse(V)
-fliplrM(A::AbstractArray) = reverse(A, dims = 1)
+flipudM(V::Any) = reverse(V::Any)
+flipudM(A::AbstractArray) = reverse(A, dims = 1)
 ################################################################
 """
     flipdimM(A, dim)
