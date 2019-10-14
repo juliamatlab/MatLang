@@ -916,6 +916,7 @@ end
     sortM(A)
     sortM(A,dim)
     sortM(..., direction)
+    sortM(..., I=true)
 
 Sorts array elements
 
@@ -923,13 +924,17 @@ If A is an matrix and dim not specified, it sorts each column. If A is an array,
 
 Optionally, specify direction as `:ascend` or `:descend`. Default one is `:ascend`.
 
-See [`sort`](@ref) doc for more options.
+If you want to get sort index as an output, you should pass `I=true`, as a keyword argument to the function. In this case sorted array is given as the first output using A[I]. This method is supported up to 2 dimensional matrices.
 
-To do: implement NaN, undef, missing placement options. Implement comparison method for complex numbers. Implement ignoring of first dimensions which are 1 in multidimensional arrays.
+See [`sort`](@ref) doc for more options.
 
 # Examples
 ```julia
-mSort1 = sortM([5, 3, 19, 20, 1, 4]) # [1, 3, 4, 5, 19, 20]
+mSort0 = sortM([5, 3, 19, 20, 1, 4]) # [1, 3, 4, 5, 19, 20]
+
+A = [5, 3, 19, 20, 1, 4]
+mSort1, iSort1 = sortM(A, I = true)  # returning sort index
+A[iSort1] == mSort1
 
 mSort2 = sortM([5, 3, 19, 20, 1, 4], :descend) # [20,19,5,4,3,1]
 
@@ -937,27 +942,73 @@ mSort3 = sortM([1 5 3; 4 1 10]) # [1 1 3; 4 5 10]
 
 mSort4 = sortM([1 5 3; 4 1 10], 2, :ascend) # [1 3 5; 1 4 10]
 
+B = [1 5 3; 4 1 10]
+mSort5, iSort5 = sortM(B, 2, :ascend, I = true) # [1 3 5; 1 4 10]
+B[iSort5] == mSort5
+
 A = zerosM(Integer, 2, 2, 2)
 A[:, :, 1] = [2 3; 1 6]
 A[:, :, 2] = [-1 9; 0 12]
-mSort5 = sortM(A, 3) # 3D sort
+mSort6 = sortM(A, 3) # 3D sort
 ```
 """
 sortM(args...) = sort(args...)
 
-function sortM(V::AbstractVector, direction::Symbol=:ascend)
+function sortM(V::AbstractVector, direction::Symbol = :ascend; I::Bool = false)
+
     if direction == :ascend
-        return sort(V)
+        if !I
+            return sort(V)
+        else
+            idx = sortperm(V)
+            return V[idx], idx
+        end
     elseif direction == :descend
-        return sort(V, rev=true)
+        if !I
+            return sort(V, rev = true)
+        else
+            idx = sortperm(V, rev = true)
+            return V[idx], idx
+        end
     end
 end
-function sortM(A::AbstractArray, dim::Integer = 1, direction::Symbol=:ascend)
+function sortM(A::AbstractArray, dim::Integer = 1, direction::Symbol=:ascend; I::Bool = false)
     if direction == :ascend
-        return sort(A,dims=dim)
+        if !I
+            return sort(A, dims = dim)
+        else
+            idx = sortperm(A, dims = dim)
+            return A[idx], idx
+        end
     elseif direction == :descend
-        return sort(A,dims=dim, rev=true)
+        if !I
+            return sort(A, dims = dim, rev = true)
+        else
+            idx = sortperm(A, dims = dim, rev = true)
+            return A[idx], idx
+        end
     end
+end
+
+# multidimensional sortperm is missing: https://github.com/JuliaLang/julia/issues/16273
+
+function Base.sortperm(A::AbstractMatrix; dims::Integer, rev::Bool = false)
+    P = mapslices(x -> sortperm(x; rev = rev), A, dims = dims)
+    if dims == 1
+        for j = 1:size(P, 2)
+            offset = (j - 1) * size(P, 1)
+            for i = 1:size(P, 1)
+                P[i, j] += offset
+            end
+        end
+    else # if dims == 2
+        for j = 1:size(P, 2)
+            for i = 1:size(P, 1)
+                P[i, j] = (P[i, j] - 1) * size(P, 1) + i
+            end
+        end
+    end
+    return P
 end
 ################################################################
 """
