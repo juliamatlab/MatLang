@@ -4,9 +4,10 @@
 ################################################################
 ################################################################
 # Copy of Julia Functions/Types
-natives = [] # input symbols
+natives = [:isempty] # input symbols
 for n in natives
     @eval begin
+        @doc @doc($n) $(Symbol(n, "M"))
         const $(Symbol(n, "M")) = $n
         export $(Symbol(n, "M"))
     end
