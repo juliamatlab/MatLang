@@ -13,152 +13,108 @@ for n in natives
     end
 end
 ################################################################
-"""
-    zerosM(:mat, dim)         # square dim*dim matrix
-    zerosM(:mat, Type,dim)    # square dim*dim matrix
-    zerosM(:mat, dim, like=anArray) # to make an array with similar type of anArray
-    zerosM(sizeAsArray) # non-efficient Matlab way
-    zerosM(Type, sizeAsArray) # non-efficient Matlab way
-    zerosM(sizeAsArray, like=anArray) # to make an array with similar type of anArray
+import Base: DimOrInd, OneTo
+for (fname, fnative, docIn) in ((:zerosM, :zeros, "zero"), (:onesM, :ones, "one"), (:randM, :rand, "random"))
+    @eval begin
 
-returns an array filled with zero values.
+        # init
+        function $fname end
 
-`zerosM(dim)` returns 1-dimensional array. To get a square matrix like in Matlab, pass `:mat` as the 1st argument.
+        # doc
+        @doc """
+            $($fname)
 
-# Examples
-```julia
-mZeros0 = zerosM(:mat, 2) # same as zeros(2,2)
+        returns an array filled with $($docIn) values.
 
-mZeros1 = zerosM(:mat, 2, like = zerosM(Int32, 2, 2)) # like method
+        In addition to original Julia methods the following methods are provided:
 
-mZeros2 = zerosM(2) # same as zeros(2)
+            $($fname)(..., like = anArray) # to make an array with similar type of anArray
+            $($fname)(Type, ...)           # to give type explicitly
 
-mZeros3 = zerosM(Int32, 2, 2) # same as zeros(Int32,2,2)
+        Above input arguments work with any other method.
 
-mZeros4 = zerosM((2, 2)) # = zerosM(2,2) # giving size as Tuple
+            $($fname)(sizeAsArray)
 
-mZeros5 = zerosM(Int32, (2, 2)) # giving size as Tuple and also the Int32 type
+        To give size as an array (non-efficient Matlab way).
 
-mZeros6 = zerosM([2, 2]) # giving size as an Array, non-efficient Matlab way. Array should be Integer otherwise you will get errors.
+            $($fname)(:mat, dim)         # square dim*dim matrix
+            $($fname)(:mat, Type, dim)   # square dim*dim matrix
 
-mZeros7 = zerosM(Int32, [2, 2]) # giving size as Array, non-efficient Matlab way
-```
-"""
-zerosM(args...) = zeros(args...) # includes T::Type method
+        `$($fname)(dim)` returns 1-dimensional array. To get a square matrix like in Matlab, pass `:mat` as the 1st argument.
 
-function zerosM(matSymbol::Symbol, T::Type, dim::Integer)
-    if matSymbol == :mat
-        return zeros(T, dim, dim)
+        # Examples
+        ```julia
+        m$($docIn)0 = $($fname)(:mat, 2) # same as $($fnative)(2,2)
+
+        m$($docIn)1 = $($fname)(:mat, 2, like = $($fname)(Int32, 2, 2)) # like method
+
+        A=[2 1 2]
+        m$($docIn)2 = $($fname)(2, like=A) # same as $($fnative)(Int64,2)
+
+        m$($docIn)3 = $($fname)(2) # same as $($fnative)(2)
+
+        m$($docIn)4 = $($fname)(Int32, 2, 2) # same as $($fnative)(Int32,2,2)
+
+        # giving size as Tuple
+        m$($docIn)5 = $($fname)((2, 2)) # = $($fname)(2,2)
+
+        m$($docIn)6 = $($fname)(Int32, (2, 2))
+
+        # giving size as an Array
+        ## non-efficient Matlab way. Array should be Integer otherwise you will get errors.
+
+        m$($docIn)7 = $($fname)([2, 2])
+
+        m$($docIn)8 = $($fname)(Int32, [2, 2])
+
+        m$($docIn)9 = $($fname)([2, 2], like = [2.5 3.0])
+        ```
+        """ $(fname)
+
+        # copying methods
+        # includes T::Type methods
+        $fname(args...)=$fnative(args...)
+
+        # Tuple as input methods
+        $fname(dims::DimOrInd...; like::Array = Vector{Float64}()) =
+        $fnative(eltype(like), dims)
+
+        $fname(dims::NTuple{N, Union{Integer, OneTo}}; like::Array = Vector{Float64}()) where {N} =
+        $fnative(eltype(like), dims)
+
+        $fname(dims::Tuple{Vararg{DimOrInd}}; like::Array = Vector{Float64}()) =
+        $fnative(eltype(like), dims)
+
+        $fname(dims::Tuple{}; like::Array = Vector{Float64}()) =
+        $fnative(eltype(like), dims)
+
+        # another way kept as a reference
+        # $fname(dims::Tuple{}}; like::Union{Array,Nothing}=nothing) =
+        # like === nothing
+        # ? $fnative(dims)
+        # : $fnative(eltype(like), dims)
+
+        # Array as input methods
+        $fname(a::Array; like::Array = Vector{Float64}()) =
+        $fnative(eltype(like), Tuple(a))
+
+        $fname(::Type{T}, a::Array) where {T} = $fnative(T, Tuple(a))
+
+        # square matrix with one dim input
+        function $fname(matSymbol::Symbol, ::Type{T}, dim::Integer) where {T}
+            if matSymbol == :mat
+                return $fnative(T, dim, dim)
+            end
+        end
+
+        function $fname(matSymbol::Symbol, dim::Integer; like::Array=Vector{Float64}())
+            if matSymbol == :mat
+                return $fnative(eltype(like), dim, dim)
+            end
+        end
     end
 end
-
-function zerosM(matSymbol::Symbol, dim::Integer; like::AbstractArray = Vector{Float64}())
-    if matSymbol == :mat
-        return zeros(eltype(like), dim, dim)
-    end
-end
-
-# zerosM(dim::Integer; like::Union{Array,Nothing}=nothing) = like === nothing ? zeros(dim,dim) : zeros(eltype(like), dim, dim)
-
-zerosM(T::Type, a::Array) = zeros(T, Tuple(a))
-zerosM(a::Array; like::AbstractArray = Vector{Float64}()) =
-    zeros(eltype(like), Tuple(a))
 ################################################################
-"""
-    onesM(:mat, dim)         # square dim*dim matrix
-    onesM(:mat, Type,dim)    # square dim*dim matrix
-    onesM(:mat, dim, like=anArray) # to make an array with similar type of anArray
-    onesM(sizeAsArray) # non-efficient Matlab way
-    onesM(Type, sizeAsArray) # non-efficient Matlab way
-    onesM(sizeAsArray, like=anArray) # to make an array with similar type of anArray
-
-returns an array filled with one values.
-
-`onesM(dim)` returns 1-dimensional array. To get a square matrix like in Matlab, pass `:mat` as the 1st argument.
-
-# Examples
-```julia
-mOnes0 = onesM(:mat, 2) # same as ones(2,2)
-
-mOnes1 = onesM(:mat, 2, like = zerosM(Int32, 2, 2)) # like method
-
-mOnes2 = onesM(2) # same as ones(2)
-
-mOnes3 = onesM(Int32, 2, 2) # same as ones(Int32,2,2)
-
-mOnes4 = onesM((2, 2)) # = onesM(2,2) # giving size as Tuple
-
-mOnes5 = onesM(Int32, (2, 2)) # giving size as Tuple and also the Int32 type
-
-mOnes6 = onesM([2, 2]) # giving size as an Array, non-efficient Matlab way. Array should be Integer otherwise you will get errors.
-
-mOnes7 = onesM(Int32, [2, 2]) # giving size as Array, non-efficient Matlab way
-```
-"""
-onesM(args...) = ones(args...) # includes T::Type method
-
-function onesM(matSymbol::Symbol, T::Type, dim::Integer)
-    if matSymbol == :mat
-        return ones(T, dim, dim)
-    end
-end
-
-function onesM(matSymbol::Symbol, dim::Integer; like::AbstractArray = Vector{Float64}())
-    if matSymbol == :mat
-        return ones(eltype(like), dim, dim)
-    end
-end
-
-# onesM(dim::Integer; like::Union{Array,Nothing}=nothing) = like === nothing ? ones(dim,dim) : ones(eltype(like), dim, dim)
-
-onesM(T::Type, a::Array) = ones(T, Tuple(a))
-onesM(a::Array; like::AbstractArray = Vector{Float64}()) =
-    ones(eltype(like), Tuple(a))
-################################################################
-"""
-    randM(:mat, dim)          # square dim*dim matrix
-    randM(:mat, Type, dim)    # square dim*dim matrix
-    randM(:mat, dim, like = anArray) # to make an array with similar type of anArray
-    randM(sizeAsArray) # non-efficient Matlab way
-    randM(Type, sizeAsArray) # non-efficient Matlab way
-    randM(sizeAsArray, like = anArray) # to make an array with similar type of anArray
-
-returns an array filled with random values.
-
-`randM(dim)` returns 1-dimensional array. To get a square matrix like in Matlab, pass `:mat` as the 1st argument.
-
-# Examples
-```julia
-mRand0 = randM(:mat, 2) # same as rand(2,2)
-
-mRand1 = randM(:mat, 2, like = zerosM(Int32, 2, 2)) # like method
-
-mRand2 = randM(2) # same as rand(2)
-
-mRand3 = randM(Int32, 2, 2) # same as rand(Int32,2,2)
-
-mRand4 = randM((2, 2)) # = randM(2,2) # giving size as Tuple
-
-mRand5 = randM(Int32, (2, 2)) # giving size as Tuple and also the Int32 type
-
-mRand6 = randM([2, 2]) # giving size as an Array, non-efficient Matlab way. Array should be Integer otherwise you will get errors.
-
-mRand7 = randM(Int32, [2, 2]) # giving size as Array, non-efficient Matlab way
-```
-"""
-randM(args...) = rand(args...) # includes T::Type method
-
-function randM(matSymbol::Symbol, T::Type, dim::Integer)
-    if matSymbol == :mat
-        return rand(T, dim, dim)
-    end
-end
-
-function randM(matSymbol::Symbol, dim::Integer; like::AbstractArray = Vector{Float64}())
-    if matSymbol == :mat
-        return rand(eltype(like), dim, dim)
-    end
-end
 
 # randM(dim::Integer; like::Union{Array,Nothing}=nothing) = like === nothing ? rand(dim,dim) : rand(eltype(like), dim, dim)
 

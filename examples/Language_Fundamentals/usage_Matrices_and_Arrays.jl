@@ -13,53 +13,80 @@ else
 end
 ################################################################
 ################################################################
-mZeros0 = zerosM(:mat, 2) # same as zeros(2,2)
+mzero0 = zerosM(:mat, 2) # same as zeros(2,2)
 
-mZeros1 = zerosM(:mat, 2, like = zerosM(Int32, 2, 2)) # like method
+mzero1 = zerosM(:mat, 2, like = zerosM(Int32, 2, 2)) # like method
 
-mZeros2 = zerosM(2) # same as zeros(2)
+A=[2 1 2]
+mzero2 = zerosM(2, like=A) # same as zeros(Int64,2)
 
-mZeros3 = zerosM(Int32, 2, 2) # same as zeros(Int32,2,2)
+mzero3 = zerosM(2) # same as zeros(2)
 
-mZeros4 = zerosM((2, 2)) # = zerosM(2,2) # giving size as Tuple
+mzero4 = zerosM(Int32, 2, 2) # same as zeros(Int32,2,2)
 
-mZeros5 = zerosM(Int32, (2, 2)) # giving size as Tuple and also the Int32 type
+# giving size as Tuple
+mzero5 = zerosM((2, 2)) # = zerosM(2,2)
 
-mZeros6 = zerosM([2, 2]) # giving size as an Array, non-efficient Matlab way. Array should be Integer otherwise you will get errors.
+mzero6 = zerosM(Int32, (2, 2))
 
-mZeros7 = zerosM(Int32, [2, 2]) # giving size as Array, non-efficient Matlab way
+# giving size as an Array
+## non-efficient Matlab way. Array should be Integer otherwise you will get errors.
+
+mzero7 = zerosM([2, 2])
+
+mzero8 = zerosM(Int32, [2, 2])
+
+mzero9 = zerosM([2, 2], like = [2.5 3.0])
 ################################################################
-mOnes0 = onesM(:mat, 2) # same as ones(2,2)
+mone0 = onesM(:mat, 2) # same as ones(2,2)
 
-mOnes1 = onesM(:mat, 2, like = zerosM(Int32, 2, 2)) # like method
+mone1 = onesM(:mat, 2, like = onesM(Int32, 2, 2)) # like method
 
-mOnes2 = onesM(2) # same as ones(2)
+A=[2 1 2]
+mone2 = onesM(2, like=A) # same as ones(Int64,2)
 
-mOnes3 = onesM(Int32, 2, 2) # same as ones(Int32,2,2)
+mone3 = onesM(2) # same as ones(2)
 
-mOnes4 = onesM((2, 2)) # = onesM(2,2) # giving size as Tuple
+mone4 = onesM(Int32, 2, 2) # same as ones(Int32,2,2)
 
-mOnes5 = onesM(Int32, (2, 2)) # giving size as Tuple and also the Int32 type
+# giving size as Tuple
+mone5 = onesM((2, 2)) # = onesM(2,2)
 
-mOnes6 = onesM([2, 2]) # giving size as an Array, non-efficient Matlab way. Array should be Integer otherwise you will get errors.
+mone6 = onesM(Int32, (2, 2))
 
-mOnes7 = onesM(Int32, [2, 2]) # giving size as Array, non-efficient Matlab way
+# giving size as an Array
+## non-efficient Matlab way. Array should be Integer otherwise you will get errors.
+
+mone7 = onesM([2, 2])
+
+mone8 = onesM(Int32, [2, 2])
+
+mone9 = onesM([2, 2], like = [2.5 3.0])
 ################################################################
-mRand0 = randM(:mat, 2) # same as rand(2,2)
+mrandom0 = randM(:mat, 2) # same as rand(2,2)
 
-mRand1 = randM(:mat, 2, like = zerosM(Int32, 2, 2)) # like method
+mrandom1 = randM(:mat, 2, like = randM(Int32, 2, 2)) # like method
 
-mRand2 = randM(2) # same as rand(2)
+A=[2 1 2]
+mrandom2 = randM(2, like=A) # same as rand(Int64,2)
 
-mRand3 = randM(Int32, 2, 2) # same as rand(Int32,2,2)
+mrandom3 = randM(2) # same as rand(2)
 
-mRand4 = randM((2, 2)) # = onesM(2,2) # giving size as Tuple
+mrandom4 = randM(Int32, 2, 2) # same as rand(Int32,2,2)
 
-mRand5 = randM(Int32, (2, 2)) # giving size as Tuple and also the Int32 type
+# giving size as Tuple
+mrandom5 = randM((2, 2)) # = randM(2,2)
 
-mRand6 = randM([2, 2]) # giving size as an Array, non-efficient Matlab way. Array should be Integer otherwise you will get errors.
+mrandom6 = randM(Int32, (2, 2))
 
-mRand7 = randM(Int32, [2, 2]) # giving size as Array, non-efficient Matlab way
+# giving size as an Array
+## non-efficient Matlab way. Array should be Integer otherwise you will get errors.
+
+mrandom7 = randM([2, 2])
+
+mrandom8 = randM(Int32, [2, 2])
+
+mrandom9 = randM([2, 2], like = [2.5 3.0])
 ################################################################
 mTrue0 = trueM(:mat, 2) # same as trues(2,2)
 
