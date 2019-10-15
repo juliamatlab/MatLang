@@ -99,8 +99,8 @@ end
 	] == [true; true; true; true; true; true; true; true]
 
 	@test [
-	ismatrixM(:mat, A1)
-	ismatrixM(:mat, A2)
+	ismatrixM(:mat, [1 2 3; 3 5 6])
+	ismatrixM(:mat, [1;2;3])
 	ismatrixM(:mat, ones(3, 1))
 	ismatrixM(:mat, ones(1, 3))
 	ismatrixM(:mat, ones(3))
@@ -108,6 +108,30 @@ end
 	ismatrixM(:mat, ["Hi", "Bye"])
 	] == [true; true; true; true; true; true; true]
 
+	@test [
+	isrowM([1 2 3]) # true
+	isrowM(ones(3, 1)) # false
+	isrowM(ones(1, 3)) # true
+	isrowM(ones(3)) # false
+	isrowM(1) # false
+	isrowM("Hi") # false
+	isrowM(["Hi", "Bye"]) # false
+	isrowM(["Hi" "Bye"]) # true
+	] == [true; false; true; false; false; false; false; true]
+
+	@test [
+
+	iscolumnM([1; 2; 3]) # false
+	iscolumnM([1 2 3]) # false
+	iscolumnM(ones(3, 1)) # tue
+	iscolumnM(ones(1, 3)) #false
+	iscolumnM(ones(3)) # false
+	iscolumnM(1) # false
+	iscolumnM("Hi") # false
+	iscolumnM(["Hi", "Bye"]) # false
+	iscolumnM(["Hi" "Bye"]) # true
+
+	] == [false; false; true; false; false; false; false; false; false]
 	@test sortM([1 5 3; 4 1 10], 2, :ascend) == [1 3 5; 1 4 10]
 
 	B = [1 5 3; 4 1 10]

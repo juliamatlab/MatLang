@@ -325,6 +325,80 @@ bIsMatrixMat6 = ismatrixM(:mat, "Hi") # true
 
 bIsMatrixMat7 = ismatrixM(:mat, ["Hi", "Bye"]) # true
 ################################################################
+A1 = [1; 2; 3] # or [1, 2, 3]
+bIsrow1 = isrowM(A1) # false
+
+A2 = [1 2 3]
+bIsrow2 = isrowM(A2) # true
+
+bIsrow3 = isrowM(ones(3, 1)) # false
+
+bIsrow4 = isrowM(ones(1, 3)) # true
+
+bIsrow5 = isrowM(ones(3)) # false
+
+bIsrow6 = isrowM(1) # false
+
+bIsrow7 = isrowM("Hi") # false
+
+bIsrow8 = isrowM(["Hi", "Bye"]) # false
+
+bIsrow9 = isrowM(["Hi" "Bye"]) # true
+
+# Matlab Way:
+bIsrowMat1 = isrowM(:mat, A1) # false
+
+bIsrowMat2 = isrowM(:mat, A2) # true
+
+bIsrowMat3 = isrowM(:mat, ones(3, 1)) # false
+
+bIsrowMat4 = isrowM(:mat, ones(1, 3)) # true
+
+bIsrowMat5 = isrowM(:mat, ones(3)) # false
+
+bIsrowMat6 = isrowM(:mat, 1) # true
+
+bIsrowMat7 = isrowM(:mat, "Hi") # true
+
+bIsrowMat8 = isrowM(:mat, ["Hi", "Bye"]) # false
+################################################################
+A1 = [1; 2; 3] # or [1, 2, 3]
+bIscolumn1 = iscolumnM(A1) # false
+
+A2 = [1 2 3]
+bIscolumn2 = iscolumnM(A2) # false
+
+bIscolumn3 = iscolumnM(ones(3, 1)) # tue
+
+bIscolumn4 = iscolumnM(ones(1, 3)) #false
+
+bIscolumn5 = iscolumnM(ones(3)) # false
+
+bIscolumn6 = iscolumnM(1) # false
+
+bIscolumn7 = iscolumnM("Hi") # false
+
+bIscolumn8 = iscolumnM(["Hi", "Bye"]) # false
+
+bIscolumn9 = iscolumnM(["Hi" "Bye"]) # false
+
+# Matlab Way:
+bIscolumnMat1 = iscolumnM(:mat, A1) # true
+
+bIscolumnMat2 = iscolumnM(:mat, A2) # false
+
+bIscolumnMat3 = iscolumnM(:mat, ones(3, 1)) # true
+
+bIscolumnMat4 = iscolumnM(:mat, ones(1, 3)) # false
+
+bIscolumnMat5 = iscolumnM(:mat, ones(3)) # true
+
+bIscolumnMat6 = iscolumnM(:mat, 1) # true
+
+bIscolumnMat7 = iscolumnM(:mat, "Hi") # true
+
+bIscolumnMat8 = iscolumnM(:mat, ["Hi", "Bye"]) # true
+################################################################
 mSort0 = sortM([5, 3, 19, 20, 1, 4]) # [1, 3, 4, 5, 19, 20]
 
 A = [5, 3, 19, 20, 1, 4]

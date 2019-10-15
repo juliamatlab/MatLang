@@ -5,7 +5,7 @@ include("Language_Fundamentals/Entering_Commands.jl")
 
 using LinearAlgebra
 
-export zerosM, onesM, randM, trueM, falseM, eyeM, diagM, blkdiagM, catM, horzcatM, vertcatM, repelemM, repmatM, linspaceM, logspaceM, meshgridM, ndgridM, freqspaceM, lengthM, sizeM, ndimsM, numelM, isscalarM, isvectorM, ismatrixM, sortM, flipM, fliplrM, flipudM, flipdimM, rot90M, transposeM, squeezeM
+export zerosM, onesM, randM, trueM, falseM, eyeM, diagM, blkdiagM, catM, horzcatM, vertcatM, repelemM, repmatM, linspaceM, logspaceM, meshgridM, ndgridM, freqspaceM, lengthM, sizeM, ndimsM, numelM, isscalarM, isvectorM, ismatrixM, isrowM, iscolumnM, sortM, flipM, fliplrM, flipudM, flipdimM, rot90M, transposeM, squeezeM
 include("Language_Fundamentals/Matrices_and_Arrays.jl")
 
 include("Language_Fundamentals/Data_Types/Numeric_Types.jl")

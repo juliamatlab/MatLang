@@ -982,6 +982,138 @@ function ismatrixM(matlabWaySymbol::Symbol, x::Any)
 end
 ################################################################
 """
+    isrowM(x)
+
+Returns boolean true if x is a row matrix.
+
+
+Checks for being a row AbstractMatrix.
+
+To get a MATLAB way result, pass `:mat` argument. Doing this:
+* For arrays (of any element type), same as Julia answer.
+* For others, if it is among `{Number, AbstractString, Char, Bool}`, then it is considered a row.
+
+# Examples
+```julia
+A1 = [1; 2; 3] # or [1, 2, 3]
+bIsrow1 = isrowM(A1) # false
+
+A2 = [1 2 3]
+bIsrow2 = isrowM(A2) # true
+
+bIsrow3 = isrowM(ones(3, 1)) # false
+
+bIsrow4 = isrowM(ones(1, 3)) # true
+
+bIsrow5 = isrowM(ones(3)) # false
+
+bIsrow6 = isrowM(1) # false
+
+bIsrow7 = isrowM("Hi") # false
+
+bIsrow8 = isrowM(["Hi", "Bye"]) # false
+
+bIsrow9 = isrowM(["Hi" "Bye"]) # true
+
+# Matlab Way:
+bIsrowMat1 = isrowM(:mat, A1) # false
+
+bIsrowMat2 = isrowM(:mat, A2) # true
+
+bIsrowMat3 = isrowM(:mat, ones(3, 1)) # false
+
+bIsrowMat4 = isrowM(:mat, ones(1, 3)) # true
+
+bIsrowMat5 = isrowM(:mat, ones(3)) # false
+
+bIsrowMat6 = isrowM(:mat, 1) # true
+
+bIsrowMat7 = isrowM(:mat, "Hi") # true
+
+bIsrowMat8 = isrowM(:mat, ["Hi", "Bye"]) # false
+```
+"""
+isrowM(x) = isa(x, AbstractMatrix) && sizeM(x, 1) == 1
+
+function isrowM(matlabWaySymbol::Symbol, x::AbstractArray)
+    if matlabWaySymbol == :mat
+        return isa(x, AbstractMatrix) && sizeM(x, 1) == 1
+    end
+end
+
+function isrowM(matlabWaySymbol::Symbol, x::Any)
+    if matlabWaySymbol == :mat
+        return isa(x, Union{Number, AbstractString, Char, Bool})
+    end
+end
+################################################################
+"""
+    iscolumnM(x)
+
+Returns boolean true if x is a column matrix.
+
+
+Checks for being a column AbstractMatrix.
+
+To get a MATLAB way result, pass `:mat` argument. Doing this:
+* For arrays (of any element type), in addtion to column AbstractMatrices,  it also considers 1-dimensional arrays.
+* For others, if it is among `{Number, AbstractString, Char, Bool}`, then it is considered a column.
+
+# Examples
+```julia
+A1 = [1; 2; 3] # or [1, 2, 3]
+bIscolumn1 = iscolumnM(A1) # false
+
+A2 = [1 2 3]
+bIscolumn2 = iscolumnM(A2) # false
+
+bIscolumn3 = iscolumnM(ones(3, 1)) # tue
+
+bIscolumn4 = iscolumnM(ones(1, 3)) #false
+
+bIscolumn5 = iscolumnM(ones(3)) # false
+
+bIscolumn6 = iscolumnM(1) # false
+
+bIscolumn7 = iscolumnM("Hi") # false
+
+bIscolumn8 = iscolumnM(["Hi", "Bye"]) # false
+
+bIscolumn9 = iscolumnM(["Hi" "Bye"]) # false
+
+# Matlab Way:
+bIscolumnMat1 = iscolumnM(:mat, A1) # true
+
+bIscolumnMat2 = iscolumnM(:mat, A2) # false
+
+bIscolumnMat3 = iscolumnM(:mat, ones(3, 1)) # true
+
+bIscolumnMat4 = iscolumnM(:mat, ones(1, 3)) # false
+
+bIscolumnMat5 = iscolumnM(:mat, ones(3)) # true
+
+bIscolumnMat6 = iscolumnM(:mat, 1) # true
+
+bIscolumnMat7 = iscolumnM(:mat, "Hi") # true
+
+bIscolumnMat8 = iscolumnM(:mat, ["Hi", "Bye"]) # true
+```
+"""
+iscolumnM(x) = isa(x, AbstractMatrix) && sizeM(x, 2) == 1
+
+function iscolumnM(matlabWaySymbol::Symbol, x::AbstractArray)
+    if matlabWaySymbol == :mat
+        return isa(x, AbstractVecOrMat) && sizeM(x, 2) == 1
+    end
+end
+
+function iscolumnM(matlabWaySymbol::Symbol, x::Any)
+    if matlabWaySymbol == :mat
+        return isa(x, Union{Number, AbstractString, Char, Bool})
+    end
+end
+################################################################
+"""
     sortM(A)
     sortM(A,dim)
     sortM(..., direction)
