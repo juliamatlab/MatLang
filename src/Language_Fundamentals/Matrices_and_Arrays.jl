@@ -115,69 +115,58 @@ for (fname, fnative, docIn) in ((:zerosM, :zeros, "zero"), (:onesM, :ones, "one"
     end
 end
 ################################################################
+for (fname, fnative, docIn) in ((:trueM, :trues, "true"), (:falseM, :falses, "false"))
+    @eval begin
 
-# randM(dim::Integer; like::Union{Array,Nothing}=nothing) = like === nothing ? rand(dim,dim) : rand(eltype(like), dim, dim)
+        # init
+        function $fname end
 
-randM(T::Type, a::Array) = rand(T, Tuple(a))
-randM(a::Array; like::AbstractArray = Vector{Float64}()) =
-    rand(eltype(like), Tuple(a))
+        # doc
+        @doc """
+            $($fname)
 
-################################################################
-"""
-    trueM(:mat, dim)          # square dim*dim matrix
-    trueM(sizeAsArray) # non-efficient Matlab way
+        returns an array filled with $($docIn) values.
 
-returns an array filled with true values.
+        In addition to original Julia methods the following methods are provided:
 
-`trueM(dim)` returns 1-dimensional array. To get a square matrix like in Matlab, pass `:mat` as the 1st argument.
+            $($fname)(sizeAsArray)
 
-# Examples
-```julia
-mTrue0 = trueM(:mat, 2) # same as trues(2,2)
+        To give size as an array (non-efficient Matlab way).
 
-mTrue1 = trueM(2) # same as trues(2)
+            $($fname)(:mat, dim)         # square dim*dim matrix
 
-mTrue2 = trueM((2, 2)) # = trues(2,2) # giving size as Tuple
+        `$($fname)(dim)` returns 1-dimensional array. To get a square matrix like in Matlab, pass `:mat` as the 1st argument.
 
-mTrue3 = trueM([2, 2]) # giving size as an Array, non-efficient Matlab way. Array should be Integer otherwise you will get errors.
-```
-"""
-trueM(args...) = trues(args...) # includes T::Type method
 
-function trueM(matSymbol::Symbol, dim::Integer)
-    if matSymbol == :mat
-        return trues(dim, dim)
+        # Examples
+        ```julia
+        m$($docIn)0 = $($fname)(:mat, 2) # same as $($fnative)(2,2)
+
+        m$($docIn)1 = $($fname)(2) # same as $($fnative)(2)
+
+        # giving size as Tuple
+        m$($docIn)2 = $($fname)((2, 2)) # = $($fnative)(2,2)
+
+        # giving size as an Array
+        ## non-efficient Matlab way. Array should be Integer otherwise you will get errors.
+        m$($docIn)3 = $($fname)([2, 2])
+        ```
+        """ $(fname)
+
+        # copying methods
+        $fname(args...)=$fnative(args...)
+
+        # Array as input methods
+        $fname(a::Array) =$fnative(Tuple(a))
+
+        # square matrix with one dim input
+        function $fname(matSymbol::Symbol, dim::Integer)
+            if matSymbol == :mat
+                return $fnative(dim, dim)
+            end
+        end
     end
 end
-trueM(a::Array) = trues(Tuple(a))
-################################################################
-"""
-    falseM(:mat, dim)          # square dim*dim matrix
-    falseM(sizeAsArray) # non-efficient Matlab way
-
-returns an array filled with false values.
-
-`falseM(dim)` returns 1-dimensional array. To get a square matrix like in Matlab, pass `:mat` as the 1st argument.
-
-# Examples
-```julia
-mFalse0 = falseM(:mat, 2) # same as falses(2,2)
-
-mFalse1 = falseM(2) # same as falses(2)
-
-mFalse2 = falseM((2, 2)) # = falseM(2,2) # giving size as Tuple
-
-mFalse3 = falseM([2, 2]) # giving size as an Array, non-efficient Matlab way. Array should be Integer otherwise you will get errors.
-```
-"""
-falseM(args...) = falses(args...) # includes T::Type method
-
-function falseM(matSymbol::Symbol, dim::Integer)
-    if matSymbol == :mat
-        return falses(dim, dim)
-    end
-end
-falseM(a::Array) = falses(Tuple(a))
 ################################################################
 """
 

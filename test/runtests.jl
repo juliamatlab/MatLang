@@ -15,7 +15,7 @@ else
 	using Test
 end
 ################################################################
-# These tests don't test every single method. For more examples, refer to Examples folder.
+# These tests don't test every single method. For more examples, refer to examples folder.
 
 @testset "MatLang.j - Entering_Commands" begin
 

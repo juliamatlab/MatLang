@@ -88,21 +88,27 @@ mrandom8 = randM(Int32, [2, 2])
 
 mrandom9 = randM([2, 2], like = [2.5 3.0])
 ################################################################
-mTrue0 = trueM(:mat, 2) # same as trues(2,2)
+mtrue0 = trueM(:mat, 2) # same as trues(2,2)
 
-mTrue1 = trueM(2) # same as trues(2)
+mtrue1 = trueM(2) # same as trues(2)
 
-mTrue2 = trueM((2, 2)) # = onesM(2,2) # giving size as Tuple
+# giving size as Tuple
+mtrue2 = trueM((2, 2)) # = trues(2,2)
 
-mTrue3 = trueM([2, 2]) # giving size as an Array, non-efficient Matlab way. Array should be Integer otherwise you will get errors.
+# giving size as an Array
+## non-efficient Matlab way. Array should be Integer otherwise you will get errors.
+mtrue3 = trueM([2, 2])
 ################################################################
-mFalse0 = falseM(:mat, 2) # same as falses(2,2)
+mfalse0 = falseM(:mat, 2) # same as falses(2,2)
 
-mFalse1 = falseM(2) # same as falses(2)
+mfalse1 = falseM(2) # same as falses(2)
 
-mFalse2 = falseM((2, 2)) # = falseM(2,2) # giving size as Tuple
+# giving size as Tuple
+mfalse2 = falseM((2, 2)) # = falses(2,2)
 
-mFalse3 = falseM([2, 2]) # giving size as an Array, non-efficient Matlab way. Array should be Integer otherwise you will get errors.
+# giving size as an Array
+## non-efficient Matlab way. Array should be Integer otherwise you will get errors.
+mfalse3 = falseM([2, 2])
 ################################################################
 mEye0 = eyeM(2); # [1 0 0; 0 1 0]
 
