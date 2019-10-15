@@ -730,7 +730,7 @@ tSize2 = sizeM(A2, 2, 3); # (5, 4)
 ```
 """
 sizeM(args...) = size(args...)
-sizeM(A::AbstractArray, dim1::Integer, dim2::Integer...) = size(A)[[dim1, dim2...]]
+sizeM(A::AbstractArray, dim1::Integer, dim2::Integer, dims3::Integer...) = size(A)[[dim1, dim2, dims3...]]
 
 # collect symbol - :arr
 function sizeM(collectSymbol::Symbol, A::AbstractArray, dim1::Integer, dim2::Integer...)
