@@ -272,6 +272,8 @@ bIsvector7 = isvectorM("Hi") # false
 
 bIsvector8 = isvectorM(["Hi", "Bye"]) # true
 
+bIsMatrix9 = isvectorM(["Hi" "Bye"]) # false
+
 # Matlab Way:
 bIsvectorMat1 = isvectorM(:mat, A1) # true
 
@@ -288,6 +290,40 @@ bIsvectorMat6 = isvectorM(:mat, 1) # true
 bIsvectorMat7 = isvectorM(:mat, "Hi") # true
 
 bIsvectorMat8 = isvectorM(:mat, ["Hi", "Bye"]) # true
+################################################################
+A1 = [1 2 3; 3 5 6]
+bIsMatrix1 = ismatrixM(A1) # true
+
+A2 = [1;2;3] # or [1,2,3]
+bIsMatrix2 = ismatrixM(A2) # false
+
+bIsMatrix3 = ismatrixM(ones(3, 1)) # true
+
+bIsMatrix4 = ismatrixM(ones(1, 3)) # true
+
+bIsMatrix5 = ismatrixM(ones(3)) # false
+
+bIsMatrix6 = ismatrixM("Hi") # false
+
+bIsMatrix7 = ismatrixM(["Hi", "Bye"]) # false
+
+bIsMatrix8 = ismatrixM(["Hi" "Bye"]) # true
+
+# Matlab Way:
+
+bIsMatrixMat1 = ismatrixM(:mat, A1) # true
+
+bIsMatrixMat2 = ismatrixM(:mat, A2) # true
+
+bIsMatrixMat3 = ismatrixM(:mat, ones(3, 1)) # true
+
+bIsMatrixMat4 = ismatrixM(:mat, ones(1, 3)) # true
+
+bIsMatrixMat5 = ismatrixM(:mat, ones(3)) # true
+
+bIsMatrixMat6 = ismatrixM(:mat, "Hi") # true
+
+bIsMatrixMat7 = ismatrixM(:mat, ["Hi", "Bye"]) # true
 ################################################################
 mSort0 = sortM([5, 3, 19, 20, 1, 4]) # [1, 3, 4, 5, 19, 20]
 

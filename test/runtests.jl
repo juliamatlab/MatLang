@@ -98,6 +98,16 @@ end
 	    isvectorM(:mat, ["Hi", "Bye"])
 	] == [true; true; true; true; true; true; true; true]
 
+	@test [
+	ismatrixM(:mat, A1)
+	ismatrixM(:mat, A2)
+	ismatrixM(:mat, ones(3, 1))
+	ismatrixM(:mat, ones(1, 3))
+	ismatrixM(:mat, ones(3))
+	ismatrixM(:mat, "Hi")
+	ismatrixM(:mat, ["Hi", "Bye"])
+	] == [true; true; true; true; true; true; true]
+
 	@test sortM([1 5 3; 4 1 10], 2, :ascend) == [1 3 5; 1 4 10]
 
 	B = [1 5 3; 4 1 10]

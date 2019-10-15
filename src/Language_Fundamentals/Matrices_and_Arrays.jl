@@ -862,7 +862,7 @@ It uses AbstractVector, which basically are 1 dimensional arrays.
 
 To get a MATLAB way result, pass `:mat` argument. Doing this:
 * For arrays (of any element type), it considers 1-dimensional arrays and also 2-dimensional arrays that one of their dimensions are singletone.
-* For others, if it is among `{Number, AbstractString, Char, Bool}`, then it is considered vectir.
+* For others, if it is among `{Number, AbstractString, Char, Bool}`, then it is considered matrix.
 
 # Examples
 ```julia
@@ -878,11 +878,15 @@ bIsvector4 = isvectorM(ones(1, 3)) # false
 
 bIsvector5 = isvectorM(ones(3)) # true
 
-bIsvector6 = isvectorM("Hi") # false
+bIsvector6 = isvectorM(1) # false
+
+bIsvector7 = isvectorM("Hi") # false
+
+bIsvector8 = isvectorM(["Hi", "Bye"]) # true
+
+bIsMatrix9 = isvectorM(["Hi" "Bye"]) # false
 
 # Matlab Way:
-bIsvector7 = isvectorM(["Hi", "Bye"]) # true
-
 bIsvectorMat1 = isvectorM(:mat, A1) # true
 
 bIsvectorMat2 = isvectorM(:mat, A2) # true
@@ -893,9 +897,11 @@ bIsvectorMat4 = isvectorM(:mat, ones(1, 3)) # true
 
 bIsvectorMat5 = isvectorM(:mat, ones(3)) # true
 
-bIsvectorMat6 = isvectorM(:mat, "Hi") # true
+bIsvectorMat6 = isvectorM(:mat, 1) # true
 
-bIsvectorMat7 = isvectorM(:mat, ["Hi", "Bye"]) # true
+bIsvectorMat7 = isvectorM(:mat, "Hi") # true
+
+bIsvectorMat8 = isvectorM(:mat, ["Hi", "Bye"]) # true
 ```
 """
 isvectorM(x) = isa(x, AbstractVector)
@@ -907,6 +913,69 @@ function isvectorM(matlabWaySymbol::Symbol, x::AbstractArray)
 end
 
 function isvectorM(matlabWaySymbol::Symbol, x::Any)
+    if matlabWaySymbol == :mat
+        return isa(x, Union{Number, AbstractString, Char, Bool})
+    end
+end
+################################################################
+"""
+    ismatrixM(x)
+
+Returns boolean true if x is a matrix.
+
+
+It uses AbstractMatrix, which basically are two dimensional arrays.
+
+To get a MATLAB way result, pass `:mat` argument. Doing this:
+* For arrays (of any element type), it considers 1-dimensional arrays as matrix.
+* For others, if it is among `{Number, AbstractString, Char, Bool}`, then it is considered matrix.
+
+# Examples
+```julia
+A1 = [1 2 3; 3 5 6]
+bIsMatrix1 = ismatrixM(A1) # true
+
+A2 = [1;2;3] # or [1,2,3]
+bIsMatrix2 = ismatrixM(A2) # false
+
+bIsMatrix3 = ismatrixM(ones(3, 1)) # true
+
+bIsMatrix4 = ismatrixM(ones(1, 3)) # true
+
+bIsMatrix5 = ismatrixM(ones(3)) # false
+
+bIsMatrix6 = ismatrixM("Hi") # false
+
+bIsMatrix7 = ismatrixM(["Hi", "Bye"]) # false
+
+bIsMatrix8 = ismatrixM(["Hi" "Bye"]) # true
+
+# Matlab Way:
+
+bIsMatrixMat1 = ismatrixM(:mat, A1) # true
+
+bIsMatrixMat2 = ismatrixM(:mat, A2) # true
+
+bIsMatrixMat3 = ismatrixM(:mat, ones(3, 1)) # true
+
+bIsMatrixMat4 = ismatrixM(:mat, ones(1, 3)) # true
+
+bIsMatrixMat5 = ismatrixM(:mat, ones(3)) # true
+
+bIsMatrixMat6 = ismatrixM(:mat, "Hi") # true
+
+bIsMatrixMat7 = ismatrixM(:mat, ["Hi", "Bye"]) # true
+```
+"""
+ismatrixM(x) = isa(x, AbstractMatrix)
+
+function ismatrixM(matlabWaySymbol::Symbol, x::AbstractArray)
+    if matlabWaySymbol == :mat
+        return ndimsM(x) <= 2
+    end
+end
+
+function ismatrixM(matlabWaySymbol::Symbol, x::Any)
     if matlabWaySymbol == :mat
         return isa(x, Union{Number, AbstractString, Char, Bool})
     end
