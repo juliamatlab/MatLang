@@ -12,7 +12,8 @@ API for Matlab's language core functions
 # Installation
 Add the package
 ```julia
-]add https://github.com/juliamatlab/MatLang
+using Pkg
+Pkg.add("MatLang")
 ```
 # Usage
 Use the package:
@@ -52,7 +53,7 @@ The full list of the functions that will be implemented in the future can be fou
 # Development
 clone the project in your usual way, or using the following command which clones the project in `.julia\dev\MatLang`
 ```julia
-] dev https://github.com/juliamatlab/MatLang
+] dev MatLang
 ```
 cd to cloned package. if you used dev command, run the following:
 ```julia

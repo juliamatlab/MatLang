@@ -20,7 +20,8 @@ JuliaMatlab GitHub Repository Link: [[JuliaMatlab Organization]](https://github.
 # Installation
 Add the package
 ```julia
-]add https://github.com/juliamatlab/MatLang
+using Pkg
+Pkg.add("MatLang")
 ```
 # Usage
 Use the package:

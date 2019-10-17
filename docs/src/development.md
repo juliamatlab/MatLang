@@ -1,7 +1,7 @@
 # Development
 clone the project in your usual way, or using the following command which clones the project in `.julia\dev\MatLang`
 ```julia
-] dev https://github.com/juliamatlab/MatLang
+] dev MatLang
 ```
 cd to cloned package. if you used dev command, run the following:
 ```julia
