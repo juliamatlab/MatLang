@@ -13,6 +13,7 @@ for n in natives
     end
 end
 ################################################################
+# zerosM, onesM, randM definition
 import Base: DimOrInd, OneTo
 for (fname, fnative, docIn) in ((:zerosM, :zeros, "zero"), (:onesM, :ones, "one"), (:randM, :rand, "random"))
     @eval begin
@@ -115,6 +116,7 @@ for (fname, fnative, docIn) in ((:zerosM, :zeros, "zero"), (:onesM, :ones, "one"
     end
 end
 ################################################################
+# trueM, falseM definition
 for (fname, fnative, docIn) in ((:trueM, :trues, "true"), (:falseM, :falses, "false"))
     @eval begin
 

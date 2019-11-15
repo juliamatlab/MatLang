@@ -23,4 +23,8 @@ function __init__()
 end
 ################################################################
 
+# precompile
+include("../SnoopCompile/precompile/precompile_MatLang.jl")
+_precompile_()
+
 end # module
