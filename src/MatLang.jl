@@ -24,7 +24,7 @@ end
 ################################################################
 
 # precompile
-include("../SnoopCompile/precompile/precompile_MatLang.jl")
+include("../deps/SnoopCompile/precompile/precompile_MatLang.jl")
 _precompile_()
 
 end # module
