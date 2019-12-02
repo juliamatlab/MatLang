@@ -23,7 +23,7 @@ jobs:
       - name : Add SnoopCompile and Current Package
         run:   julia -e 'using Pkg; Pkg.add("SnoopCompile"); Pkg.develop(PackageSpec(; path=pwd()));'     
       - name: Generating precompile files
-        run: julia --project -e 'include("deps/SnoopCompile/snoopCompile.jl")'
+        run: julia --project=@. -e 'include("deps/SnoopCompile/snoopCompile.jl")'
 
       # https://github.com/marketplace/actions/create-pull-request
       - name: Create Pull Request
