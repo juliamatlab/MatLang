@@ -17,11 +17,11 @@ jobs:
       - uses: julia-actions/setup-julia@latest
         with:
           version: ${{ matrix.julia-version }}
-      - uses: julia-actions/julia-buildpkg@latest
-      - name : Add SnoopCompile
-        run:   julia -e 'using Pkg; Pkg.add("SnoopCompile");'     
-#       - name: Install dependencies
-#         run: julia --project=@. -e 'using Pkg; Pkg.instantiate();'
+#       - uses: julia-actions/julia-buildpkg@latest
+      - name: Install dependencies
+        run: julia --project=@. -e 'using Pkg; Pkg.instantiate();'
+      - name : Add SnoopCompile and Current Package
+        run:   julia -e 'using Pkg; Pkg.add("SnoopCompile"); Pkg.develop(PackageSpec(; path=pwd()));'     
       - name: Generating precompile files
         run: julia --project -e 'include("deps/SnoopCompile/snoopCompile.jl")'
 
