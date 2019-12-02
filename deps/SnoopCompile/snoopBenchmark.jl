@@ -13,7 +13,7 @@
 ################################################################
 function timesum(snoop)
 
-    timeSum = 0
+    timeSum = 0.0
     for x in snoop
         timeSum+=x[1]
     end
