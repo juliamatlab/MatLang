@@ -13,13 +13,14 @@ jobs:
         julia-arch: [x86]
         os: [ubuntu-latest]
     steps:
+      - uses: actions/checkout@v1
       - uses: julia-actions/setup-julia@latest
         with:
           version: ${{ matrix.julia-version }}
-
-      - uses: actions/checkout@v1
+      - name: Install dependencies
+        run: julia --project=@. -e 'using Pkg; Pkg.instantiate(); Pkg.update()'
       - name: Generating precompile files
-        run: julia --project=deps/SnoopCompile -e deps/SnoopCompile/snoopCompile.jl
+        run: julia --project=@. -e deps/SnoopCompile/snoopCompile.jl
 
       # https://github.com/marketplace/actions/create-pull-request
       - name: Create Pull Request
