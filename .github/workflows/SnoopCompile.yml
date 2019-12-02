@@ -18,7 +18,7 @@ jobs:
         with:
           version: ${{ matrix.julia-version }}
       - name: Install dependencies
-        run: julia --project=@. -e 'using Pkg; Pkg.instantiate(); Pkg.update()'
+        run: julia --project=@. -e 'using Pkg; Pkg.instantiate(); Pkg.update(); Pkg.add("SnoopCompile")'
       - name: Generating precompile files
         run: julia --project=@. -e 'include("deps/SnoopCompile/snoopCompile.jl")'
 
