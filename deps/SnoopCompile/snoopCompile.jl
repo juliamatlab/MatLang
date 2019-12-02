@@ -1,5 +1,50 @@
 using SnoopCompile
 
+################################################################
+packageName = "MatLang"
+
+function precompileDeactivator(packageName)
+
+    filePath = joinpath(pwd(),"src","$packageName.jl")
+    file = open(filePath,"r")
+    packageText = read(file, String)
+    close(file)
+
+    packageEdited = foldl(replace,
+                 (
+                  "include(\"../deps/SnoopCompile/precompile/precompile_$packageName.jl\")" => "#include(\"../deps/SnoopCompile/precompile/precompile_$packageName.jl\")",
+                  "_precompile_()" => "#_precompile_()",
+                 ),
+                 init = packageText)
+
+     file = open(filePath,"w")
+     write(file, packageEdited)
+     close(file)
+end
+
+function precompileActivator(packageName)
+
+    filePath = joinpath(pwd(),"src","$packageName.jl")
+    file = open(filePath,"r")
+    packageText = read(file, String)
+    close(file)
+
+    packageEdited = foldl(replace,
+                 (
+                  "#include(\"../deps/SnoopCompile/precompile/precompile_$packageName.jl\")" => "include(\"../deps/SnoopCompile/precompile/precompile_$packageName.jl\")",
+                  "#_precompile_()" => "_precompile_()",
+                 ),
+                 init = packageText)
+
+     file = open(filePath,"w")
+     write(file, packageEdited)
+     close(file)
+end
+
+################################################################
+precompileDeactivator(packageName);
+
+rootPath = pwd()
 cd(@__DIR__)
 ################################################################
 
@@ -26,3 +71,7 @@ data = SnoopCompile.read("$(pwd())/Snoop.log")
 
 pc = SnoopCompile.parcel(reverse!(data[2]))
 SnoopCompile.write("$(pwd())/precompile", pc)
+
+################################################################
+precompileActivator(packageName)
+cd(rootPath)
