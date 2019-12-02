@@ -7,6 +7,7 @@ version = "0.1.0"
 BlockDiagonals = "0a1fb500-61f7-11e9-3c65-f5ef3456f9f0"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Requires = "ae029012-a4dd-5104-9daa-d747884805df"
+SnoopCompile = "aa65fe97-06da-5843-b5b1-d5d13cad87d2"
 
 [compat]
 BlockDiagonals = ">= 0.1.1"
