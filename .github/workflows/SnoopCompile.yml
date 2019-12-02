@@ -22,7 +22,7 @@ jobs:
       - name: Install dependencies
         run: julia --project=@. -e 'using Pkg; Pkg.instantiate();'
       - name: Generating precompile files
-        run: julia --project=@. -e 'Pkg.activate(pwd()); include("deps/SnoopCompile/snoopCompile.jl")'
+        run: julia --project=@. -e 'using Pkg; Pkg.activate(pwd()); include("deps/SnoopCompile/snoopCompile.jl")'
 
       # https://github.com/marketplace/actions/create-pull-request
       - name: Create Pull Request
