@@ -1,4 +1,4 @@
-name: pkg-update
+name: SnoopCompile precompile file generation
 
 on:
   schedule:
