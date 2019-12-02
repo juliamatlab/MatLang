@@ -19,7 +19,7 @@ jobs:
 
       - uses: actions/checkout@v1
       - name: Generating precompile files
-        run: julia --project=deps/SnoopCompile -e "include("snoopCompile.jl")"
+        run: julia --project=deps/SnoopCompile -e deps/SnoopCompile/snoopCompile.jl
 
       # https://github.com/marketplace/actions/create-pull-request
       - name: Create Pull Request
