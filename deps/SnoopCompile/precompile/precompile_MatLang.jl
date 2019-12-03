@@ -1,7 +1,5 @@
 function _precompile_()
     ccall(:jl_generating_output, Cint, ()) == 1 || return nothing
-    precompile(Tuple{Base.var"#kw##sortperm",NamedTuple{(:dims,),Tuple{Int64}},typeof(sortperm),Array{Int64,2}})
-    precompile(Tuple{MatLang.var"##sortperm#31",Int64,Bool,typeof(sortperm),Array{Int64,2}})
     precompile(Tuple{MatLang.var"#kw##eyeM",NamedTuple{(:like,),Tuple{Array{Int8,2}}},typeof(eyeM),Int64,Int64})
     precompile(Tuple{MatLang.var"#kw##freqspaceM",NamedTuple{(:dim,),Tuple{Int64}},typeof(freqspaceM),Int64})
     precompile(Tuple{MatLang.var"#kw##ndgridM",NamedTuple{(:dim,),Tuple{Int64}},typeof(ndgridM),StepRange{Int64,Int64}})
