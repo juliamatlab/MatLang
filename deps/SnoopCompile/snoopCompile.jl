@@ -80,7 +80,7 @@ end
 ### Parse the compiles and generate precompilation scripts
 pc = SnoopCompile.parcel(data)
 onlypackage = Dict(package => pc[package])
-SnoopCompile.write("$(pwd())/precompile.jl",onlypackage)
+SnoopCompile.write("$(pwd())/precompile",onlypackage)
 ################################################################
 cd(rootPath)
 precompileActivator(packageName, filePath)
