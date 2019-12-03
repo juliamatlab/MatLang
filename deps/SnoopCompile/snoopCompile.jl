@@ -1,8 +1,6 @@
-using SnoopCompile
-
-
+const package = :MatLang
 ################################################################
-const packageName = "MatLang"
+const packageName = string(package)
 const filePath = joinpath(pwd(),"src","$packageName.jl")
 
 function precompileDeactivator(packageName, filePath)
@@ -11,12 +9,21 @@ function precompileDeactivator(packageName, filePath)
     packageText = read(file, String)
     close(file)
 
-    packageEdited = foldl(replace,
-                 (
-                  "include(\"../deps/SnoopCompile/precompile/precompile_$packageName.jl\")" => "#include(\"../deps/SnoopCompile/precompile/precompile_$packageName.jl\")",
-                  "_precompile_()" => "#_precompile_()",
-                 ),
-                 init = packageText)
+    available = occursin("include(\"../deps/SnoopCompile/precompile/precompile_$packageName.jl\")", packageText)  && occursin("_precompile_()", packageText)
+
+    if available
+        packageEdited = foldl(replace,
+                     (
+                      "include(\"../deps/SnoopCompile/precompile/precompile_$packageName.jl\")" => "#include(\"../deps/SnoopCompile/precompile/precompile_$packageName.jl\")",
+                      "_precompile_()" => "#_precompile_()",
+                     ),
+                     init = packageText)
+    else
+        error(""" add the following codes into your package:
+         include(\"../deps/SnoopCompile/precompile/precompile_$packageName.jl\")
+         _precompile_()
+         """)
+    end
 
      file = open(filePath,"w")
      write(file, packageEdited)
@@ -29,12 +36,20 @@ function precompileActivator(packageName, filePath)
     packageText = read(file, String)
     close(file)
 
-    packageEdited = foldl(replace,
-                 (
-                  "#include(\"../deps/SnoopCompile/precompile/precompile_$packageName.jl\")" => "include(\"../deps/SnoopCompile/precompile/precompile_$packageName.jl\")",
-                  "#_precompile_()" => "_precompile_()",
-                 ),
-                 init = packageText)
+    available = occursin("#include(\"../deps/SnoopCompile/precompile/precompile_$packageName.jl\")", packageText)  && occursin("#_precompile_()", packageText)
+    if available
+        packageEdited = foldl(replace,
+                     (
+                      "#include(\"../deps/SnoopCompile/precompile/precompile_$packageName.jl\")" => "include(\"../deps/SnoopCompile/precompile/precompile_$packageName.jl\")",
+                      "#_precompile_()" => "_precompile_()",
+                     ),
+                     init = packageText)
+    else
+        error(""" add the following codes into your package:
+         include(\"../deps/SnoopCompile/precompile/precompile_$packageName.jl\")
+         _precompile_()
+         """)
+    end
 
      file = open(filePath,"w")
      write(file, packageEdited)
@@ -43,51 +58,29 @@ end
 
 ################################################################
 const rootPath = pwd()
-
 precompileDeactivator(packageName, filePath);
-
 cd(@__DIR__)
 ################################################################
+using SnoopCompile
 
 ### Log the compiles
-# This only needs to be run once (to generate log file)
-
-SnoopCompile.@snoopc "$(pwd())/Snoop.log" begin
-
-    # Use runtests.jl or your exmaples that uses package:
+data = @snoopi tmin=0.001 begin
 
     using MatLang, Pkg
 
+    # Use runtests.jl
+    include(joinpath(dirname(dirname(pathof(MatLang))), "test","runtests.jl"))
+
+    # Ues examples
     include(joinpath(dirname(dirname(pathof(MatLang))), "examples","Language_Fundamentals", "usage_Matrices_and_Arrays.jl"))
     include(joinpath(dirname(dirname(pathof(MatLang))), "examples","Language_Fundamentals", "usage_Entering_Commands.jl"))
     include(joinpath(dirname(dirname(pathof(MatLang))), "examples","Language_Fundamentals", "Data_Types", "usage_Numeric_Types.jl"))
 end
-
 ################################################################
-
 ### Parse the compiles and generate precompilation scripts
-# This can be run repeatedly to tweak the scripts
-
-data = SnoopCompile.read("$(pwd())/Snoop.log")
-
-pc = SnoopCompile.parcel(reverse!(data[2]))
-SnoopCompile.write("$(pwd())/precompile", pc)
-
-################################################################
-inferSnoop = SnoopCompile.@snoopi begin
-
-    # Use runtests.jl or your exmaples that uses package:
-
-    using MatLang, Pkg
-
-    include(joinpath(dirname(dirname(pathof(MatLang))), "examples","Language_Fundamentals", "usage_Matrices_and_Arrays.jl"))
-    include(joinpath(dirname(dirname(pathof(MatLang))), "examples","Language_Fundamentals", "usage_Entering_Commands.jl"))
-    include(joinpath(dirname(dirname(pathof(MatLang))), "examples","Language_Fundamentals", "Data_Types", "usage_Numeric_Types.jl"))
-end
-
-inferSnoop = SnoopCompile.parcel(t)
-SnoopCompile.write("$(pwd())/precompile_infer", inferSnoop)
-
+pc = SnoopCompile.parcel(data)
+onlypackage = Dict(package => pc[package])
+SnoopCompile.write("$(pwd())/precompile.jl",onlypackage)
 ################################################################
 cd(rootPath)
 precompileActivator(packageName, filePath)
