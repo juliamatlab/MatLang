@@ -64,7 +64,7 @@ cd(@__DIR__)
 using SnoopCompile
 
 ### Log the compiles
-data = @snoopi tmin=0.001 begin
+data = @snoopi begin
 
     using MatLang, Pkg
 
