@@ -69,7 +69,7 @@ data = @snoopi tmin=0.001 begin
     using MatLang, Pkg
 
     # Use runtests.jl
-    include(joinpath(dirname(dirname(pathof(MatLang))), "test","runtests.jl"))
+    # include(joinpath(dirname(dirname(pathof(MatLang))), "test","runtests.jl"))
 
     # Ues examples
     include(joinpath(dirname(dirname(pathof(MatLang))), "examples","Language_Fundamentals", "usage_Matrices_and_Arrays.jl"))
@@ -79,7 +79,7 @@ end
 ################################################################
 ### Parse the compiles and generate precompilation scripts
 pc = SnoopCompile.parcel(data)
-onlypackage = Dict(package => pc[package])
+onlypackage = Dict(package => sort(pc[package]))
 SnoopCompile.write("$(pwd())/precompile",onlypackage)
 ################################################################
 cd(rootPath)
