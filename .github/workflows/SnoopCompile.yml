@@ -2,7 +2,8 @@ name: SnoopCompile
 
 on:
   - push
-    
+
+
 jobs:
   build:
     runs-on: ${{ matrix.os }}
@@ -19,9 +20,13 @@ jobs:
       - name: Install dependencies
         run: julia --project=@. -e 'using Pkg; Pkg.instantiate();'
       - name : Add SnoopCompile and Current Package
-        run:   julia -e 'using Pkg; Pkg.add("SnoopCompile"); Pkg.develop(PackageSpec(; path=pwd()));'
+        run:   julia -e 'using Pkg; Pkg.add(PackageSpec(url = "https://github.com/aminya/SnoopCompile.jl", rev ="packageSnooper")); Pkg.develop(PackageSpec(; path=pwd()));'
+      # - name : Precompile Deactivation
+      #   run:   julia -e 'using SnoopCompile; precompileDeactivator("src/MatLang.jl", precompilePath("MatLang"));'
       - name: Generating precompile files
         run: julia --project=@. -e 'include("deps/SnoopCompile/snoopCompile.jl")'
+      # - name : Precompile Activation
+        # run:   julia -e 'using SnoopCompile; precompileActivator("src/MatLang.jl", precompilePath("MatLang"));'
 
       # https://github.com/marketplace/actions/create-pull-request
       - name: Create Pull Request
