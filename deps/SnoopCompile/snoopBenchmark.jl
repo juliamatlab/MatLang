@@ -15,7 +15,7 @@ using SnoopCompile
 println("Package load time:")
 loadSnoop = @snoopi using MatLang
 
-timesum(loadSnoop)
+println(timesum(loadSnoop))
 
 ################################################################
 println("Running Examples/Tests:")
@@ -29,4 +29,4 @@ include(joinpath(dirname(dirname(pathof(MatLang))), "examples","Language_Fundame
 
 end
 
-timesum(runSnoop)
+println(timesum(runSnoop))
