@@ -22,12 +22,7 @@ jobs:
       - name : Add SnoopCompile and Current Package
         run:   julia -e 'using Pkg; Pkg.add(PackageSpec(url = "https://github.com/aminya/SnoopCompile.jl", rev ="packageSnooper")); Pkg.develop(PackageSpec(; path=pwd()));'
       - name: Generating precompile files
-        run: julia --project=@. -e 'using SnoopCompile; @snoopiBot "MatLang" begin
-                  using MatLang
-                  include(joinpath(dirname(dirname(pathof(MatLang))), "examples","Language_Fundamentals", "usage_Matrices_and_Arrays.jl"))
-                  include(joinpath(dirname(dirname(pathof(MatLang))), "examples","Language_Fundamentals", "usage_Entering_Commands.jl"))
-                  include(joinpath(dirname(dirname(pathof(MatLang))), "examples","Language_Fundamentals", "Data_Types", "usage_Numeric_Types.jl"))
-             end'
+        run: julia --project=@. -e 'include("deps/SnoopCompile/snoopCompile.jl")'
 
       # https://github.com/marketplace/actions/create-pull-request
       - name: Create Pull Request
