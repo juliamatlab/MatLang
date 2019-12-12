@@ -20,7 +20,7 @@ jobs:
       - name: Install dependencies
         run: julia --project=@. -e 'using Pkg; Pkg.instantiate();'
       - name : Add SnoopCompile and Current Package
-        run:   julia -e 'using Pkg; Pkg.add(PackageSpec(; name = "SnoopCompile", url = "https://github.com/timholy/SnoopCompile.jl", rev ="packageSnooper")); Pkg.develop(PackageSpec(; path=pwd()));'
+        run:   julia -e 'using Pkg; Pkg.add(PackageSpec(url = "https://github.com/aminya/SnoopCompile.jl", rev ="packageSnooper")); Pkg.develop(PackageSpec(; path=pwd()));'
       # - name : Precompile Deactivation
       #   run:   julia -e 'using SnoopCompile; precompileDeactivator("src/MatLang.jl", precompilePath("MatLang"));'
       - name: Generating precompile files
