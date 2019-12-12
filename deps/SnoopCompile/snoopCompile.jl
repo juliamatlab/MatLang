@@ -3,12 +3,12 @@ const package = :MatLang
 
 ################################################################
 const packageName = string(package)
-const filePath = joinpath(pwd(),"src","$packageName.jl")
+const packagePath = joinpath(pwd(),"src","$packageName.jl")
 ################################################################
 using SnoopCompile
 ################################################################
 const rootPath = pwd()
-precompileDeactivator(filePath, precompilePath(packageName));
+precompileDeactivator(packagePath, precompilePath(packageName));
 cd(@__DIR__)
 ################################################################
 
@@ -33,4 +33,4 @@ onlypackage = Dict(package => sort(pc[package]))
 SnoopCompile.write("$(pwd())/precompile",onlypackage)
 ################################################################
 cd(rootPath)
-precompileActivator(filePath, precompilePath(packageName))
+precompileActivator(packagePath, precompilePath(packageName))
