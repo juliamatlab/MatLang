@@ -1,7 +1,62 @@
+const __bodyfunction__ = Dict{Method,Any}()
+
+# Find keyword "body functions" (the function that contains the body
+# as written by the developer, called after all missing keyword-arguments
+# have been assigned values), in a manner that doesn't depend on
+# gensymmed names.
+# `mnokw` is the method that gets called when you invoke it without
+# supplying any keywords.
+function __lookup_kwbody__(mnokw::Method)
+    function getsym(arg)
+        isa(arg, Symbol) && return arg
+        @assert isa(arg, GlobalRef)
+        return arg.name
+    end
+
+    f = get(__bodyfunction__, mnokw, nothing)
+    if f === nothing
+        fmod = mnokw.module
+        # The lowered code for `mnokw` should look like
+        #   %1 = mkw(kwvalues..., #self#, args...)
+        #        return %1
+        # where `mkw` is the name of the "active" keyword body-function.
+        ast = Base.uncompressed_ast(mnokw)
+        if isa(ast, Core.CodeInfo) && length(ast.code) >= 2
+            callexpr = ast.code[end-1]
+            if isa(callexpr, Expr) && callexpr.head == :call
+                fsym = callexpr.args[1]
+                if isa(fsym, Symbol)
+                    f = getfield(fmod, fsym)
+                elseif isa(fsym, GlobalRef)
+                    if fsym.mod === Core && fsym.name === :_apply
+                        f = getfield(mnokw.module, getsym(callexpr.args[2]))
+                    elseif fsym.mod === Core && fsym.name === :_apply_iterate
+                        f = getfield(mnokw.module, getsym(callexpr.args[3]))
+                    else
+                        f = getfield(fsym.mod, fsym.name)
+                    end
+                else
+                    f = missing
+                end
+            else
+                f = missing
+            end
+        else
+            f = missing
+        end
+        __bodyfunction__[mnokw] = f
+    end
+    return f
+end
+
 function _precompile_()
     ccall(:jl_generating_output, Cint, ()) == 1 || return nothing
-    isdefined(MatLang, Symbol("##sortperm#31")) && precompile(Tuple{getfield(MatLang, Symbol("##sortperm#31")),Int64,Bool,typeof(sortperm),Array{Int64,2}})
     isdefined(MatLang, Symbol("#32#33")) && precompile(Tuple{getfield(MatLang, Symbol("#32#33")),Array{Int64,1}})
+    let fbody = try __lookup_kwbody__(which(sortperm, (Array{Int64,2},))) catch missing end
+        if !ismissing(fbody)
+            precompile(fbody, (Int64,Bool,typeof(sortperm),Array{Int64,2},))
+        end
+    end
     precompile(Tuple{Core.kwftype(typeof(MatLang.eyeM)),NamedTuple{(:like,),Tuple{Array{Int8,2}}},typeof(eyeM),Int64,Int64})
     precompile(Tuple{Core.kwftype(typeof(MatLang.freqspaceM)),NamedTuple{(:dim,),Tuple{Int64}},typeof(freqspaceM),Int64})
     precompile(Tuple{Core.kwftype(typeof(MatLang.ndgridM)),NamedTuple{(:dim,),Tuple{Int64}},typeof(ndgridM),StepRange{Int64,Int64}})
@@ -29,9 +84,9 @@ function _precompile_()
     precompile(Tuple{typeof(eyeM),Int64,Int64})
     precompile(Tuple{typeof(eyeM),Int64})
     precompile(Tuple{typeof(eyeM),Tuple{Int64,Int64}})
-    precompile(Tuple{typeof(eyeM),Type,Array{Int64,1}})
-    precompile(Tuple{typeof(eyeM),Type,Int64,Int64})
-    precompile(Tuple{typeof(eyeM),Type,Tuple{Int64,Int64}})
+    precompile(Tuple{typeof(eyeM),Type{T} where T,Array{Int64,1}})
+    precompile(Tuple{typeof(eyeM),Type{T} where T,Int64,Int64})
+    precompile(Tuple{typeof(eyeM),Type{T} where T,Tuple{Int64,Int64}})
     precompile(Tuple{typeof(falseM),Array{Int64,1}})
     precompile(Tuple{typeof(falseM),Int64})
     precompile(Tuple{typeof(falseM),Symbol,Int64})
@@ -131,16 +186,16 @@ function _precompile_()
     precompile(Tuple{typeof(onesM),Int64})
     precompile(Tuple{typeof(onesM),Symbol,Int64})
     precompile(Tuple{typeof(onesM),Tuple{Int64,Int64}})
-    precompile(Tuple{typeof(onesM),Type,Int64,Int64})
-    precompile(Tuple{typeof(onesM),Type,Tuple{Int64,Int64}})
     precompile(Tuple{typeof(onesM),Type{Int32},Array{Int64,1}})
+    precompile(Tuple{typeof(onesM),Type{T} where T,Int64,Int64})
+    precompile(Tuple{typeof(onesM),Type{T} where T,Tuple{Int64,Int64}})
     precompile(Tuple{typeof(randM),Array{Int64,1}})
     precompile(Tuple{typeof(randM),Int64})
     precompile(Tuple{typeof(randM),Symbol,Int64})
     precompile(Tuple{typeof(randM),Tuple{Int64,Int64}})
-    precompile(Tuple{typeof(randM),Type,Int64,Int64})
-    precompile(Tuple{typeof(randM),Type,Tuple{Int64,Int64}})
     precompile(Tuple{typeof(randM),Type{Int32},Array{Int64,1}})
+    precompile(Tuple{typeof(randM),Type{T} where T,Int64,Int64})
+    precompile(Tuple{typeof(randM),Type{T} where T,Tuple{Int64,Int64}})
     precompile(Tuple{typeof(repelemM),Array{Int64,2},Int64})
     precompile(Tuple{typeof(repmatM),Array{Int64,1},Array{Int64,1}})
     precompile(Tuple{typeof(repmatM),Array{Int64,1},Int64,Int64})
@@ -171,8 +226,8 @@ function _precompile_()
     precompile(Tuple{typeof(zerosM),Int64})
     precompile(Tuple{typeof(zerosM),Symbol,Int64})
     precompile(Tuple{typeof(zerosM),Tuple{Int64,Int64}})
-    precompile(Tuple{typeof(zerosM),Type,Int64,Int64,Int64})
-    precompile(Tuple{typeof(zerosM),Type,Int64,Int64})
-    precompile(Tuple{typeof(zerosM),Type,Tuple{Int64,Int64}})
     precompile(Tuple{typeof(zerosM),Type{Int32},Array{Int64,1}})
+    precompile(Tuple{typeof(zerosM),Type{T} where T,Int64,Int64,Int64})
+    precompile(Tuple{typeof(zerosM),Type{T} where T,Int64,Int64})
+    precompile(Tuple{typeof(zerosM),Type{T} where T,Tuple{Int64,Int64}})
 end
