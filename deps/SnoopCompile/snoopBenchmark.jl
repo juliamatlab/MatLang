@@ -1,32 +1,19 @@
-# dev your package
-
-# comment the precompile part of your package ("include() and _precompile_()")
-# run this benchmark
-# restart Julia
-
-# uncomment the precompile part of your package ("include() and _precompile_()")
-# run this benchmark
-# restart Julia
-
-# now compare the result
-################################################################
 using SnoopCompile
 
-println("Package load time:")
-loadSnoop = @snoopi using MatLang
+println("loading infer benchmark")
 
-println(timesum(loadSnoop))
+@snoopiBenchBot "MatLang" using MatLang
 
-################################################################
-println("Running Examples/Tests:")
-runSnoop = @snoopi begin
 
-using MatLang
+println("examples infer benchmark")
 
-include(joinpath(dirname(dirname(pathof(MatLang))), "examples","Language_Fundamentals", "usage_Matrices_and_Arrays.jl"))
-# include(joinpath(dirname(dirname(pathof(MatLang))), "examples","Language_Fundamentals", "usage_Entering_Commands.jl"))
-include(joinpath(dirname(dirname(pathof(MatLang))), "examples","Language_Fundamentals", "Data_Types", "usage_Numeric_Types.jl"))
-
+@snoopiBenchBot "MatLang" begin
+    using MatLang
+    examplePath = joinpath(dirname(dirname(pathof(MatLang))), "examples")
+    # include(joinpath(examplePath,"Language_Fundamentals", "usage_Entering_Commands.jl"))
+    include(joinpath(examplePath,"Language_Fundamentals", "usage_Matrices_and_Arrays.jl"))
+    include(joinpath(examplePath,"Language_Fundamentals", "Data_Types", "usage_Numeric_Types.jl"))
 end
 
-println(timesum(runSnoop))
+
+@snoopiBenchBot "MatLang" 
