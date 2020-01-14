@@ -2,12 +2,13 @@ using SnoopCompile
 
 println("loading infer benchmark")
 
-@snoopiBench "MatLang" using MatLang
-
+@snoopiBench "MatLang" begin
+    using MatLang
+end
 
 println("examples infer benchmark")
 
-@snoopiBench "MahtLang" begin
+@snoopiBench "MatLang" begin
     using MatLang
     examplePath = joinpath(dirname(dirname(pathof(MatLang))), "examples")
     # include(joinpath(examplePath,"Language_Fundamentals", "usage_Entering_Commands.jl"))
@@ -17,5 +18,4 @@ end
 
 
 println("tests infer benchmark")
-
 @snoopiBench "MatLang"
