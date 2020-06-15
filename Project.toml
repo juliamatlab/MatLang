@@ -1,7 +1,7 @@
 name = "MatLang"
 uuid = "05b439c0-bb3c-11e9-1d8d-1f0a9ebca87a"
 authors = ["aminya <aminyahyaabadi74@gmail.com>"]
-version = "0.1.1"
+version = "0.1.2"
 
 [deps]
 BlockDiagonals = "0a1fb500-61f7-11e9-3c65-f5ef3456f9f0"

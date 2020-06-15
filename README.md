@@ -5,7 +5,7 @@ API for Matlab's language core functions
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 ![CI](https://github.com/juliamatlab/MatLang/workflows/CI/badge.svg)
 ![SnoopCompile](https://github.com/juliamatlab/MatLang/workflows/SnoopCompile/badge.svg)
-[![Test Coverage](https://codecov.io/gh/aminya/MatLang/branch/master/graph/badge.svg)](https://codecov.io/gh/aminya/MatLang)
+[![Test Coverage](https://codecov.io/gh/juliamatlab/MatLang/branch/master/graph/badge.svg)](https://codecov.io/gh/juliamatlab/MatLang)
 
 
 # Documentation
