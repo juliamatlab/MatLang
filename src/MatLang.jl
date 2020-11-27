@@ -23,4 +23,5 @@ function __init__()
 end
 ################################################################
 
+include("precompile_includer.jl")
 end # module
