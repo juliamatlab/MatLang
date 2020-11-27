@@ -1,9 +1,8 @@
-using SnoopCompile
+using CompileBot
 
 botconfig = BotConfig(
   "MatLang";
   yml_path = "SnoopCompile.yml",
-  blacklist = [],
 )
 
 println("Benchmarking the inference time of `using MatLang`")
